@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AEA1 Reconeixement de l'estructura de les xarxes locals · MP0225</title>
+  <meta name="description" content="Material del mòdul professional MP0225 Xarxes locals, CFGM Sistemes Microinformàtics i Xarxes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg: #f4f6f8; --surface: #ffffff; --ink: #15222e; --muted: #53636f;
+  --cable: #1b5fd1; --cable-dark: #123f8e; --gold: #d9a21b;
+  --line: #d7dde3; --hero-bg: #0f2a4a; --hero-ink: #f2f6fb;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
+.wrap { max-width: 880px; margin: 0 auto; padding: 0 1.25rem; }
+.muted { color: var(--muted); }
+
+.hero { background: var(--hero-bg); color: var(--hero-ink); padding: 4rem 0 3rem; }
+.module { margin: 0 0 .5rem; color: #a9c2e6; }
+.module a { color: inherit; }
+.hero h1 { margin: 0; font-size: clamp(2.6rem, 8vw, 4.5rem); line-height: 1.05; font-weight: 700; letter-spacing: -0.02em; }
+.lead { max-width: 52ch; margin: 1rem 0 0; font-size: 1.15rem; color: #d3e0f2; }
+.hero-small { padding: 2.5rem 0 2rem; }
+.hero-small h1 { font-size: clamp(1.8rem, 5.5vw, 2.8rem); max-width: 22ch; }
+
+.rj45 { display: flex; gap: 6px; margin-top: 2.5rem; width: max-content; padding: 10px 14px 0; background: #1c3d66; border-radius: 6px 6px 0 0; }
+.rj45 span { width: 8px; height: 36px; background: var(--gold); border-radius: 2px 2px 0 0; }
+
+.topnav { position: sticky; top: 0; z-index: 10; background: var(--surface); border-bottom: 1px solid var(--line); }
+.topnav .wrap { display: flex; gap: 1.5rem; overflow-x: auto; }
+.topnav a { padding: .9rem 0; color: var(--ink); text-decoration: none; font-weight: 700; border-bottom: 3px solid transparent; white-space: nowrap; }
+.topnav a:hover { border-bottom-color: var(--cable); }
+
+main.wrap { padding-top: 2.5rem; padding-bottom: 3rem; }
+section { margin-bottom: 3rem; }
+h2 { margin: 0 0 .5rem; font-size: 1.6rem; }
+.note { color: var(--muted); margin-top: 0; }
+
+/* Llista d'AEA */
+.aea { list-style: none; margin: 1.25rem 0 0; padding: 0; display: grid; gap: .75rem; }
+.aea a, .aea .pending > div { display: grid; grid-template-columns: 4.5rem 1fr; align-items: center; padding: 1rem 1.25rem; background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--cable); border-radius: 4px; color: inherit; text-decoration: none; }
+.aea a:hover { border-left-color: var(--gold); background: #fbfcfd; }
+.aea .code { font-weight: 700; font-size: 1.1rem; color: var(--cable-dark); }
+.aea h3 { margin: 0; font-size: 1.1rem; }
+.tag { display: inline-block; margin-top: .25rem; padding: 0 .55rem; border-radius: 999px; background: #e3edfc; color: var(--cable-dark); font-size: .9rem; font-weight: 700; }
+.aea .pending > div { border-left-color: var(--line); background: transparent; color: var(--muted); }
+.aea .pending .code { color: var(--muted); }
+.soon { font-size: .95rem; }
+
+/* Taula RA */
+.table-scroll { overflow-x: auto; margin-top: 1rem; }
+table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); }
+th, td { text-align: left; padding: .7rem .9rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+thead th { background: #e9eef3; }
+tbody th { color: var(--cable-dark); white-space: nowrap; }
+td a { color: var(--cable-dark); font-weight: 700; }
+
+/* Pàgina d'AEA */
+.ra-box { background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--gold); border-radius: 4px; padding: 1rem 1.25rem; }
+.ra-box p { margin: .25rem 0 0; }
+.items { list-style: none; margin: 1rem 0 0; padding: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; }
+.items li { display: flex; align-items: center; gap: 1rem; padding: .85rem 1.1rem; border-bottom: 1px solid var(--line); }
+.items li:last-child { border-bottom: 0; }
+.kind { flex: none; min-width: 6.5rem; text-align: center; padding: .1rem .6rem; border-radius: 999px; font-size: .9rem; font-weight: 700; }
+.kind-act { background: #e3edfc; color: var(--cable-dark); }
+.kind-mat { background: #eceff2; color: #3b4a56; }
+.kind-pre { background: #fbefcf; color: #6d4f05; }
+.kind-enl { background: #dcf1e6; color: #1d5b3d; }
+.pager { display: flex; justify-content: space-between; gap: 1rem; margin-top: 2rem; }
+.pager a { color: var(--cable-dark); font-weight: 700; }
+
+.links { padding-left: 1.2rem; }
+.links a, footer a { color: var(--cable-dark); }
+footer { border-top: 1px solid var(--line); padding: 1.5rem 0; color: var(--muted); font-size: .95rem; }
+a:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+@media (max-width: 520px) {
+  .aea a, .aea .pending > div { grid-template-columns: 1fr; row-gap: .25rem; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  </style>
+</head>
+<body>
+
+  <header class="hero hero-small">
+    <div class="wrap">
+      <p class="module"><a href="../index.html">MP0225 Xarxes locals</a> · AEA1</p>
+      <h1>Reconeixement de l'estructura de les xarxes locals</h1>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <section>
+      <h2>Resultat d'aprenentatge</h2>
+      <div class="ra-box">
+        <strong>RA1</strong>
+        <p>Escriu aquí el text oficial del RA1 i, a sota, els criteris d'avaluació que es treballen en aquesta AEA.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Activitats i materials</h2>
+      <p class="note">Afegeix l'enllaç de cada element (Classroom, Drive, PDF...) a l'etiqueta corresponent.</p>
+      <ul class="items">
+        <li><span class="kind kind-act">Activitat</span><span class="name">Activitat A0</span></li>
+        <li><span class="kind kind-act">Activitat</span><span class="name">Activitat A1</span></li>
+        <li><span class="kind kind-act">Activitat</span><span class="name">Activitat A2</span></li>
+        <li><span class="kind kind-mat">Material</span><span class="name">Crear usuari Skills4All / Packet Tracer</span></li>
+        <li><span class="kind kind-pre">Presentació</span><span class="name">Cablejat estructurat</span></li>
+        <li><span class="kind kind-mat">Material</span><span class="name">Brainstorming</span></li>
+        <li><span class="kind kind-act">Activitat</span><span class="name">Activitat A3</span></li>
+        <li><span class="kind kind-act">Activitat</span><span class="name">Activitat A3 extra</span></li>
+        <li><span class="kind kind-pre">Presentació</span><span class="name">Dispositius d'interconnexió i dominis</span></li>
+        <li><span class="kind kind-enl">Enllaç</span><span class="name">Cables submarins</span></li>
+      </ul>
+    </section>
+
+    <nav class="pager" aria-label="Navegació entre AEA">
+      <span></span>
+      <span class="muted">Següent: AEA2 (properament)</span>
+    </nav>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p><a href="../index.html">Tornar a l'índex</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>
