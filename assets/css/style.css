@@ -81,7 +81,7 @@ body {
 .topnav a:hover { border-bottom-color: var(--cable); }
 
 /* Seccions */
-main { padding-top: 2.5rem; padding-bottom: 3rem; }
+main.wrap { padding-top: 2.5rem; padding-bottom: 3rem; }
 section { margin-bottom: 3rem; }
 h2 { margin: 0 0 .5rem; font-size: 1.6rem; }
 .note { color: var(--muted); margin-top: 0; }
