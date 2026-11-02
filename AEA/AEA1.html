@@ -200,9 +200,59 @@ a:focus-visible, summary:focus-visible, button:focus-visible { outline: 3px soli
 .cards li .card.pending { background: transparent; color: var(--muted); opacity: 1; border-style: dashed; box-shadow: none; }
 .cards li .card.pending .code { background: var(--grey); color: var(--muted); }
 
+/* Teoria, exercicis i PDF */
+.sechead.in { margin: 3rem 0 1.5rem; }
+.exbox { background: var(--white); border: 1px solid var(--dark); border-radius: 28px; box-shadow: 0 6px 0 var(--dark); padding: 1.5rem; margin-bottom: 1.75rem; }
+.exbox h3 { margin: 0 0 .25rem; }
+.inner p, .inner ul { margin: .6rem 0; }
+.inner table { background: var(--white); }
+.pool, .drop { min-height: 3.2rem; display: flex; flex-wrap: wrap; gap: .5rem; padding: .6rem; border: 2px dashed var(--dark); border-radius: 18px; align-content: flex-start; }
+.pool { background: var(--grey); margin: .75rem 0; }
+.drop.over, .pool.over { background: var(--lime); }
+.boxes { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem; }
+.box { background: var(--grey); border: 1px solid var(--dark); border-radius: 20px; padding: .8rem; }
+.box h4 { margin: 0 0 .5rem; font-size: 1rem; }
+.chip-d { display: inline-block; padding: .35rem .9rem; border: 1px solid var(--dark); border-radius: 99px; background: var(--white); font-weight: 500; cursor: grab; user-select: none; box-shadow: 0 2px 0 var(--dark); }
+.chip-d.sel { background: var(--lime); outline: 3px solid var(--dark); }
+.chip-d.ok { background: var(--lime); }
+.chip-d.ko { background: #ffd9d9; border-color: #b3261e; }
+.result { margin: .75rem 0 0; font-weight: 700; min-height: 1.5rem; }
+.exbox .btn { padding: .5rem 1.2rem; cursor: pointer; font: inherit; font-weight: 700; }
+.quiz fieldset.q { border: 1px solid var(--dark); border-radius: 18px; margin: 0 0 1rem; padding: .75rem 1.1rem 1rem; background: var(--grey); }
+.quiz legend { font-weight: 700; padding: 0 .4rem; }
+.quiz label { display: block; padding: .3rem 0; cursor: pointer; }
+.quiz input { accent-color: var(--dark); margin-right: .5rem; }
+.q .exp { display: none; margin: .5rem 0 0; padding: .5rem .8rem; border-radius: 12px; background: var(--white); border-left: 6px solid var(--dark); }
+.q.done .exp { display: block; }
+.q.ok { background: #e4ffc7; }
+.q.ko { background: #ffe4e4; }
+.tcards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1rem 0; }
+.tcard { background: var(--white); border: 1px solid var(--dark); border-radius: 22px; padding: 1rem 1.25rem; }
+.tcard svg, .fig svg { width: 150px; height: auto; display: block; }
+.tcard h3 { margin: .25rem 0; }
+.tcard p { margin: .4rem 0; }
+.fig { margin: 1rem 0; text-align: center; }
+.fig svg { width: 100%; max-width: 420px; margin: 0 auto; }
+.fig figcaption { color: var(--muted); font-size: .95rem; }
+.docbtn { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; margin: 0 0 1.5rem; }
+@media (max-width: 760px) { .tcards { grid-template-columns: 1fr; } }
+
   </style>
 </head>
 <body>
+
+  <div class="wrap">
+    <nav class="nav" aria-label="Navegació principal">
+      <a class="logo" href="../index.html"><i></i>Xarxes locals</a>
+      <ul>
+        <li><a href="../index.html#aea">AEA</a></li>
+        <li><a href="../index.html#ra">Resultats d'aprenentatge</a></li>
+        <li><a href="../index.html#avaluacio">Avaluació</a></li>
+        <li><a href="../index.html#recursos">Recursos</a></li>
+        <li><a class="btn" href="AEA1.html">AEA1</a></li>
+      </ul>
+    </nav>
+  </div>
 
   <header class="hero hero-small">
     <div class="wrap">
@@ -215,30 +265,34 @@ a:focus-visible, summary:focus-visible, button:focus-visible { outline: 3px soli
   <main class="wrap">
 
     <section>
-      <h2>Resultat d'aprenentatge</h2>
-      <div class="ra-box">
-        <strong>RA1</strong>
-        <p>Reconeix l'estructura de les xarxes locals cablejades analitzant les característiques dels entorns d'aplicació i descrivint la funcionalitat dels seus components.</p>
-      </div>
+      <div class="sechead"><h2 class="label">Resultat d'aprenentatge</h2></div>
+      <div class="ra-box"><strong>RA1</strong><p>Reconeix l'estructura de les xarxes locals cablejades analitzant les característiques dels entorns d'aplicació i descrivint la funcionalitat dels seus components.</p></div>
     </section>
 
     <section>
-      <h2>Pla de la sessió</h2>
-      <p class="note">Tres activitats guiades, amb llista de passos i cronòmetre. Els temps són orientatius: A0 + A1 omplen una classe d'1 h 30 min, i A2 queda per a la següent.</p>
+      <div class="sechead"><h2 class="label">Activitats</h2><p>Guies amb llista de passos, progrés i cronòmetre. A2 i A3 inclouen teoria, exercicis interactius i PDF. Els temps són orientatius: A0 + A1 omplen una classe d'1 h 30 min.</p></div>
       <ul class="aea">
         <li><a href="A0.html"><span class="code">A0</span><span class="body"><h3>Normativa del centre i del mòdul</h3><span class="tag">40 min</span></span></a></li>
         <li><a href="A1.html"><span class="code">A1</span><span class="body"><h3>Presa de contacte amb les xarxes locals</h3><span class="tag">50 min</span></span></a></li>
-        <li><a href="A2.html"><span class="code">A2</span><span class="body"><h3>Diagrames de xarxa (físics i lògics)</h3><span class="tag">55 min</span></span></a></li>
+        <li><a href="A2.html"><span class="code">A2</span><span class="body"><h3>Diagrames de xarxa (físics i lògics)</h3><span class="tag">90 min</span></span></a></li>
+        <li><a href="A3.html"><span class="code">A3</span><span class="body"><h3>Tipus de xarxes (topologies)</h3><span class="tag">90 min</span></span></a></li>
       </ul>
     </section>
 
     <section>
-      <h2>Altres materials de l'AEA</h2>
+      <div class="sechead"><h2 class="label">Teoria en PDF</h2><p>Per estudiar a casa.</p></div>
+      <ul class="pills">
+        <li><a href="../assets/docs/teoria-A2.pdf" download>Teoria A2 · Diagrames de xarxa</a></li>
+        <li><a href="../assets/docs/teoria-A3.pdf" download>Teoria A3 · Tipus de xarxes</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <div class="sechead"><h2 class="label">Altres materials</h2></div>
       <ul class="items">
         <li><span class="kind kind-mat">Material</span><span class="name">Crear usuari Skills4All / Packet Tracer</span></li>
         <li><span class="kind kind-pre">Presentació</span><span class="name">Cablejat estructurat</span></li>
         <li><span class="kind kind-mat">Material</span><span class="name">Brainstorming</span></li>
-        <li><span class="kind kind-act">Activitat</span><span class="name">Activitat A3</span></li>
         <li><span class="kind kind-act">Activitat</span><span class="name">Activitat A3 extra</span></li>
         <li><span class="kind kind-pre">Presentació</span><span class="name">Dispositius d'interconnexió i dominis</span></li>
         <li><span class="kind kind-enl">Enllaç</span><span class="name">Cables submarins</span></li>
@@ -247,9 +301,10 @@ a:focus-visible, summary:focus-visible, button:focus-visible { outline: 3px soli
 
   </main>
 
-  <footer>
+  <footer class="site">
     <div class="wrap">
-      <p><a href="../index.html">Tornar a l'índex</a></p>
+      <a class="logo" href="../index.html"><i></i>MP0225 Xarxes locals</a>
+      <p>CFGM Sistemes Microinformàtics i Xarxes · Curs 2026-2027 · Nom del docent</p>
     </div>
   </footer>
 

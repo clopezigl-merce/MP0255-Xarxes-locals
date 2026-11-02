@@ -200,9 +200,59 @@ a:focus-visible, summary:focus-visible, button:focus-visible { outline: 3px soli
 .cards li .card.pending { background: transparent; color: var(--muted); opacity: 1; border-style: dashed; box-shadow: none; }
 .cards li .card.pending .code { background: var(--grey); color: var(--muted); }
 
+/* Teoria, exercicis i PDF */
+.sechead.in { margin: 3rem 0 1.5rem; }
+.exbox { background: var(--white); border: 1px solid var(--dark); border-radius: 28px; box-shadow: 0 6px 0 var(--dark); padding: 1.5rem; margin-bottom: 1.75rem; }
+.exbox h3 { margin: 0 0 .25rem; }
+.inner p, .inner ul { margin: .6rem 0; }
+.inner table { background: var(--white); }
+.pool, .drop { min-height: 3.2rem; display: flex; flex-wrap: wrap; gap: .5rem; padding: .6rem; border: 2px dashed var(--dark); border-radius: 18px; align-content: flex-start; }
+.pool { background: var(--grey); margin: .75rem 0; }
+.drop.over, .pool.over { background: var(--lime); }
+.boxes { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem; }
+.box { background: var(--grey); border: 1px solid var(--dark); border-radius: 20px; padding: .8rem; }
+.box h4 { margin: 0 0 .5rem; font-size: 1rem; }
+.chip-d { display: inline-block; padding: .35rem .9rem; border: 1px solid var(--dark); border-radius: 99px; background: var(--white); font-weight: 500; cursor: grab; user-select: none; box-shadow: 0 2px 0 var(--dark); }
+.chip-d.sel { background: var(--lime); outline: 3px solid var(--dark); }
+.chip-d.ok { background: var(--lime); }
+.chip-d.ko { background: #ffd9d9; border-color: #b3261e; }
+.result { margin: .75rem 0 0; font-weight: 700; min-height: 1.5rem; }
+.exbox .btn { padding: .5rem 1.2rem; cursor: pointer; font: inherit; font-weight: 700; }
+.quiz fieldset.q { border: 1px solid var(--dark); border-radius: 18px; margin: 0 0 1rem; padding: .75rem 1.1rem 1rem; background: var(--grey); }
+.quiz legend { font-weight: 700; padding: 0 .4rem; }
+.quiz label { display: block; padding: .3rem 0; cursor: pointer; }
+.quiz input { accent-color: var(--dark); margin-right: .5rem; }
+.q .exp { display: none; margin: .5rem 0 0; padding: .5rem .8rem; border-radius: 12px; background: var(--white); border-left: 6px solid var(--dark); }
+.q.done .exp { display: block; }
+.q.ok { background: #e4ffc7; }
+.q.ko { background: #ffe4e4; }
+.tcards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1rem 0; }
+.tcard { background: var(--white); border: 1px solid var(--dark); border-radius: 22px; padding: 1rem 1.25rem; }
+.tcard svg, .fig svg { width: 150px; height: auto; display: block; }
+.tcard h3 { margin: .25rem 0; }
+.tcard p { margin: .4rem 0; }
+.fig { margin: 1rem 0; text-align: center; }
+.fig svg { width: 100%; max-width: 420px; margin: 0 auto; }
+.fig figcaption { color: var(--muted); font-size: .95rem; }
+.docbtn { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; margin: 0 0 1.5rem; }
+@media (max-width: 760px) { .tcards { grid-template-columns: 1fr; } }
+
   </style>
 </head>
 <body>
+
+  <div class="wrap">
+    <nav class="nav" aria-label="Navegació principal">
+      <a class="logo" href="../index.html"><i></i>Xarxes locals</a>
+      <ul>
+        <li><a href="../index.html#aea">AEA</a></li>
+        <li><a href="../index.html#ra">Resultats d'aprenentatge</a></li>
+        <li><a href="../index.html#avaluacio">Avaluació</a></li>
+        <li><a href="../index.html#recursos">Recursos</a></li>
+        <li><a class="btn" href="AEA1.html">AEA1</a></li>
+      </ul>
+    </nav>
+  </div>
 
   <header class="hero hero-small">
     <div class="wrap">
@@ -222,10 +272,61 @@ a:focus-visible, summary:focus-visible, button:focus-visible { outline: 3px soli
   </div>
 
   <main class="wrap">
-    <div class="compare">
-      <div><h3>Diagrama físic</h3><p>Un plànol de l'edifici vist des de dalt, amb tots els seus elements: distribució de les taules, cablejat…</p></div>
-      <div><h3>Diagrama lògic</h3><p>Detalla la topologia de la xarxa utilitzada i les adreces IP de cada xarxa o element.</p></div>
-    </div>
+<div class="sechead in"><h2 class="label">Teoria</h2><p>Llegeix-la abans de fer l'activitat. Pots descarregar-la en PDF per estudiar-la.</p></div>
+<div class="docbtn"><a class="btn" href="../assets/docs/teoria-A2.pdf" download>Descarrega la teoria (PDF)</a></div>
+
+    <details class="part" open>
+      <summary>Per què fem diagrames de xarxa? <span class="chip time">5 min</span><span class="chip count"></span></summary>
+      <div class="inner">
+<p>Abans d'instal·lar o arreglar una xarxa cal poder-la <b>veure sobre el paper</b>. Un <b>diagrama de xarxa</b> és un dibuix que representa els equips i com es connecten entre ells.</p><p>Serveix per <b>dissenyar</b> una xarxa nova, per <b>documentar</b> la que ja existeix i per <b>trobar avaries</b> més ràpid. Segons el que vulguem mostrar, fem servir dos tipus de diagrama: el <b>físic</b> i el <b>lògic</b>.</p>
+      </div>
+    </details>
+
+    <details class="part" open>
+      <summary>El diagrama físic <span class="chip time">5 min</span><span class="chip count"></span></summary>
+      <div class="inner">
+<p>És un <b>plànol de l'edifici vist des de dalt</b>. Mostra <b>on és</b> cada cosa: taules, ordinadors, preses de xarxa, armari de comunicacions (<i>rack</i>) i el recorregut del cablejat, normalment amb mesures.</p><ul><li><b>Per a què serveix:</b> instal·lar el cablejat, calcular quants metres de cable calen i localitzar un equip.</li><li><b>Eina a l'activitat:</b> Lucidchart.</li></ul>
+      </div>
+    </details>
+
+    <details class="part" open>
+      <summary>El diagrama lògic <span class="chip time">5 min</span><span class="chip count"></span></summary>
+      <div class="inner">
+<p>Mostra <b>com es connecten</b> els equips i quines <b>adreces IP</b> té cada xarxa i cada equip. No importa on són a l'aula: importa què està connectat amb què.</p><ul><li><b>Per a què serveix:</b> entendre la topologia, configurar la xarxa i resoldre problemes.</li><li><b>Eina a l'activitat:</b> Packet Tracer.</li></ul><figure class="fig"><svg viewBox="0 0 360 180" role="img" aria-label="Diagrama lògic: un switch amb tres PC i les seves IP" xmlns="http://www.w3.org/2000/svg">
+<g stroke="#191a23" stroke-width="3"><line x1="180" y1="50" x2="60" y2="115"/><line x1="180" y1="50" x2="180" y2="115"/><line x1="180" y1="50" x2="300" y2="115"/></g>
+<rect x="145" y="25" width="70" height="30" rx="8" fill="#b9ff66" stroke="#191a23" stroke-width="3"/><text x="180" y="45" text-anchor="middle" font-size="13" font-weight="700">Switch</text>
+<g fill="#fff" stroke="#191a23" stroke-width="3"><rect x="30" y="115" width="60" height="32" rx="5"/><rect x="150" y="115" width="60" height="32" rx="5"/><rect x="270" y="115" width="60" height="32" rx="5"/></g>
+<g font-size="12" text-anchor="middle" font-weight="700"><text x="60" y="135">PC1</text><text x="180" y="135">PC2</text><text x="300" y="135">PC3</text></g>
+<g font-size="12" text-anchor="middle"><text x="60" y="167">172.16.209.10</text><text x="180" y="167">172.16.209.11</text><text x="300" y="167">172.16.209.12</text><text x="290" y="35" font-weight="700">Xarxa 172.16.209.0</text></g></svg>
+<figcaption>Diagrama lògic: no importa on són els equips, sinó com es connecten i quines IP tenen.</figcaption></figure>
+      </div>
+    </details>
+
+    <details class="part" open>
+      <summary>Físic o lògic? La comparació <span class="chip time">3 min</span><span class="chip count"></span></summary>
+      <div class="inner">
+<div class="table-scroll"><table><thead><tr><th></th><th>Diagrama físic</th><th>Diagrama lògic</th></tr></thead><tbody><tr><th scope='row'>Què mostra</th><td>On és cada element i per on passa el cable</td><td>Com es connecten els elements i quines IP tenen</td></tr><tr><th scope='row'>Vista</th><td>Plànol des de dalt</td><td>Esquema de connexions</td></tr><tr><th scope='row'>Útil per a</th><td>Instal·lar i mesurar</td><td>Configurar i diagnosticar</td></tr><tr><th scope='row'>Eina</th><td>Lucidchart</td><td>Packet Tracer</td></tr></tbody></table></div>
+      </div>
+    </details>
+
+    <details class="part" open>
+      <summary>Les adreces IP <span class="chip time">7 min</span><span class="chip count"></span></summary>
+      <div class="inner">
+<p>Una <b>adreça IP</b> identifica un equip dins d'una xarxa, com l'adreça d'una casa dins d'un carrer. A IPv4 són <b>4 números entre 0 i 255</b> separats per punts, per exemple <code>172.16.209.37</code>.</p><p>La <b>màscara</b> (per exemple <code>255.255.255.0</code>) indica quina part de l'adreça identifica la <b>xarxa</b> i quina identifica l'<b>equip</b>. Amb aquesta màscara, els tres primers números són de la xarxa i l'últim és de l'equip.</p><div class="table-scroll"><table><thead><tr><th>Concepte</th><th>Exemple</th><th>Explicació</th></tr></thead><tbody><tr><th scope='row'>IP de l'equip</th><td>172.16.209.37</td><td>Identifica aquest PC concret</td></tr><tr><th scope='row'>Màscara</th><td>255.255.255.0</td><td>Els 3 primers números són la xarxa</td></tr><tr><th scope='row'>IP de la xarxa</th><td>172.16.209.0</td><td>Identifica la xarxa sencera (l'últim número és 0)</td></tr></tbody></table></div><p>Tots els equips d'una mateixa xarxa comparteixen la part de xarxa i només canvia l'últim número. Per veure la teva IP: a Ubuntu, <code>ip a</code> al terminal; a Windows, <code>ipconfig</code>.</p>
+      </div>
+    </details>
+
+    <details class="part" open>
+      <summary>Components d'una xarxa local <span class="chip time">5 min</span><span class="chip count"></span></summary>
+      <div class="inner">
+<div class="table-scroll"><table><thead><tr><th>Component</th><th>Funció</th></tr></thead><tbody><tr><th scope='row'>PC o portàtil</th><td>Equip de l'usuari</td></tr><tr><th scope='row'>Switch</th><td>Connecta per cable els equips d'una mateixa xarxa</td></tr><tr><th scope='row'>Router</th><td>Connecta xarxes diferents (per exemple, la xarxa local amb Internet)</td></tr><tr><th scope='row'>Punt d'accés Wi-Fi</th><td>Dona connexió sense cables</td></tr><tr><th scope='row'>Servidor</th><td>Ofereix serveis: fitxers, web, impressió…</td></tr><tr><th scope='row'>Impressora de xarxa</th><td>Recurs que comparteixen diversos equips</td></tr><tr><th scope='row'>Cable UTP</th><td>Transporta les dades entre els equips</td></tr></tbody></table></div>
+      </div>
+    </details>
+<div class="sechead in"><h2 class="label">Exercicis</h2><p>Practica els conceptes. Pots repetir-los tantes vegades com vulguis.</p></div>
+<div class="exbox"><div class="dnd"><h3>Físic o lògic?</h3><p class="mini">Cada concepte pertany a un dels dos diagrames. Arrossega els conceptes a la caixa correcta (o toca un concepte i després la caixa).</p><div class="pool" aria-label="Conceptes"><span class="chip-d" draggable="true" data-ans="0">Plànol de l'aula vist des de dalt</span><span class="chip-d" draggable="true" data-ans="0">Distribució de les taules i dels endolls</span><span class="chip-d" draggable="true" data-ans="0">Recorregut del cable pel fals sostre</span><span class="chip-d" draggable="true" data-ans="0">Metres de cable entre dos punts</span><span class="chip-d" draggable="true" data-ans="1">Adreces IP dels equips</span><span class="chip-d" draggable="true" data-ans="1">Topologia de la xarxa</span><span class="chip-d" draggable="true" data-ans="1">Connexions entre switch i router</span><span class="chip-d" draggable="true" data-ans="1">Esquema fet amb Packet Tracer</span></div><div class="boxes"><div class="box"><h4>Diagrama físic</h4><div class="drop" data-box="0"></div></div><div class="box"><h4>Diagrama lògic</h4><div class="drop" data-box="1"></div></div></div><div class="btnrow"><button type="button" class="btn check">Comprova</button><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox"><div class="dnd"><h3>IP d'equip o IP de xarxa?</h3><p class="mini">Suposa que la màscara és 255.255.255.0. Arrossega els conceptes a la caixa correcta (o toca un concepte i després la caixa).</p><div class="pool" aria-label="Conceptes"><span class="chip-d" draggable="true" data-ans="0">172.16.209.37</span><span class="chip-d" draggable="true" data-ans="0">192.168.1.20</span><span class="chip-d" draggable="true" data-ans="0">10.0.0.15</span><span class="chip-d" draggable="true" data-ans="1">172.16.209.0</span><span class="chip-d" draggable="true" data-ans="1">192.168.1.0</span><span class="chip-d" draggable="true" data-ans="1">10.0.0.0</span></div><div class="boxes"><div class="box"><h4>IP d'un equip</h4><div class="drop" data-box="0"></div></div><div class="box"><h4>IP d'una xarxa</h4><div class="drop" data-box="1"></div></div></div><div class="btnrow"><button type="button" class="btn check">Comprova</button><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox"><div class="quiz"><h3>Test d'autoavaluació</h3><fieldset class="q" data-ans="0"><legend>1. Quin diagrama és un plànol de l'edifici vist des de dalt?</legend><label><input type="radio" name="a2q1" value="0">El físic</label><label><input type="radio" name="a2q1" value="1">El lògic</label><label><input type="radio" name="a2q1" value="2">Cap dels dos</label><p class="exp">El diagrama físic mostra on són els elements, com un plànol.</p></fieldset><fieldset class="q" data-ans="1"><legend>2. Vols saber quines IP tenen els equips. Quin diagrama consultes?</legend><label><input type="radio" name="a2q2" value="0">El físic</label><label><input type="radio" name="a2q2" value="1">El lògic</label><label><input type="radio" name="a2q2" value="2">Tots dos serveixen igual</label><p class="exp">Les adreces IP i la topologia són al diagrama lògic.</p></fieldset><fieldset class="q" data-ans="1"><legend>3. Quina eina s'usa a l'activitat per al diagrama lògic?</legend><label><input type="radio" name="a2q3" value="0">Lucidchart</label><label><input type="radio" name="a2q3" value="1">Packet Tracer</label><label><input type="radio" name="a2q3" value="2">Google Docs</label><p class="exp">Lucidchart es fa servir per al físic i Packet Tracer per al lògic.</p></fieldset><fieldset class="q" data-ans="0"><legend>4. Un PC té la IP 172.16.209.37 (màscara 255.255.255.0). Quina IP pot tenir un altre PC de la mateixa xarxa?</legend><label><input type="radio" name="a2q4" value="0">172.16.209.38</label><label><input type="radio" name="a2q4" value="1">172.16.210.38</label><label><input type="radio" name="a2q4" value="2">10.0.0.38</label><p class="exp">Ha de compartir els tres primers números: 172.16.209.</p></fieldset><fieldset class="q" data-ans="1"><legend>5. Quin aparell connecta la xarxa local amb altres xarxes, com Internet?</legend><label><input type="radio" name="a2q5" value="0">El switch</label><label><input type="radio" name="a2q5" value="1">El router</label><label><input type="radio" name="a2q5" value="2">La impressora</label><p class="exp">El switch connecta equips d'una mateixa xarxa; el router connecta xarxes diferents.</p></fieldset><div class="btnrow"><button type="button" class="btn check">Comprova</button><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="sechead in"><h2 class="label">Activitat</h2><p>Passos a fer al document i al Drive. Marca cada pas quan l'acabis.</p></div>
 
     <details class="part" open>
       <summary>Part 0. Què és una IP d'un PC? I la d'una xarxa? <span class="chip time">5 min</span><span class="chip count"></span></summary>
@@ -275,22 +376,12 @@ a:focus-visible, summary:focus-visible, button:focus-visible { outline: 3px soli
       </div>
     </details>
 
-    <details class="part" open>
-      <summary>Comprova què has après <span class="chip time">5 min</span><span class="chip count"></span></summary>
-      <div class="inner">
-<details class="qa"><summary>Quin diagrama és un plànol de l'edifici vist des de dalt?</summary><p>El diagrama físic.</p></details>
-<details class="qa"><summary>Quin diagrama mostra les adreces IP i la topologia?</summary><p>El diagrama lògic.</p></details>
-<details class="qa"><summary>Quina eina fas servir per al diagrama físic? I per al lògic?</summary><p>Lucidchart per al físic i Packet Tracer per al lògic.</p></details>
-<details class="qa"><summary>Com s'ha de dir el fitxer de Packet Tracer?</summary><p>A2-PT-NomCognom.pkt</p></details>
-
-      </div>
-    </details>
-
   </main>
 
-  <footer>
+  <footer class="site">
     <div class="wrap">
-      <p><a href="AEA1.html">Tornar a l'AEA1</a> · <a href="../index.html">Índex</a></p>
+      <a class="logo" href="../index.html"><i></i>MP0225 Xarxes locals</a>
+      <p>CFGM Sistemes Microinformàtics i Xarxes · Curs 2026-2027 · Nom del docent</p>
     </div>
   </footer>
 <script>
@@ -324,6 +415,50 @@ a:focus-visible, summary:focus-visible, button:focus-visible { outline: 3px soli
   });
   t.addEventListener('dblclick',function(){s=0;show()});
   update();
+})();
+</script>
+<script>
+(function(){
+  function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+  [].forEach.call(document.querySelectorAll('.dnd'),function(d){
+    var pool=d.querySelector('.pool'),chips=[].slice.call(d.querySelectorAll('.chip-d')),res=d.querySelector('.result'),sel=null;
+    var targets=[pool].concat([].slice.call(d.querySelectorAll('.drop')));
+    function scatter(){shuffle(chips.slice()).forEach(function(c){pool.appendChild(c)})}
+    function clear(){chips.forEach(function(c){c.classList.remove('ok','ko')});res.textContent=''}
+    function put(c,t){t.appendChild(c);c.classList.remove('sel');sel=null;clear()}
+    scatter();
+    chips.forEach(function(c){
+      c.setAttribute('tabindex','0');
+      c.addEventListener('click',function(e){e.stopPropagation();if(sel&&sel!==c){put(sel,c.parentNode);return}if(sel===c){c.classList.remove('sel');sel=null;return}if(sel)sel.classList.remove('sel');sel=c;c.classList.add('sel')});
+      c.addEventListener('dragstart',function(e){sel=c;e.dataTransfer.setData('text/plain','x')});
+      c.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();c.click()}});
+    });
+    targets.forEach(function(t){
+      t.addEventListener('click',function(){if(sel)put(sel,t)});
+      t.addEventListener('dragover',function(e){e.preventDefault();t.classList.add('over')});
+      t.addEventListener('dragleave',function(){t.classList.remove('over')});
+      t.addEventListener('drop',function(e){e.preventDefault();t.classList.remove('over');if(sel)put(sel,t)});
+    });
+    d.querySelector('.check').addEventListener('click',function(){
+      var ok=0,pl=0;
+      chips.forEach(function(c){var p=c.parentNode;c.classList.remove('ok','ko');
+        if(p.classList.contains('drop')){pl++;if(p.getAttribute('data-box')===c.getAttribute('data-ans')){ok++;c.classList.add('ok')}else c.classList.add('ko')}});
+      res.textContent=pl<chips.length?'Et falta col·locar '+(chips.length-pl)+' concepte(s). Correctes ara: '+ok+'.':ok+' de '+chips.length+' correctes'+(ok===chips.length?' · Perfecte!':'. Revisa els marcats en vermell.');
+    });
+    d.querySelector('.reset').addEventListener('click',function(){if(sel){sel.classList.remove('sel');sel=null}scatter();clear()});
+  });
+  [].forEach.call(document.querySelectorAll('.quiz'),function(z){
+    var qs=[].slice.call(z.querySelectorAll('.q')),res=z.querySelector('.result');
+    z.querySelector('.check').addEventListener('click',function(){
+      var ok=0,an=0;
+      qs.forEach(function(q){q.classList.remove('ok','ko');q.classList.add('done');var r=q.querySelector('input:checked');if(!r)return;an++;
+        if(r.value===q.getAttribute('data-ans')){ok++;q.classList.add('ok')}else q.classList.add('ko')});
+      res.textContent=ok+' de '+qs.length+' correctes'+(an<qs.length?' ('+(qs.length-an)+' sense respondre)':'');
+    });
+    z.querySelector('.reset').addEventListener('click',function(){
+      qs.forEach(function(q){q.classList.remove('ok','ko','done');[].forEach.call(q.querySelectorAll('input'),function(i){i.checked=false})});res.textContent='';
+    });
+  });
 })();
 </script>
 
