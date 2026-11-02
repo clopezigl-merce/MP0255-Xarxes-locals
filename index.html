@@ -7,194 +7,343 @@
   <meta name="description" content="Material del mòdul professional MP0225 Xarxes locals, CFGM Sistemes Microinformàtics i Xarxes.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
 :root {
-  --bg: #f4f6f8; --surface: #ffffff; --ink: #15222e; --muted: #53636f;
-  --cable: #1b5fd1; --cable-dark: #123f8e; --gold: #d9a21b;
-  --line: #d7dde3; --hero-bg: #0f2a4a; --hero-ink: #f2f6fb;
+  --lime: #b9ff66; --dark: #191a23; --grey: #f3f3f3; --white: #fff;
+  --muted: #5b5d6b; --line: #191a23;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; font-family: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
-.wrap { max-width: 880px; margin: 0 auto; padding: 0 1.25rem; }
+body { margin: 0; font-family: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--white); color: var(--dark); line-height: 1.55; }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 1.25rem; }
+a { color: inherit; }
 .muted { color: var(--muted); }
 
-.hero { background: var(--hero-bg); color: var(--hero-ink); padding: 4rem 0 3rem; }
-.module { margin: 0 0 .5rem; color: #a9c2e6; }
-.module a { color: inherit; }
-.hero h1 { margin: 0; font-size: clamp(2.6rem, 8vw, 4.5rem); line-height: 1.05; font-weight: 700; letter-spacing: -0.02em; }
-.lead { max-width: 52ch; margin: 1rem 0 0; font-size: 1.15rem; color: #d3e0f2; }
-.hero-small { padding: 2.5rem 0 2rem; }
-.hero-small h1 { font-size: clamp(1.8rem, 5.5vw, 2.8rem); max-width: 22ch; }
+/* Etiqueta ressaltada */
+.label { display: inline-block; background: var(--lime); color: var(--dark); padding: .05rem .6rem; border-radius: 8px; font-weight: 700; }
+h2.label, .label.h2 { font-size: clamp(1.6rem, 4vw, 2.2rem); margin: 0; line-height: 1.3; }
 
-.rj45 { display: flex; gap: 6px; margin-top: 2.5rem; width: max-content; padding: 10px 14px 0; background: #1c3d66; border-radius: 6px 6px 0 0; }
-.rj45 span { width: 8px; height: 36px; background: var(--gold); border-radius: 2px 2px 0 0; }
+/* Botons */
+.btn { display: inline-block; padding: .85rem 1.6rem; border-radius: 14px; background: var(--dark); color: var(--white); font-weight: 700; text-decoration: none; border: 2px solid var(--dark); }
+.btn:hover { background: var(--lime); color: var(--dark); }
+.btn.soft { background: var(--lime); color: var(--dark); padding: .4rem 1rem; border-radius: 10px; }
+.btn.soft:hover { background: var(--dark); color: var(--lime); }
+.btnrow { display: flex; flex-wrap: wrap; gap: .6rem; margin: .75rem 0 0; }
+.btn.light { background: var(--white); color: var(--dark); }
+.btn.light:hover { background: var(--lime); }
 
-.topnav { position: sticky; top: 0; z-index: 10; background: var(--surface); border-bottom: 1px solid var(--line); }
-.topnav .wrap { display: flex; gap: 1.5rem; overflow-x: auto; }
-.topnav a { padding: .9rem 0; color: var(--ink); text-decoration: none; font-weight: 700; border-bottom: 3px solid transparent; white-space: nowrap; }
-.topnav a:hover { border-bottom-color: var(--cable); }
+/* Capçalera de portada */
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem 0; flex-wrap: wrap; }
+.logo { display: flex; align-items: center; gap: .5rem; font-weight: 700; font-size: 1.35rem; text-decoration: none; }
+.logo i { width: 1.4rem; height: 1.4rem; background: var(--dark); border-radius: 5px; position: relative; display: inline-block; }
+.logo i::after { content: ""; position: absolute; inset: 5px; background: var(--lime); border-radius: 2px; }
+.nav ul { display: flex; gap: 1.5rem; list-style: none; margin: 0; padding: 0; align-items: center; flex-wrap: wrap; }
+.nav ul a { text-decoration: none; }
+.nav ul a:not(.btn):hover { text-decoration: underline; text-decoration-thickness: 3px; text-decoration-color: var(--lime); }
+.nav .btn { background: var(--white); color: var(--dark); padding: .6rem 1.2rem; border-color: var(--dark); }
+.nav .btn:hover { background: var(--lime); }
 
-main.wrap { padding-top: 2.5rem; padding-bottom: 3rem; }
-section { margin-bottom: 3rem; }
-h2 { margin: 0 0 .5rem; font-size: 1.6rem; }
+/* Hero */
+.hero { padding: 2.5rem 0 3rem; }
+.hero .wrap.split { display: grid; grid-template-columns: 1.1fr 1fr; gap: 2rem; align-items: center; }
+.module { display: inline-block; margin: 0 0 1rem; padding: .15rem .7rem; background: var(--lime); border-radius: 8px; font-weight: 700; }
+.module a { text-decoration: none; }
+.hero h1 { margin: 0; font-size: clamp(2.2rem, 6vw, 4rem); line-height: 1.08; letter-spacing: -0.02em; }
+.lead { max-width: 46ch; margin: 1.25rem 0 1.75rem; font-size: 1.15rem; color: #2e2f3b; }
+.hero svg { width: 100%; height: auto; }
+.hero-small { padding: 1.5rem 0 1.5rem; border-bottom: 2px solid var(--dark); }
+.hero-small h1 { font-size: clamp(1.8rem, 5vw, 3rem); max-width: 24ch; }
+
+/* Franja de dades */
+.facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; padding: 1.5rem 0 2.5rem; text-align: center; }
+.facts b { display: block; font-size: 1.6rem; }
+.facts span { color: var(--muted); }
+
+/* Seccions */
+main.wrap { padding-top: 1.5rem; padding-bottom: 3rem; }
+section { margin-bottom: 4.5rem; }
+.sechead { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2.25rem; flex-wrap: wrap; }
+.sechead p { margin: 0; max-width: 42ch; color: #2e2f3b; }
 .note { color: var(--muted); margin-top: 0; }
+h2 { margin: 0 0 .5rem; font-size: 1.7rem; }
 
-/* Llista d'AEA */
-.aea { list-style: none; margin: 1.25rem 0 0; padding: 0; display: grid; gap: .75rem; }
-.aea a, .aea .pending > div { display: grid; grid-template-columns: 4.5rem 1fr; align-items: center; padding: 1rem 1.25rem; background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--cable); border-radius: 4px; color: inherit; text-decoration: none; }
-.aea a:hover { border-left-color: var(--gold); background: #fbfcfd; }
-.aea .code { font-weight: 700; font-size: 1.1rem; color: var(--cable-dark); }
-.aea h3 { margin: 0; font-size: 1.1rem; }
-.tag { display: inline-block; margin-top: .25rem; padding: 0 .55rem; border-radius: 999px; background: #e3edfc; color: var(--cable-dark); font-size: .9rem; font-weight: 700; }
-.aea .pending > div { border-left-color: var(--line); background: transparent; color: var(--muted); }
-.aea .pending .code { color: var(--muted); }
-.soon { font-size: .95rem; }
+/* Targetes d'AEA */
+.cards, .aea { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.75rem; }
+.card, .aea a, .aea .pending > div { display: flex; flex-direction: column; justify-content: space-between; gap: 1.5rem; min-height: 15rem; padding: 2rem; border: 1px solid var(--dark); border-radius: 36px; box-shadow: 0 6px 0 var(--dark); background: var(--grey); color: var(--dark); text-decoration: none; }
+.cards li:nth-child(4n+2) .card { background: var(--lime); }
+.cards li:nth-child(4n+3) .card { background: var(--dark); color: var(--white); }
+.cards li:nth-child(5n) .card { background: var(--lime); }
+.card .code { display: inline-block; align-self: flex-start; background: var(--lime); color: var(--dark); padding: 0 .6rem; border-radius: 8px; font-size: 1.5rem; font-weight: 700; }
+.cards li:nth-child(4n+2) .code { background: var(--white); }
+.card h3 { margin: .75rem 0 0; font-size: 1.15rem; max-width: 26ch; }
+.tag { display: inline-block; margin-top: .6rem; padding: 0 .65rem; border: 1px solid currentColor; border-radius: 99px; font-size: .9rem; font-weight: 700; }
+.go { display: inline-flex; align-items: center; gap: .6rem; font-weight: 700; }
+.go::before { content: "\2197"; display: inline-grid; place-items: center; width: 2.2rem; height: 2.2rem; border-radius: 50%; background: var(--dark); color: var(--lime); font-size: 1.1rem; }
+.cards li:nth-child(4n+3) .go::before { background: var(--white); color: var(--dark); }
+a.card:hover { transform: translateY(-3px); box-shadow: 0 9px 0 var(--dark); }
+.card.pending { min-height: 9rem; border-style: dashed; box-shadow: none; opacity: .75; }
 
-/* Taula RA */
-.table-scroll { overflow-x: auto; margin-top: 1rem; }
-table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); }
-th, td { text-align: left; padding: .7rem .9rem; border-bottom: 1px solid var(--line); vertical-align: top; }
-thead th { background: #e9eef3; }
-tbody th { color: var(--cable-dark); white-space: nowrap; }
-td a { color: var(--cable-dark); font-weight: 700; }
+/* Acordió */
+.accordion details { background: var(--grey); border: 1px solid var(--dark); border-radius: 30px; box-shadow: 0 6px 0 var(--dark); margin-bottom: 1.5rem; }
+.accordion details[open] { background: var(--lime); }
+.accordion summary { display: flex; align-items: center; gap: 1.25rem; padding: 1.4rem 1.75rem; cursor: pointer; list-style: none; font-size: 1.15rem; font-weight: 700; }
+.accordion summary::-webkit-details-marker { display: none; }
+.accordion .num { font-size: 2rem; }
+.accordion .ttl { flex: 1; }
+.accordion summary::after { content: "+"; display: grid; place-items: center; flex: none; width: 2.6rem; height: 2.6rem; border: 1px solid var(--dark); border-radius: 50%; background: var(--white); font-size: 1.6rem; line-height: 1; }
+.accordion details[open] summary::after { content: "\2212"; }
+.accordion .body { padding: 0 1.75rem 1.5rem; margin: 0 1.75rem; border-top: 1px solid var(--dark); padding-top: 1.25rem; margin-bottom: .5rem; }
+.accordion .body p { margin: 0 0 .75rem; }
+.accordion .body a { font-weight: 700; }
 
-/* Pàgina d'AEA */
-.ra-box { background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--gold); border-radius: 4px; padding: 1rem 1.25rem; }
-.ra-box p { margin: .25rem 0 0; }
-.items { list-style: none; margin: 1rem 0 0; padding: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; }
-.items li { display: flex; align-items: center; gap: 1rem; padding: .85rem 1.1rem; border-bottom: 1px solid var(--line); }
+/* Bloc fosc */
+.darkbox { background: var(--dark); color: var(--white); border-radius: 40px; padding: 2.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+.darkbox h3 { margin: 0 0 .75rem; color: var(--lime); font-size: 1.2rem; }
+.darkbox ul { margin: 0; padding-left: 1.2rem; }
+.darkbox li { margin-bottom: .5rem; }
+
+/* Banner CTA */
+.cta { position: relative; overflow: hidden; background: var(--grey); border-radius: 40px; padding: 2.5rem; display: grid; grid-template-columns: 1.4fr 1fr; gap: 1rem; align-items: center; }
+.cta h2 { font-size: 1.8rem; }
+.cta p { max-width: 42ch; margin: 0 0 1.25rem; }
+.cta svg { width: 100%; max-width: 260px; justify-self: center; }
+
+/* Recursos */
+.pills { display: flex; flex-wrap: wrap; gap: .75rem; list-style: none; margin: 0; padding: 0; }
+.pills a { display: inline-block; padding: .55rem 1.1rem; border: 1px solid var(--dark); border-radius: 99px; text-decoration: none; font-weight: 700; box-shadow: 0 3px 0 var(--dark); }
+.pills a:hover { background: var(--lime); }
+
+/* Peu */
+footer.site { background: var(--dark); color: var(--white); border-radius: 40px 40px 0 0; padding: 2.5rem 0; margin-top: 2rem; }
+footer.site .wrap { display: flex; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; align-items: center; }
+footer.site .logo i { background: var(--lime); }
+footer.site .logo i::after { background: var(--dark); }
+footer.site p { margin: 0; color: #c9cad3; }
+footer.site a { color: var(--lime); }
+footer:not(.site) { border-top: 2px solid var(--dark); padding: 1.5rem 0; }
+footer:not(.site) a { font-weight: 700; }
+
+/* ------ Pàgines d'AEA i activitats ------ */
+.items, .items li { list-style: none; }
+.items { margin: 1rem 0 0; padding: 0; border: 1px solid var(--dark); border-radius: 24px; box-shadow: 0 5px 0 var(--dark); overflow: hidden; }
+.items li { display: flex; align-items: center; gap: 1rem; padding: .85rem 1.25rem; border-bottom: 1px solid var(--dark); background: var(--white); }
 .items li:last-child { border-bottom: 0; }
-.kind { flex: none; min-width: 6.5rem; text-align: center; padding: .1rem .6rem; border-radius: 999px; font-size: .9rem; font-weight: 700; }
-.kind-act { background: #e3edfc; color: var(--cable-dark); }
-.kind-mat { background: #eceff2; color: #3b4a56; }
-.kind-pre { background: #fbefcf; color: #6d4f05; }
-.kind-enl { background: #dcf1e6; color: #1d5b3d; }
-.pager { display: flex; justify-content: space-between; gap: 1rem; margin-top: 2rem; }
-.pager a { color: var(--cable-dark); font-weight: 700; }
+.kind { flex: none; min-width: 6.5rem; text-align: center; padding: .05rem .6rem; border: 1px solid var(--dark); border-radius: 99px; font-size: .9rem; font-weight: 700; background: var(--grey); }
+.kind-act { background: var(--lime); }
+.kind-pre { background: var(--dark); color: var(--white); }
+.ra-box { background: var(--lime); border: 1px solid var(--dark); border-radius: 28px; box-shadow: 0 5px 0 var(--dark); padding: 1.5rem 1.75rem; }
+.ra-box p { margin: .25rem 0 0; }
+.aea a, .aea .pending > div { min-height: 0; flex-direction: row; align-items: center; padding: 1.25rem 1.5rem; border-radius: 28px; }
+.aea { grid-template-columns: 1fr; gap: 1.25rem; }
+.aea li { list-style: none; }
+.aea .code { font-weight: 700; font-size: 1.6rem; margin-right: 1rem; }
+.aea a { display: grid; grid-template-columns: 4rem 1fr; align-items: center; }
+.aea a:hover { background: var(--lime); }
+.aea h3 { margin: 0; font-size: 1.1rem; }
+.table-scroll { overflow-x: auto; margin-top: 1rem; }
+table { width: 100%; border-collapse: collapse; border: 1px solid var(--dark); }
+th, td { text-align: left; padding: .7rem .9rem; border-bottom: 1px solid var(--dark); vertical-align: top; }
+thead th { background: var(--lime); }
 
-.links { padding-left: 1.2rem; }
-.links a, footer a { color: var(--cable-dark); }
-footer { border-top: 1px solid var(--line); padding: 1.5rem 0; color: var(--muted); font-size: .95rem; }
-a:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
-@media (max-width: 520px) {
-  .aea a, .aea .pending > div { grid-template-columns: 1fr; row-gap: .25rem; }
-}
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-
-/* Guia de classe interactiva */
-.statusbar { position: sticky; top: 0; z-index: 10; background: var(--surface); border-bottom: 1px solid var(--line); }
+.statusbar { position: sticky; top: 0; z-index: 10; background: var(--white); border-bottom: 2px solid var(--dark); }
 .statusbar .wrap { display: flex; align-items: center; gap: .75rem; padding-top: .6rem; padding-bottom: .6rem; flex-wrap: wrap; }
-.bar { flex: 1 1 8rem; height: 10px; background: #e1e7ec; border-radius: 99px; overflow: hidden; }
-.bar span { display: block; height: 100%; width: 0; background: var(--cable); transition: width .25s; }
+.bar { flex: 1 1 8rem; height: 14px; background: var(--grey); border: 1px solid var(--dark); border-radius: 99px; overflow: hidden; }
+.bar span { display: block; height: 100%; width: 0; background: var(--lime); border-right: 1px solid var(--dark); transition: width .25s; }
 #pct { font-weight: 700; min-width: 3rem; }
-.statusbar button { font: inherit; font-weight: 700; padding: .3rem .8rem; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--ink); cursor: pointer; }
-.statusbar button:hover { border-color: var(--cable); }
-#timer.run { background: var(--gold); border-color: var(--gold); }
-details.part { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; margin: 0 0 1rem; }
-details.part > summary { cursor: pointer; padding: 1rem 1.25rem; font-weight: 700; font-size: 1.15rem; list-style: none; display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+.statusbar button { font: inherit; font-weight: 700; padding: .3rem .9rem; border: 1px solid var(--dark); border-radius: 10px; background: var(--white); color: var(--dark); cursor: pointer; box-shadow: 0 3px 0 var(--dark); }
+.statusbar button:hover { background: var(--lime); }
+#timer.run { background: var(--lime); }
+
+details.part { background: var(--white); border: 1px solid var(--dark); border-radius: 28px; box-shadow: 0 6px 0 var(--dark); margin: 0 0 1.75rem; }
+details.part[open] { background: var(--grey); }
+details.part > summary { cursor: pointer; padding: 1.1rem 1.5rem; font-weight: 700; font-size: 1.2rem; list-style: none; display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
 details.part > summary::-webkit-details-marker { display: none; }
-details.part > summary::before { content: "+"; font-size: 1.4rem; color: var(--cable); width: 1rem; }
-details.part[open] > summary::before { content: "\2212"; }
-details.part .inner { padding: 0 1.25rem 1.25rem; }
-.chip { font-size: .9rem; font-weight: 700; padding: 0 .6rem; border-radius: 99px; background: #e3edfc; color: var(--cable-dark); }
-.chip.time { background: #fbefcf; color: #6d4f05; }
+details.part > summary::before { content: "+"; display: grid; place-items: center; width: 2rem; height: 2rem; border: 1px solid var(--dark); border-radius: 50%; background: var(--white); font-size: 1.3rem; line-height: 1; }
+details.part[open] > summary::before { content: "\2212"; background: var(--lime); }
+details.part .inner { padding: 0 1.5rem 1.5rem; }
+.chip { font-size: .85rem; font-weight: 700; padding: 0 .6rem; border: 1px solid var(--dark); border-radius: 99px; background: var(--white); }
+.chip.time { background: var(--lime); }
+.chip.count:empty { display: none; }
 .steps { list-style: none; margin: 0; padding: 0; }
-.steps li { border-top: 1px solid var(--line); counter-increment: s; }
+.steps li { border-top: 1px solid #c9cad3; counter-increment: s; }
 .steps li:first-child { border-top: 0; }
-.steps label { display: grid; grid-template-columns: auto 2rem 1fr; gap: .6rem; padding: .7rem 0; cursor: pointer; align-items: start; }
-.steps .n::before { content: counter(s); font-weight: 700; color: var(--cable-dark); }
+.steps label { display: grid; grid-template-columns: auto 1.8rem 1fr; gap: .6rem; padding: .7rem 0; cursor: pointer; align-items: start; }
+.steps .n::before { content: counter(s); font-weight: 700; }
 .steps.plain .n::before { content: ""; }
-.steps input { width: 1.2rem; height: 1.2rem; margin-top: .25rem; accent-color: var(--cable); }
-.steps li:has(input:checked) .t { color: var(--muted); text-decoration: line-through; text-decoration-color: #9aa7b2; }
-.steps code, .tip code { background: #e9eef3; padding: 0 .35rem; border-radius: 4px; }
-.tip { margin: .75rem 0; padding: .75rem 1rem; background: #fdf6e3; border-left: 4px solid var(--gold); border-radius: 4px; }
-.quote { margin: .75rem 0; padding: .5rem 1rem; border-left: 4px solid var(--cable); background: #eef3fb; font-style: italic; }
-.btnrow { display: flex; flex-wrap: wrap; gap: .5rem; margin: .5rem 0 0; }
-.btn { display: inline-block; padding: .35rem .9rem; border-radius: 6px; background: var(--cable); color: #fff; font-weight: 700; text-decoration: none; }
-.btn:hover { background: var(--cable-dark); }
-.btn.soft { background: #e3edfc; color: var(--cable-dark); }
-.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0 2rem; }
-.compare > div { background: var(--surface); border: 1px solid var(--line); border-top: 5px solid var(--cable); border-radius: 6px; padding: 1rem 1.25rem; }
-.compare > div:nth-child(2) { border-top-color: var(--gold); }
-.compare h3 { margin: 0 0 .25rem; }
+.steps input { width: 1.3rem; height: 1.3rem; margin-top: .2rem; accent-color: var(--dark); }
+.steps li:has(input:checked) .t { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--dark); }
+.steps code, .tip code { background: var(--lime); padding: 0 .35rem; border-radius: 5px; }
+.tip { margin: .9rem 0; padding: .8rem 1.1rem; background: var(--white); border: 1px solid var(--dark); border-left: 8px solid var(--lime); border-radius: 12px; }
+.quote { margin: .9rem 0; padding: .6rem 1.1rem; border-left: 8px solid var(--dark); background: var(--white); font-style: italic; border-radius: 4px; }
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 2rem 0 2.5rem; }
+.compare > div { background: var(--lime); border: 1px solid var(--dark); border-radius: 28px; box-shadow: 0 5px 0 var(--dark); padding: 1.5rem; }
+.compare > div:nth-child(2) { background: var(--dark); color: var(--white); }
+.compare h3 { margin: 0 0 .4rem; }
 .compare p { margin: 0; }
 .players { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: .75rem; margin: .75rem 0; padding: 0; list-style: none; counter-reset: p; }
-.players li { counter-increment: p; background: #eef3fb; border-radius: 6px; padding: .75rem 1rem; }
-.players li::before { content: counter(p, decimal-leading-zero); display: block; font-weight: 700; color: var(--cable-dark); }
-.qa { border-top: 1px solid var(--line); padding: .6rem 0; }
+.players li { counter-increment: p; background: var(--white); border: 1px solid var(--dark); border-radius: 18px; padding: .75rem 1rem; }
+.players li::before { content: counter(p, decimal-leading-zero); display: inline-block; margin-bottom: .2rem; padding: 0 .5rem; background: var(--lime); border-radius: 6px; font-weight: 700; }
+.qa { border-top: 1px solid #c9cad3; padding: .6rem 0; }
 .qa summary { cursor: pointer; font-weight: 700; }
-.qa p { margin: .5rem 0 0; padding: .5rem .8rem; background: #dcf1e6; border-radius: 4px; }
+.qa p { margin: .5rem 0 0; padding: .6rem .9rem; background: var(--lime); border-radius: 12px; }
 h3.sub { margin: 1.25rem 0 .25rem; font-size: 1.05rem; }
 .mini { color: var(--muted); font-size: .95rem; }
-@media (max-width: 640px) { .compare { grid-template-columns: 1fr; } }
+a:focus-visible, summary:focus-visible, button:focus-visible { outline: 3px solid var(--dark); outline-offset: 3px; }
+
+@media (max-width: 760px) {
+  .hero .wrap.split, .cards, .darkbox, .cta, .compare { grid-template-columns: 1fr; }
+  .facts { grid-template-columns: repeat(2, 1fr); }
+  .card { min-height: 12rem; }
+  .darkbox, .cta { padding: 1.75rem; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } a.card:hover { transform: none; } .bar span { transition: none; } }
+.cards li .card.pending { background: transparent; color: var(--muted); opacity: 1; border-style: dashed; box-shadow: none; }
+.cards li .card.pending .code { background: var(--grey); color: var(--muted); }
 
   </style>
 </head>
 <body>
 
+  <div class="wrap">
+    <nav class="nav" aria-label="Navegació principal">
+      <a class="logo" href="#"><i></i>Xarxes locals</a>
+      <ul>
+        <li><a href="#aea">AEA</a></li>
+        <li><a href="#ra">Resultats d'aprenentatge</a></li>
+        <li><a href="#avaluacio">Avaluació</a></li>
+        <li><a href="#recursos">Recursos</a></li>
+        <li><a class="btn" href="AEA/AEA1.html">Comença l'AEA1</a></li>
+      </ul>
+    </nav>
+  </div>
+
   <header class="hero">
-    <div class="wrap">
-      <p class="module">MP0225 · CFGM Sistemes Microinformàtics i Xarxes</p>
-      <h1>Xarxes locals</h1>
-      <p class="lead">Activitats, presentacions i recursos per aprendre a instal·lar, configurar i mantenir una xarxa local.</p>
-      <div class="rj45" aria-hidden="true">
-        <span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span></span>
+    <div class="wrap split">
+      <div>
+        <p class="module">MP0225 · CFGM Sistemes Microinformàtics i Xarxes</p>
+        <h1>Aprèn a cablejar i configurar xarxes locals</h1>
+        <p class="lead">Activitats, presentacions i recursos per instal·lar, configurar i mantenir una xarxa local, pas a pas.</p>
+        <a class="btn" href="AEA/AEA1.html">Comença l'AEA1</a>
       </div>
+      <svg viewBox="0 0 460 380" role="img" aria-label="Il·lustració d'una xarxa local: un switch connectat a tres equips" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="#191a23" stroke-width="1.5">
+    <ellipse cx="230" cy="190" rx="205" ry="72" transform="rotate(-22 230 190)"/>
+    <ellipse cx="230" cy="190" rx="190" ry="60" transform="rotate(24 230 190)" stroke="#9a9ca8"/>
+  </g>
+  <g fill="none" stroke="#191a23" stroke-width="4" stroke-linecap="round">
+    <path d="M200 175 C150 150 120 130 92 112"/>
+    <path d="M262 175 C310 150 340 135 372 118"/>
+    <path d="M230 222 C232 260 230 280 230 296"/>
+  </g>
+  <rect x="140" y="160" width="180" height="64" rx="14" fill="#b9ff66" stroke="#191a23" stroke-width="3.5"/>
+  <g fill="#191a23"><rect x="158" y="184" width="16" height="16" rx="3"/><rect x="182" y="184" width="16" height="16" rx="3"/><rect x="206" y="184" width="16" height="16" rx="3"/><rect x="230" y="184" width="16" height="16" rx="3"/><rect x="254" y="184" width="16" height="16" rx="3"/><rect x="278" y="184" width="16" height="16" rx="3"/></g>
+  <g stroke="#191a23" stroke-width="3.5" fill="#fff">
+    <circle cx="76" cy="98" r="40"/><circle cx="388" cy="104" r="40"/><circle cx="230" cy="330" r="40" fill="#191a23"/>
+  </g>
+  <g stroke="#191a23" stroke-width="3" fill="#fff">
+    <rect x="58" y="82" width="36" height="24" rx="3"/><path d="M52 114h48" fill="none" stroke-linecap="round"/>
+    <rect x="370" y="88" width="36" height="24" rx="3"/><path d="M364 120h48" fill="none" stroke-linecap="round"/>
+  </g>
+  <g stroke="#b9ff66" stroke-width="3" fill="none" stroke-linecap="round"><rect x="212" y="314" width="36" height="24" rx="3"/><path d="M206 346h48"/></g>
+  <path d="M60 300 L68 318 L86 326 L68 334 L60 352 L52 334 L34 326 L52 318 Z" fill="#191a23"/>
+  <path d="M410 250 L416 264 L430 270 L416 276 L410 290 L404 276 L390 270 L404 264 Z" fill="#b9ff66" stroke="#191a23" stroke-width="2"/>
+  <circle cx="330" cy="40" r="9" fill="#b9ff66" stroke="#191a23" stroke-width="2"/><circle cx="130" cy="262" r="6" fill="#191a23"/>
+</svg>
     </div>
   </header>
 
-  <nav class="topnav" aria-label="Navegació principal">
-    <div class="wrap">
-      <a href="#aea">AEA</a>
-      <a href="#ra">Resultats d'aprenentatge</a>
-      <a href="#avaluacio">Avaluació</a>
-      <a href="#recursos">Recursos</a>
-    </div>
-  </nav>
+  <div class="wrap facts">
+    <div><b>MP0225</b><span>Xarxes locals</span></div>
+    <div><b>6 RA</b><span>Resultats d'aprenentatge</span></div>
+    <div><b>5 AEA</b><span>Activitats d'ensenyament-aprenentatge</span></div>
+    <div><b>2026-27</b><span>Curs</span></div>
+  </div>
 
   <main class="wrap">
 
     <section id="aea">
-      <h2>Activitats d'ensenyament-aprenentatge</h2>
-      <p class="note">Cada AEA treballa un o més resultats d'aprenentatge (RA).</p>
-      <ul class="aea">
-        <li><a href="AEA/AEA1.html"><span class="code">AEA1</span><span class="body"><h3>Reconeixement de l'estructura de les xarxes locals</h3><span class="tag">RA1</span></span></a></li>
-        <li class="pending"><div><span class="code">AEA2</span><span class="body"></span></div></li>
-        <li class="pending"><div><span class="code">AEA3</span><span class="body"></span></div></li>
-        <li class="pending"><div><span class="code">AEA4</span><span class="body"></span></div></li>
-        <li class="pending"><div><span class="code">AEA5</span><span class="body"></span></div></li>
+      <div class="sechead"><h2 class="label">AEA</h2><p>Activitats d'ensenyament-aprenentatge. Cada AEA treballa un o més resultats d'aprenentatge.</p></div>
+      <ul class="cards">
+        <li><a class="card" href="AEA/AEA1.html"><div><span class="code">AEA1</span><h3>Reconeixement de l'estructura de les xarxes locals</h3><span class="tag">RA1</span></div><span class="go">Entra a l'AEA</span></a></li>
+        <li><div class="card pending"><div><span class="code">AEA2</span></div></div></li>
+        <li><div class="card pending"><div><span class="code">AEA3</span></div></div></li>
+        <li><div class="card pending"><div><span class="code">AEA4</span></div></div></li>
+        <li><div class="card pending"><div><span class="code">AEA5</span></div></div></li>
       </ul>
     </section>
 
     <section id="ra">
-      <h2>Resultats d'aprenentatge</h2>
-      <p class="note">Resultats d'aprenentatge del mòdul i l'AEA on es treballen.</p>
-      <div class="table-scroll">
-      <table>
-        <thead><tr><th scope="col">RA</th><th scope="col">Descripció</th><th scope="col">Es treballa a</th></tr></thead>
-        <tbody>
-        <tr><th scope="row">RA1</th><td>Reconeix l'estructura de les xarxes locals cablejades analitzant les característiques dels entorns d'aplicació i descrivint la funcionalitat dels seus components.</td><td><a href="AEA/AEA1.html">AEA1</a></td></tr>
-        <tr><th scope="row">RA2</th><td>Desplega el cablejat d'una xarxa local interpretant-ne especificacions i aplicant-hi tècniques de muntatge.</td><td><span class="muted">Sense AEA assignada</span></td></tr>
-        <tr><th scope="row">RA3</th><td>Interconnecta equips en xarxes locals cablejades descrivint estàndards de cablejat i aplicant tècniques de muntatge de connectors.</td><td><span class="muted">Sense AEA assignada</span></td></tr>
-        <tr><th scope="row">RA4</th><td>Instal·la equips en xarxa, descrivint les seves prestacions i aplicant tècniques de muntatge.</td><td><span class="muted">Sense AEA assignada</span></td></tr>
-        <tr><th scope="row">RA5</th><td>Manté una xarxa local interpretant recomanacions dels fabricants de maquinari o programari i establint la relació entre disfuncions i les seves causes.</td><td><span class="muted">Sense AEA assignada</span></td></tr>
-        <tr><th scope="row">RA6</th><td>Compleix les normes de prevenció de riscos laborals i la protecció ambiental, identificant els riscos associats, les mesures i equips per prevenir-los.</td><td><span class="muted">Sense AEA assignada</span></td></tr>
-        </tbody>
-      </table>
+      <div class="sechead"><h2 class="label">Resultats d'aprenentatge</h2><p>El mòdul s'estructura en sis RA. Obre'n un per veure'n el text i l'AEA on es treballa.</p></div>
+      <div class="accordion">
+      <details open>
+        <summary><span class="num">01</span><span class="ttl">RA1</span></summary>
+        <div class="body"><p>Reconeix l'estructura de les xarxes locals cablejades analitzant les característiques dels entorns d'aplicació i descrivint la funcionalitat dels seus components.</p><p><a href="AEA/AEA1.html">Es treballa a AEA1 →</a></p></div>
+      </details>
+      <details>
+        <summary><span class="num">02</span><span class="ttl">RA2</span></summary>
+        <div class="body"><p>Desplega el cablejat d'una xarxa local interpretant-ne especificacions i aplicant-hi tècniques de muntatge.</p><p class="muted">Encara no assignat a cap AEA.</p></div>
+      </details>
+      <details>
+        <summary><span class="num">03</span><span class="ttl">RA3</span></summary>
+        <div class="body"><p>Interconnecta equips en xarxes locals cablejades descrivint estàndards de cablejat i aplicant tècniques de muntatge de connectors.</p><p class="muted">Encara no assignat a cap AEA.</p></div>
+      </details>
+      <details>
+        <summary><span class="num">04</span><span class="ttl">RA4</span></summary>
+        <div class="body"><p>Instal·la equips en xarxa, descrivint les seves prestacions i aplicant tècniques de muntatge.</p><p class="muted">Encara no assignat a cap AEA.</p></div>
+      </details>
+      <details>
+        <summary><span class="num">05</span><span class="ttl">RA5</span></summary>
+        <div class="body"><p>Manté una xarxa local interpretant recomanacions dels fabricants de maquinari o programari i establint la relació entre disfuncions i les seves causes.</p><p class="muted">Encara no assignat a cap AEA.</p></div>
+      </details>
+      <details>
+        <summary><span class="num">06</span><span class="ttl">RA6</span></summary>
+        <div class="body"><p>Compleix les normes de prevenció de riscos laborals i la protecció ambiental, identificant els riscos associats, les mesures i equips per prevenir-los.</p><p class="muted">Encara no assignat a cap AEA.</p></div>
+      </details>
       </div>
     </section>
 
     <section id="avaluacio">
-      <h2>Avaluació</h2>
-      <p>Aquí pots explicar com s'avalua cada RA: instruments, criteris d'avaluació, pes de cada activitat i dates de lliurament.</p>
+      <div class="sechead"><h2 class="label">Avaluació</h2><p>Així es qualifica el mòdul.</p></div>
+      <div class="darkbox">
+        <div>
+          <h3>Activitats i actitud</h3>
+          <ul>
+            <li>Cal fer el 100% de les activitats (Classroom).</li>
+            <li>Les activitats són obligatòries i puntuen un màxim del 10% (al Drive).</li>
+            <li>L'actitud envers l'assignatura puntua un 10%: participar a classe, fer preguntes interessants…</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Exàmens i assistència</h3>
+          <ul>
+            <li>Exàmens de test: cal treure un mínim de 4.</li>
+            <li>Exàmens pràctics: cal treure un mínim de 4.</li>
+            <li>Assistència mínima del 80%: pots faltar menys d'un 20% del mòdul.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="cta">
+        <div>
+          <h2>Comencem?</h2>
+          <p>L'AEA1 té tres activitats guiades, amb llista de passos, progrés i cronòmetre per fer a classe.</p>
+          <a class="btn" href="AEA/AEA1.html">Obre l'AEA1</a>
+        </div>
+        <svg viewBox="0 0 260 200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="130" cy="100" rx="120" ry="40" transform="rotate(-15 130 100)" fill="none" stroke="#191a23" stroke-width="1.5"/>
+  <circle cx="130" cy="100" r="42" fill="#191a23"/><circle cx="116" cy="94" r="7" fill="#fff"/><circle cx="144" cy="94" r="7" fill="#fff"/>
+  <path d="M200 20 L208 42 L230 50 L208 58 L200 80 L192 58 L170 50 L192 42 Z" fill="#b9ff66" stroke="#191a23" stroke-width="2"/>
+  <path d="M60 140 L66 156 L82 162 L66 168 L60 184 L54 168 L38 162 L54 156 Z" fill="#b9ff66" stroke="#191a23" stroke-width="2"/>
+</svg>
+      </div>
     </section>
 
     <section id="recursos">
-      <h2>Recursos</h2>
-      <ul class="links">
+      <div class="sechead"><h2 class="label">Recursos</h2></div>
+      <ul class="pills">
         <li><a href="#">Cisco Packet Tracer (Skills for All)</a></li>
         <li><a href="#">Documents de suport</a></li>
         <li><a href="#">Enllaços d'interès</a></li>
@@ -203,9 +352,10 @@ h3.sub { margin: 1.25rem 0 .25rem; font-size: 1.05rem; }
 
   </main>
 
-  <footer>
+  <footer class="site">
     <div class="wrap">
-      <p>MP0225 Xarxes locals · Curs 2026-2027 · Nom del docent</p>
+      <a class="logo" href="#"><i></i>MP0225 Xarxes locals</a>
+      <p>CFGM Sistemes Microinformàtics i Xarxes · Curs 2026-2027 · Nom del docent</p>
     </div>
   </footer>
 
