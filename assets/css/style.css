@@ -71,3 +71,50 @@ a:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
   .aea a, .aea .pending > div { grid-template-columns: 1fr; row-gap: .25rem; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* Guia de classe interactiva */
+.statusbar { position: sticky; top: 0; z-index: 10; background: var(--surface); border-bottom: 1px solid var(--line); }
+.statusbar .wrap { display: flex; align-items: center; gap: .75rem; padding-top: .6rem; padding-bottom: .6rem; flex-wrap: wrap; }
+.bar { flex: 1 1 8rem; height: 10px; background: #e1e7ec; border-radius: 99px; overflow: hidden; }
+.bar span { display: block; height: 100%; width: 0; background: var(--cable); transition: width .25s; }
+#pct { font-weight: 700; min-width: 3rem; }
+.statusbar button { font: inherit; font-weight: 700; padding: .3rem .8rem; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--ink); cursor: pointer; }
+.statusbar button:hover { border-color: var(--cable); }
+#timer.run { background: var(--gold); border-color: var(--gold); }
+details.part { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; margin: 0 0 1rem; }
+details.part > summary { cursor: pointer; padding: 1rem 1.25rem; font-weight: 700; font-size: 1.15rem; list-style: none; display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+details.part > summary::-webkit-details-marker { display: none; }
+details.part > summary::before { content: "+"; font-size: 1.4rem; color: var(--cable); width: 1rem; }
+details.part[open] > summary::before { content: "\2212"; }
+details.part .inner { padding: 0 1.25rem 1.25rem; }
+.chip { font-size: .9rem; font-weight: 700; padding: 0 .6rem; border-radius: 99px; background: #e3edfc; color: var(--cable-dark); }
+.chip.time { background: #fbefcf; color: #6d4f05; }
+.steps { list-style: none; margin: 0; padding: 0; }
+.steps li { border-top: 1px solid var(--line); counter-increment: s; }
+.steps li:first-child { border-top: 0; }
+.steps label { display: grid; grid-template-columns: auto 2rem 1fr; gap: .6rem; padding: .7rem 0; cursor: pointer; align-items: start; }
+.steps .n::before { content: counter(s); font-weight: 700; color: var(--cable-dark); }
+.steps.plain .n::before { content: ""; }
+.steps input { width: 1.2rem; height: 1.2rem; margin-top: .25rem; accent-color: var(--cable); }
+.steps li:has(input:checked) .t { color: var(--muted); text-decoration: line-through; text-decoration-color: #9aa7b2; }
+.steps code, .tip code { background: #e9eef3; padding: 0 .35rem; border-radius: 4px; }
+.tip { margin: .75rem 0; padding: .75rem 1rem; background: #fdf6e3; border-left: 4px solid var(--gold); border-radius: 4px; }
+.quote { margin: .75rem 0; padding: .5rem 1rem; border-left: 4px solid var(--cable); background: #eef3fb; font-style: italic; }
+.btnrow { display: flex; flex-wrap: wrap; gap: .5rem; margin: .5rem 0 0; }
+.btn { display: inline-block; padding: .35rem .9rem; border-radius: 6px; background: var(--cable); color: #fff; font-weight: 700; text-decoration: none; }
+.btn:hover { background: var(--cable-dark); }
+.btn.soft { background: #e3edfc; color: var(--cable-dark); }
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0 2rem; }
+.compare > div { background: var(--surface); border: 1px solid var(--line); border-top: 5px solid var(--cable); border-radius: 6px; padding: 1rem 1.25rem; }
+.compare > div:nth-child(2) { border-top-color: var(--gold); }
+.compare h3 { margin: 0 0 .25rem; }
+.compare p { margin: 0; }
+.players { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: .75rem; margin: .75rem 0; padding: 0; list-style: none; counter-reset: p; }
+.players li { counter-increment: p; background: #eef3fb; border-radius: 6px; padding: .75rem 1rem; }
+.players li::before { content: counter(p, decimal-leading-zero); display: block; font-weight: 700; color: var(--cable-dark); }
+.qa { border-top: 1px solid var(--line); padding: .6rem 0; }
+.qa summary { cursor: pointer; font-weight: 700; }
+.qa p { margin: .5rem 0 0; padding: .5rem .8rem; background: #dcf1e6; border-radius: 4px; }
+h3.sub { margin: 1.25rem 0 .25rem; font-size: 1.05rem; }
+.mini { color: var(--muted); font-size: .95rem; }
+@media (max-width: 640px) { .compare { grid-template-columns: 1fr; } }

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A1 Presa de contacte amb les xarxes locals · MP0225 Xarxes locals</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --bg: #f4f6f8; --surface: #ffffff; --ink: #15222e; --muted: #53636f;
+  --cable: #1b5fd1; --cable-dark: #123f8e; --gold: #d9a21b;
+  --line: #d7dde3; --hero-bg: #0f2a4a; --hero-ink: #f2f6fb;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
+.wrap { max-width: 880px; margin: 0 auto; padding: 0 1.25rem; }
+.muted { color: var(--muted); }
+
+.hero { background: var(--hero-bg); color: var(--hero-ink); padding: 4rem 0 3rem; }
+.module { margin: 0 0 .5rem; color: #a9c2e6; }
+.module a { color: inherit; }
+.hero h1 { margin: 0; font-size: clamp(2.6rem, 8vw, 4.5rem); line-height: 1.05; font-weight: 700; letter-spacing: -0.02em; }
+.lead { max-width: 52ch; margin: 1rem 0 0; font-size: 1.15rem; color: #d3e0f2; }
+.hero-small { padding: 2.5rem 0 2rem; }
+.hero-small h1 { font-size: clamp(1.8rem, 5.5vw, 2.8rem); max-width: 22ch; }
+
+.rj45 { display: flex; gap: 6px; margin-top: 2.5rem; width: max-content; padding: 10px 14px 0; background: #1c3d66; border-radius: 6px 6px 0 0; }
+.rj45 span { width: 8px; height: 36px; background: var(--gold); border-radius: 2px 2px 0 0; }
+
+.topnav { position: sticky; top: 0; z-index: 10; background: var(--surface); border-bottom: 1px solid var(--line); }
+.topnav .wrap { display: flex; gap: 1.5rem; overflow-x: auto; }
+.topnav a { padding: .9rem 0; color: var(--ink); text-decoration: none; font-weight: 700; border-bottom: 3px solid transparent; white-space: nowrap; }
+.topnav a:hover { border-bottom-color: var(--cable); }
+
+main.wrap { padding-top: 2.5rem; padding-bottom: 3rem; }
+section { margin-bottom: 3rem; }
+h2 { margin: 0 0 .5rem; font-size: 1.6rem; }
+.note { color: var(--muted); margin-top: 0; }
+
+/* Llista d'AEA */
+.aea { list-style: none; margin: 1.25rem 0 0; padding: 0; display: grid; gap: .75rem; }
+.aea a, .aea .pending > div { display: grid; grid-template-columns: 4.5rem 1fr; align-items: center; padding: 1rem 1.25rem; background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--cable); border-radius: 4px; color: inherit; text-decoration: none; }
+.aea a:hover { border-left-color: var(--gold); background: #fbfcfd; }
+.aea .code { font-weight: 700; font-size: 1.1rem; color: var(--cable-dark); }
+.aea h3 { margin: 0; font-size: 1.1rem; }
+.tag { display: inline-block; margin-top: .25rem; padding: 0 .55rem; border-radius: 999px; background: #e3edfc; color: var(--cable-dark); font-size: .9rem; font-weight: 700; }
+.aea .pending > div { border-left-color: var(--line); background: transparent; color: var(--muted); }
+.aea .pending .code { color: var(--muted); }
+.soon { font-size: .95rem; }
+
+/* Taula RA */
+.table-scroll { overflow-x: auto; margin-top: 1rem; }
+table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); }
+th, td { text-align: left; padding: .7rem .9rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+thead th { background: #e9eef3; }
+tbody th { color: var(--cable-dark); white-space: nowrap; }
+td a { color: var(--cable-dark); font-weight: 700; }
+
+/* Pàgina d'AEA */
+.ra-box { background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--gold); border-radius: 4px; padding: 1rem 1.25rem; }
+.ra-box p { margin: .25rem 0 0; }
+.items { list-style: none; margin: 1rem 0 0; padding: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; }
+.items li { display: flex; align-items: center; gap: 1rem; padding: .85rem 1.1rem; border-bottom: 1px solid var(--line); }
+.items li:last-child { border-bottom: 0; }
+.kind { flex: none; min-width: 6.5rem; text-align: center; padding: .1rem .6rem; border-radius: 999px; font-size: .9rem; font-weight: 700; }
+.kind-act { background: #e3edfc; color: var(--cable-dark); }
+.kind-mat { background: #eceff2; color: #3b4a56; }
+.kind-pre { background: #fbefcf; color: #6d4f05; }
+.kind-enl { background: #dcf1e6; color: #1d5b3d; }
+.pager { display: flex; justify-content: space-between; gap: 1rem; margin-top: 2rem; }
+.pager a { color: var(--cable-dark); font-weight: 700; }
+
+.links { padding-left: 1.2rem; }
+.links a, footer a { color: var(--cable-dark); }
+footer { border-top: 1px solid var(--line); padding: 1.5rem 0; color: var(--muted); font-size: .95rem; }
+a:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+@media (max-width: 520px) {
+  .aea a, .aea .pending > div { grid-template-columns: 1fr; row-gap: .25rem; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* Guia de classe interactiva */
+.statusbar { position: sticky; top: 0; z-index: 10; background: var(--surface); border-bottom: 1px solid var(--line); }
+.statusbar .wrap { display: flex; align-items: center; gap: .75rem; padding-top: .6rem; padding-bottom: .6rem; flex-wrap: wrap; }
+.bar { flex: 1 1 8rem; height: 10px; background: #e1e7ec; border-radius: 99px; overflow: hidden; }
+.bar span { display: block; height: 100%; width: 0; background: var(--cable); transition: width .25s; }
+#pct { font-weight: 700; min-width: 3rem; }
+.statusbar button { font: inherit; font-weight: 700; padding: .3rem .8rem; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--ink); cursor: pointer; }
+.statusbar button:hover { border-color: var(--cable); }
+#timer.run { background: var(--gold); border-color: var(--gold); }
+details.part { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; margin: 0 0 1rem; }
+details.part > summary { cursor: pointer; padding: 1rem 1.25rem; font-weight: 700; font-size: 1.15rem; list-style: none; display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+details.part > summary::-webkit-details-marker { display: none; }
+details.part > summary::before { content: "+"; font-size: 1.4rem; color: var(--cable); width: 1rem; }
+details.part[open] > summary::before { content: "\2212"; }
+details.part .inner { padding: 0 1.25rem 1.25rem; }
+.chip { font-size: .9rem; font-weight: 700; padding: 0 .6rem; border-radius: 99px; background: #e3edfc; color: var(--cable-dark); }
+.chip.time { background: #fbefcf; color: #6d4f05; }
+.steps { list-style: none; margin: 0; padding: 0; }
+.steps li { border-top: 1px solid var(--line); counter-increment: s; }
+.steps li:first-child { border-top: 0; }
+.steps label { display: grid; grid-template-columns: auto 2rem 1fr; gap: .6rem; padding: .7rem 0; cursor: pointer; align-items: start; }
+.steps .n::before { content: counter(s); font-weight: 700; color: var(--cable-dark); }
+.steps.plain .n::before { content: ""; }
+.steps input { width: 1.2rem; height: 1.2rem; margin-top: .25rem; accent-color: var(--cable); }
+.steps li:has(input:checked) .t { color: var(--muted); text-decoration: line-through; text-decoration-color: #9aa7b2; }
+.steps code, .tip code { background: #e9eef3; padding: 0 .35rem; border-radius: 4px; }
+.tip { margin: .75rem 0; padding: .75rem 1rem; background: #fdf6e3; border-left: 4px solid var(--gold); border-radius: 4px; }
+.quote { margin: .75rem 0; padding: .5rem 1rem; border-left: 4px solid var(--cable); background: #eef3fb; font-style: italic; }
+.btnrow { display: flex; flex-wrap: wrap; gap: .5rem; margin: .5rem 0 0; }
+.btn { display: inline-block; padding: .35rem .9rem; border-radius: 6px; background: var(--cable); color: #fff; font-weight: 700; text-decoration: none; }
+.btn:hover { background: var(--cable-dark); }
+.btn.soft { background: #e3edfc; color: var(--cable-dark); }
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0 2rem; }
+.compare > div { background: var(--surface); border: 1px solid var(--line); border-top: 5px solid var(--cable); border-radius: 6px; padding: 1rem 1.25rem; }
+.compare > div:nth-child(2) { border-top-color: var(--gold); }
+.compare h3 { margin: 0 0 .25rem; }
+.compare p { margin: 0; }
+.players { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: .75rem; margin: .75rem 0; padding: 0; list-style: none; counter-reset: p; }
+.players li { counter-increment: p; background: #eef3fb; border-radius: 6px; padding: .75rem 1rem; }
+.players li::before { content: counter(p, decimal-leading-zero); display: block; font-weight: 700; color: var(--cable-dark); }
+.qa { border-top: 1px solid var(--line); padding: .6rem 0; }
+.qa summary { cursor: pointer; font-weight: 700; }
+.qa p { margin: .5rem 0 0; padding: .5rem .8rem; background: #dcf1e6; border-radius: 4px; }
+h3.sub { margin: 1.25rem 0 .25rem; font-size: 1.05rem; }
+.mini { color: var(--muted); font-size: .95rem; }
+@media (max-width: 640px) { .compare { grid-template-columns: 1fr; } }
+
+  </style>
+</head>
+<body>
+
+  <header class="hero hero-small">
+    <div class="wrap">
+      <p class="module"><a href="../index.html">MP0225 Xarxes locals</a> · <a href="AEA1.html">AEA1</a> · A1</p>
+      <h1>A1 · Presa de contacte amb les xarxes locals</h1>
+      <p class="lead">Aprèn a moure't pel Drive, respon les preguntes i fes una primera recerca.</p>
+    </div>
+  </header>
+
+  <div class="statusbar" role="region" aria-label="Progrés de l'activitat">
+    <div class="wrap">
+      <div class="bar" aria-hidden="true"><span id="fill"></span></div>
+      <span id="pct">0%</span>
+      <button id="timer" type="button" title="Clic: inicia o atura. Doble clic: reinicia">Cronòmetre 00:00</button>
+      <button id="reset" type="button">Reinicia</button>
+    </div>
+  </div>
+
+  <main class="wrap">
+
+    <details class="part" open>
+      <summary>1. Saber moure't pel Drive <span class="chip time">10 min</span><span class="chip count"></span></summary>
+      <div class="inner">
+<ol class="steps" style="counter-reset: s 0">
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Entra al Drive de la teva compte (<b>correu.lamerce.com</b>). Crea la carpeta <code>M0225 - NomCognom</code> i, a dins, la subcarpeta <code>AEA-1: Intro a Xarxes Locals</code>.</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Descarrega del campus l'activitat <b>A0</b> (pdf) i l'<b>A1</b> (docx) i puja-les a aquesta subcarpeta.</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Visualitza el Drive en <b>mode llista</b>.</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Edita el document que has pujat i posa el teu nom al requadre de la capçalera (fent doble clic a la capçalera).</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t"><b>Comparteix la carpeta</b> <code>M0225 - NomCognom</code> amb el professor, en mode <b>Editor</b> i sense notificar.</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Entra a l'arrel de la carpeta, copia l'enllaç i enganxa'l a la tasca del campus (apartat Presentació).</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Necessitaràs afegir imatges al document: obre <b>Menú › Accessoris › «Fes una captura de pantalla»</b> i posa-la a la barra de tasques.</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Escolta el professor i canvia el tauler d'Ubuntu de <b>Familiar</b> a <b>Tradicional</b>: Menú › escriu «tw» › MATE Tweak › Taulers › Tradicional.</span></label></li>
+</ol>
+<div class="tip">Comparteix la <b>carpeta</b>, no el document, i no marquis «Notificar als usuaris».</div>
+
+      </div>
+    </details>
+
+    <details class="part" open>
+      <summary>2. Respon les preguntes <span class="chip time">15 min</span><span class="chip count"></span></summary>
+      <div class="inner">
+<p class="mini">Respon al document en color <b style="color:#1b3fd1">blau</b>. Pots millorar les respostes afegint petites imatges dins dels requadres.</p>
+<h3 class="sub">Preguntes personals</h3>
+<ol class="steps plain" style="counter-reset: s 0">
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Nom i cognom.</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Procedència: on vas néixer i quants anys portes a Catalunya.</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">2 hobbies i quan els practiques.</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Els teus 3 videojocs preferits i de què van.</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">2 o 3 estils musicals o grups, amb un videoclip de cadascun.</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Les teves 3 consoles preferides de tota la història i per què.</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Les 2 millors pel·lícules que has vist al cinema.</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">2 jocs de mòbil que t'agradin a tu o a algun familiar.</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Les 2 millors sèries que has vist en streaming.</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">2 o 3 youtubers, amb un vídeo de cadascun.</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Algun documental o llibre que t'hagi impactat; el teu llibre o anime preferit.</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">El teu menú perfecte: 1r plat, 2n plat, postres i beguda.</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Fas servir Google Drive? Ho trobes útil? Prefereixes un USB? Ja el tens?</span></label></li>
+</ol>
+<h3 class="sub">Preguntes sobre La Mercè</h3>
+<p class="mini">Pista: consulta la web del centre i l'activitat <a href="A0.html">A0</a>.</p>
+<ol class="steps plain" style="counter-reset: s 0">
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Quants alumnes, més o menys, hi ha a La Mercè?</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Quantes famílies professionals hi ha al centre?</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">On són els tallers de la planta d'informàtica?</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Quantes aules hi ha a la planta d'informàtica?</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Quants professors hi ha al departament d'informàtica?</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Què passa si superes el 20% de faltes d'assistència permeses?</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Quants RA té el mòdul M5?</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Si tens un problema treballant en grup, què faries: intentar solucionar-lo o canviar de grup immediatament?</span></label></li>
+</ol>
+
+      </div>
+    </details>
+
+    <details class="part" open>
+      <summary>3. Fes una recerca <span class="chip time">10 min</span><span class="chip count"></span></summary>
+      <div class="inner">
+<ol class="steps" style="counter-reset: s 0">
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Busca a Internet <b>què és una xarxa local</b> (LAN) i escriu-ne una definició de 2-3 línies.</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Busca <b>quins elements componen una xarxa local</b>.</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Busca un dibuix o diagrama que representi el que has trobat i enganxa'l al document.</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Mostra-li al professor que has respost totes les preguntes.</span></label></li>
+</ol>
+
+      </div>
+    </details>
+
+    <details class="part" open>
+      <summary>4. Aprèn a compartir documents amb el Drive <span class="chip time">10 min</span><span class="chip count"></span></summary>
+      <div class="inner">
+<ol class="steps" style="counter-reset: s 0">
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Comparteix el teu document, només com a <b>Lector</b>, amb el company del costat.</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Dins del Drive, crea la carpeta <code>Compartides</code> dins de l'AEA corresponent.</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Ves a <b>Compartit amb mi</b>, troba el document que t'han compartit i fes clic a <b>Afegeix una drecera al Drive</b> per afegir-lo a la carpeta <code>Compartides</code>.</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Revisa l'activitat A1 d'un company: quina nota li posaries (1-10)?</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Per acabar, posa l'enllaç del teu Drive al campus (apartat Presentació › Tasca).</span></label></li>
+<li><label><input type="checkbox"><span class="n"></span><span class="t">Escriu les <b>conclusions</b>: l'activitat t'ha semblat útil o difícil?</span></label></li>
+</ol>
+
+      </div>
+    </details>
+
+    <details class="part" open>
+      <summary>Comprova què has après <span class="chip time">5 min</span><span class="chip count"></span></summary>
+      <div class="inner">
+<details class="qa"><summary>Què es comparteix amb el professor: la carpeta o el document?</summary><p>La carpeta, en mode Editor i sense notificar.</p></details>
+<details class="qa"><summary>Amb quin permís comparteixes el document amb un company?</summary><p>Com a Lector.</p></details>
+<details class="qa"><summary>Com guardes al teu Drive un document que t'han compartit?</summary><p>A «Compartit amb mi», amb l'opció «Afegeix una drecera al Drive».</p></details>
+<details class="qa"><summary>On es lliura l'enllaç del Drive?</summary><p>A la tasca del campus, a l'apartat Presentació.</p></details>
+
+      </div>
+    </details>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p><a href="AEA1.html">Tornar a l'AEA1</a> · <a href="../index.html">Índex</a></p>
+    </div>
+  </footer>
+<script>
+(function(){
+  var KEY='xl:'+location.pathname, state={};
+  try{state=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){}
+  var boxes=[].slice.call(document.querySelectorAll('.steps input'));
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+  function update(){
+    var d=boxes.filter(function(b){return b.checked}).length, p=boxes.length?Math.round(d*100/boxes.length):0;
+    document.getElementById('fill').style.width=p+'%';
+    document.getElementById('pct').textContent=p+'%';
+    [].forEach.call(document.querySelectorAll('details.part'),function(det){
+      var bs=det.querySelectorAll('.steps input'), c=det.querySelector('.count');
+      if(c&&bs.length){c.textContent=[].filter.call(bs,function(b){return b.checked}).length+'/'+bs.length}
+    });
+  }
+  boxes.forEach(function(b,i){
+    b.checked=!!state[i];
+    b.addEventListener('change',function(){state[i]=b.checked;save();update()});
+  });
+  document.getElementById('reset').addEventListener('click',function(){
+    if(!confirm('Vols esborrar el progrés d\'aquesta activitat?'))return;
+    state={};save();boxes.forEach(function(b){b.checked=false});update();
+  });
+  var t=document.getElementById('timer'), s=0, iv=null;
+  function show(){var m=Math.floor(s/60),x=s%60;t.textContent='Cronòmetre '+(m<10?'0':'')+m+':'+(x<10?'0':'')+x}
+  t.addEventListener('click',function(){
+    if(iv){clearInterval(iv);iv=null;t.classList.remove('run')}
+    else{iv=setInterval(function(){s++;show()},1000);t.classList.add('run')}
+  });
+  t.addEventListener('dblclick',function(){s=0;show()});
+  update();
+})();
+</script>
+
+</body>
+</html>
