@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MP0225 Xarxes locals</title>
-  <meta name="description" content="Material del mòdul professional MP0225 Xarxes locals, CFGM Sistemes Microinformàtics i Xarxes.">
+  <title>MP0255 Xarxes locals</title>
+  <meta name="description" content="Material del mòdul professional MP0255 Xarxes locals, CFGM Sistemes Microinformàtics i Xarxes.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
@@ -201,6 +201,93 @@ a:focus-visible, summary:focus-visible, button:focus-visible { outline: 3px soli
 .cards li .card.pending { background: transparent; color: var(--muted); opacity: 1; border-style: dashed; box-shadow: none; }
 .cards li .card.pending .code { background: var(--grey); color: var(--muted); }
 
+/* Teoria, exercicis i PDF */
+.sechead.in { margin: 3rem 0 1.5rem; }
+.exbox { background: var(--white); border: 1px solid var(--dark); border-radius: 28px; box-shadow: 0 6px 0 var(--dark); padding: 1.5rem; margin-bottom: 1.75rem; }
+.exbox h3 { margin: 0 0 .25rem; }
+.inner p, .inner ul { margin: .6rem 0; }
+.inner table { background: var(--white); }
+.pool, .drop { min-height: 3.2rem; display: flex; flex-wrap: wrap; gap: .5rem; padding: .6rem; border: 2px dashed var(--dark); border-radius: 18px; align-content: flex-start; }
+.pool { background: var(--grey); margin: .75rem 0; }
+.drop.over, .pool.over { background: var(--lime); }
+.boxes { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem; }
+.box { background: var(--grey); border: 1px solid var(--dark); border-radius: 20px; padding: .8rem; }
+.box h4 { margin: 0 0 .5rem; font-size: 1rem; }
+.chip-d { display: inline-block; padding: .35rem .9rem; border: 1px solid var(--dark); border-radius: 99px; background: var(--white); font-weight: 500; cursor: grab; user-select: none; box-shadow: 0 2px 0 var(--dark); }
+.chip-d.sel { background: var(--lime); outline: 3px solid var(--dark); }
+.chip-d.ok { background: var(--lime); }
+.chip-d.ko { background: #ffd9d9; border-color: #b3261e; }
+.result { margin: .75rem 0 0; font-weight: 700; min-height: 1.5rem; }
+.exbox .btn { padding: .5rem 1.2rem; cursor: pointer; font: inherit; font-weight: 700; }
+.quiz fieldset.q { border: 1px solid var(--dark); border-radius: 18px; margin: 0 0 1rem; padding: .75rem 1.1rem 1rem; background: var(--grey); }
+.quiz legend { font-weight: 700; padding: 0 .4rem; }
+.quiz label { display: block; padding: .3rem 0; cursor: pointer; }
+.quiz input { accent-color: var(--dark); margin-right: .5rem; }
+.q .exp { display: none; margin: .5rem 0 0; padding: .5rem .8rem; border-radius: 12px; background: var(--white); border-left: 6px solid var(--dark); }
+.q.done .exp { display: block; }
+.q.ok { background: #e4ffc7; }
+.q.ko { background: #ffe4e4; }
+.tcards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1rem 0; }
+.tcard { background: var(--white); border: 1px solid var(--dark); border-radius: 22px; padding: 1rem 1.25rem; }
+.tcard svg, .fig svg { width: 150px; height: auto; display: block; }
+.tcard h3 { margin: .25rem 0; }
+.tcard p { margin: .4rem 0; }
+.fig { margin: 1rem 0; text-align: center; }
+.fig svg { width: 100%; max-width: 420px; margin: 0 auto; }
+.fig figcaption { color: var(--muted); font-size: .95rem; }
+.docbtn { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; margin: 0 0 1.5rem; }
+@media (max-width: 760px) { .tcards { grid-template-columns: 1fr; } }
+
+/* Apartats, progrés i exercicis nous */
+.statusbar .wrap { gap: .6rem; }
+.aptlabel { font-weight: 700; flex: 1 1 14rem; }
+.stepper { display: flex; gap: .3rem; flex-wrap: wrap; }
+.dot { width: 1.9rem; height: 1.9rem; padding: 0 !important; border-radius: 50% !important; box-shadow: none !important; font-size: .85rem; }
+.dot.done { background: var(--lime) !important; }
+.dot.cur { background: var(--dark) !important; color: var(--white) !important; }
+details.part { scroll-margin-top: 8.5rem; }
+.aptn { display: inline-grid; place-items: center; min-width: 1.9rem; height: 1.9rem; border-radius: 8px; background: var(--dark); color: var(--lime); font-size: 1rem; }
+details.part.done .aptn { background: var(--lime); color: var(--dark); border: 1px solid var(--dark); }
+.aptnav { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 2px solid var(--dark); }
+.aptnav .btn { font: inherit; font-weight: 700; cursor: pointer; }
+.fills { list-style: none; margin: .75rem 0; padding: 0; }
+.fills li { padding: .6rem 0; border-top: 1px solid #c9cad3; }
+.fills li:first-child { border-top: 0; }
+select { font: inherit; padding: .2rem .5rem; border: 1px solid var(--dark); border-radius: 10px; background: var(--white); max-width: 100%; }
+select.ok { background: var(--lime); }
+select.ko { background: #ffd9d9; border-color: #b3261e; }
+.ord { list-style: none; margin: .75rem 0; padding: 0; counter-reset: o; }
+.ord li { counter-increment: o; display: flex; gap: .75rem; align-items: center; padding: .55rem .9rem; margin-bottom: .5rem; background: var(--white); border: 1px solid var(--dark); border-radius: 14px; }
+.ord li::before { content: counter(o); font-weight: 700; background: var(--lime); border: 1px solid var(--dark); border-radius: 8px; padding: 0 .55rem; }
+.ord .otxt { flex: 1; }
+.omv { display: flex; gap: .3rem; }
+.omv button { font: inherit; font-weight: 700; width: 2.1rem; height: 2.1rem; border: 1px solid var(--dark); border-radius: 8px; background: var(--grey); cursor: pointer; }
+.omv button:hover { background: var(--lime); }
+.ord li.ok { background: #e4ffc7; }
+.ord li.ko { background: #ffe4e4; }
+.tfs { list-style: none; margin: .75rem 0; padding: 0; }
+.tfrow { padding: .75rem 1rem; margin-bottom: .6rem; border: 1px solid var(--dark); border-radius: 16px; background: var(--white); }
+.tfrow p { margin: 0 0 .5rem; }
+.tfbtns { display: flex; gap: .5rem; }
+.tfb { font: inherit; font-weight: 700; padding: .3rem 1.1rem; border: 1px solid var(--dark); border-radius: 10px; background: var(--grey); cursor: pointer; }
+.tfb:hover { background: var(--lime); }
+.tfrow .exp { display: none; margin: .6rem 0 0; padding: .5rem .8rem; border-radius: 10px; background: var(--grey); }
+.tfrow.ok { background: #e4ffc7; } .tfrow.ko { background: #ffe4e4; }
+.tfrow.ok .exp, .tfrow.ko .exp { display: block; }
+.tfb.pick { background: var(--dark); color: var(--white); }
+.pairs { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: .75rem 0; }
+.pairs > div { display: flex; flex-direction: column; gap: .5rem; }
+.pc { font: inherit; text-align: left; padding: .55rem .9rem; border: 1px solid var(--dark); border-radius: 14px; background: var(--white); cursor: pointer; box-shadow: 0 2px 0 var(--dark); }
+.pc:hover { background: var(--grey); }
+.pc.sel { background: var(--lime); outline: 3px solid var(--dark); }
+.pc.done { background: #e4ffc7; opacity: .75; cursor: default; }
+.pc.ko { background: #ffd9d9; }
+.docbtn { margin-top: .5rem; }
+@media (max-width: 640px) { .pairs { grid-template-columns: 1fr; } .aptlabel { flex-basis: 100%; } }
+.statusbar button { padding: .2rem .7rem; }
+.dot { width: 1.7rem; height: 1.7rem; font-size: .8rem; }
+.statusbar .wrap { padding-top: .45rem; padding-bottom: .45rem; }
+
   </style>
 </head>
 <body>
@@ -221,7 +308,7 @@ a:focus-visible, summary:focus-visible, button:focus-visible { outline: 3px soli
   <header class="hero">
     <div class="wrap split">
       <div>
-        <p class="module">MP0225 · CFGM Sistemes Microinformàtics i Xarxes</p>
+        <p class="module">MP0255 · CFGM Sistemes Microinformàtics i Xarxes</p>
         <h1>Aprèn a cablejar i configurar xarxes locals</h1>
         <p class="lead">Activitats, presentacions i recursos per instal·lar, configurar i mantenir una xarxa local, pas a pas.</p>
         <a class="btn" href="AEA/AEA1.html">Comença l'AEA1</a>
@@ -254,7 +341,7 @@ a:focus-visible, summary:focus-visible, button:focus-visible { outline: 3px soli
   </header>
 
   <div class="wrap facts">
-    <div><b>MP0225</b><span>Xarxes locals</span></div>
+    <div><b>MP0255</b><span>Xarxes locals</span></div>
     <div><b>6 RA</b><span>Resultats d'aprenentatge</span></div>
     <div><b>5 AEA</b><span>Activitats d'ensenyament-aprenentatge</span></div>
     <div><b>2026-27</b><span>Curs</span></div>
@@ -329,7 +416,7 @@ a:focus-visible, summary:focus-visible, button:focus-visible { outline: 3px soli
       <div class="cta">
         <div>
           <h2>Comencem?</h2>
-          <p>L'AEA1 té tres activitats guiades, amb llista de passos, progrés i cronòmetre per fer a classe.</p>
+          <p>L'AEA1 té quatre activitats guiades, amb teoria, exercicis interactius, progrés i cronòmetre per fer a classe.</p>
           <a class="btn" href="AEA/AEA1.html">Obre l'AEA1</a>
         </div>
         <svg viewBox="0 0 260 200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
@@ -354,7 +441,7 @@ a:focus-visible, summary:focus-visible, button:focus-visible { outline: 3px soli
 
   <footer class="site">
     <div class="wrap">
-      <a class="logo" href="#"><i></i>MP0225 Xarxes locals</a>
+      <a class="logo" href="#"><i></i>MP0255 Xarxes locals</a>
       <p>CFGM Sistemes Microinformàtics i Xarxes · Curs 2026-2027 · Nom del docent</p>
     </div>
   </footer>
