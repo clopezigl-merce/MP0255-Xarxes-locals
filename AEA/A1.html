@@ -306,6 +306,13 @@ select.ko { background: #ffd9d9; border-color: #b3261e; }
 .lk a { opacity: .55; cursor: not-allowed; }
 .lk .tag { background: var(--dark); color: var(--lime); border-color: var(--dark); }
 
+/* Llistes simples i targeta del Classroom */
+.slist { margin: .6rem 0; padding-left: 1.4rem; }
+.slist li { margin: .45rem 0; }
+.classroom { background: var(--lime); border: 1px solid var(--dark); border-radius: 28px; box-shadow: 0 5px 0 var(--dark); padding: 1.75rem; }
+.classroom h3 { margin: 0 0 .5rem; font-size: 1.4rem; }
+.classroom p { margin: 0 0 .75rem; max-width: 52ch; }
+
   </style>
 </head>
 <body>
@@ -347,15 +354,15 @@ select.ko { background: #ffd9d9; border-color: #b3261e; }
     <details class="part" open data-t="Saber moure't pel Drive">
       <summary>Saber moure't pel Drive <span class="chip time">10 min</span><span class="chip count"></span></summary>
       <div class="inner">
-<ol class="steps" style="counter-reset: s 0">
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Entra al Drive de la teva compte (<b>correu.lamerce.com</b>). Crea la carpeta <code>M0225 - NomCognom</code> i, a dins, la subcarpeta <code>AEA-1: Intro a Xarxes Locals</code>.</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Descarrega del campus l'activitat <b>A0</b> (pdf) i l'<b>A1</b> (docx) i puja-les a aquesta subcarpeta.</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Visualitza el Drive en <b>mode llista</b>.</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Edita el document que has pujat i posa el teu nom al requadre de la capçalera (fent doble clic a la capçalera).</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t"><b>Comparteix la carpeta</b> <code>M0225 - NomCognom</code> amb el professor, en mode <b>Editor</b> i sense notificar.</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Entra a l'arrel de la carpeta, copia l'enllaç i enganxa'l a la tasca del campus (apartat Presentació).</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Necessitaràs afegir imatges al document: obre <b>Menú › Accessoris › «Fes una captura de pantalla»</b> i posa-la a la barra de tasques.</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Escolta el professor i canvia el tauler d'Ubuntu de <b>Familiar</b> a <b>Tradicional</b>: Menú › escriu «tw» › MATE Tweak › Taulers › Tradicional.</span></label></li>
+<ol class="slist" start="1">
+<li>Entra al Drive de la teva compte (<b>correu.lamerce.com</b>). Crea la carpeta <code>M0225 - NomCognom</code> i, a dins, la subcarpeta <code>AEA-1: Intro a Xarxes Locals</code>.</li>
+<li>Descarrega del campus l'activitat <b>A0</b> (pdf) i l'<b>A1</b> (docx) i puja-les a aquesta subcarpeta.</li>
+<li>Visualitza el Drive en <b>mode llista</b>.</li>
+<li>Edita el document que has pujat i posa el teu nom al requadre de la capçalera (fent doble clic a la capçalera).</li>
+<li><b>Comparteix la carpeta</b> <code>M0225 - NomCognom</code> amb el professor, en mode <b>Editor</b> i sense notificar.</li>
+<li>Entra a l'arrel de la carpeta, copia l'enllaç i enganxa'l a la tasca del campus (apartat Presentació).</li>
+<li>Necessitaràs afegir imatges al document: obre <b>Menú › Accessoris › «Fes una captura de pantalla»</b> i posa-la a la barra de tasques.</li>
+<li>Escolta el professor i canvia el tauler d'Ubuntu de <b>Familiar</b> a <b>Tradicional</b>: Menú › escriu «tw» › MATE Tweak › Taulers › Tradicional.</li>
 </ol>
 <div class="tip">Comparteix la <b>carpeta</b>, no el document, i no marquis «Notificar als usuaris».</div>
 
@@ -367,33 +374,33 @@ select.ko { background: #ffd9d9; border-color: #b3261e; }
       <div class="inner">
 <p class="mini">Respon al document en color <b style="color:#1b3fd1">blau</b>. Pots millorar les respostes afegint petites imatges dins dels requadres.</p>
 <h3 class="sub">Preguntes personals</h3>
-<ol class="steps plain" style="counter-reset: s 0">
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Nom i cognom.</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Procedència: on vas néixer i quants anys portes a Catalunya.</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">2 hobbies i quan els practiques.</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Els teus 3 videojocs preferits i de què van.</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">2 o 3 estils musicals o grups, amb un videoclip de cadascun.</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Les teves 3 consoles preferides de tota la història i per què.</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Les 2 millors pel·lícules que has vist al cinema.</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">2 jocs de mòbil que t'agradin a tu o a algun familiar.</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Les 2 millors sèries que has vist en streaming.</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">2 o 3 youtubers, amb un vídeo de cadascun.</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Algun documental o llibre que t'hagi impactat; el teu llibre o anime preferit.</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">El teu menú perfecte: 1r plat, 2n plat, postres i beguda.</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Fas servir Google Drive? Ho trobes útil? Prefereixes un USB? Ja el tens?</span></label></li>
-</ol>
+<ul class="slist">
+<li>Nom i cognom.</li>
+<li>Procedència: on vas néixer i quants anys portes a Catalunya.</li>
+<li>2 hobbies i quan els practiques.</li>
+<li>Els teus 3 videojocs preferits i de què van.</li>
+<li>2 o 3 estils musicals o grups, amb un videoclip de cadascun.</li>
+<li>Les teves 3 consoles preferides de tota la història i per què.</li>
+<li>Les 2 millors pel·lícules que has vist al cinema.</li>
+<li>2 jocs de mòbil que t'agradin a tu o a algun familiar.</li>
+<li>Les 2 millors sèries que has vist en streaming.</li>
+<li>2 o 3 youtubers, amb un vídeo de cadascun.</li>
+<li>Algun documental o llibre que t'hagi impactat; el teu llibre o anime preferit.</li>
+<li>El teu menú perfecte: 1r plat, 2n plat, postres i beguda.</li>
+<li>Fas servir Google Drive? Ho trobes útil? Prefereixes un USB? Ja el tens?</li>
+</ul>
 <h3 class="sub">Preguntes sobre La Mercè</h3>
 <p class="mini">Pista: consulta la web del centre i l'activitat <a href="A0.html">A0</a>.</p>
-<ol class="steps plain" style="counter-reset: s 0">
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Quants alumnes, més o menys, hi ha a La Mercè?</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Quantes famílies professionals hi ha al centre?</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">On són els tallers de la planta d'informàtica?</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Quantes aules hi ha a la planta d'informàtica?</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Quants professors hi ha al departament d'informàtica?</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Què passa si superes el 20% de faltes d'assistència permeses?</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Quants RA té el mòdul M5?</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Si tens un problema treballant en grup, què faries: intentar solucionar-lo o canviar de grup immediatament?</span></label></li>
-</ol>
+<ul class="slist">
+<li>Quants alumnes, més o menys, hi ha a La Mercè?</li>
+<li>Quantes famílies professionals hi ha al centre?</li>
+<li>On són els tallers de la planta d'informàtica?</li>
+<li>Quantes aules hi ha a la planta d'informàtica?</li>
+<li>Quants professors hi ha al departament d'informàtica?</li>
+<li>Què passa si superes el 20% de faltes d'assistència permeses?</li>
+<li>Quants RA té el mòdul M5?</li>
+<li>Si tens un problema treballant en grup, què faries: intentar solucionar-lo o canviar de grup immediatament?</li>
+</ul>
 
       </div>
     </details>
@@ -401,11 +408,11 @@ select.ko { background: #ffd9d9; border-color: #b3261e; }
     <details class="part" open data-t="Fes una recerca">
       <summary>Fes una recerca <span class="chip time">10 min</span><span class="chip count"></span></summary>
       <div class="inner">
-<ol class="steps" style="counter-reset: s 0">
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Busca a Internet <b>què és una xarxa local</b> (LAN) i escriu-ne una definició de 2-3 línies.</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Busca <b>quins elements componen una xarxa local</b>.</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Busca un dibuix o diagrama que representi el que has trobat i enganxa'l al document.</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Mostra-li al professor que has respost totes les preguntes.</span></label></li>
+<ol class="slist" start="1">
+<li>Busca a Internet <b>què és una xarxa local</b> (LAN) i escriu-ne una definició de 2-3 línies.</li>
+<li>Busca <b>quins elements componen una xarxa local</b>.</li>
+<li>Busca un dibuix o diagrama que representi el que has trobat i enganxa'l al document.</li>
+<li>Mostra-li al professor que has respost totes les preguntes.</li>
 </ol>
 
       </div>
@@ -414,13 +421,13 @@ select.ko { background: #ffd9d9; border-color: #b3261e; }
     <details class="part" open data-t="Aprèn a compartir documents amb el Drive">
       <summary>Aprèn a compartir documents amb el Drive <span class="chip time">10 min</span><span class="chip count"></span></summary>
       <div class="inner">
-<ol class="steps" style="counter-reset: s 0">
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Comparteix el teu document, només com a <b>Lector</b>, amb el company del costat.</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Dins del Drive, crea la carpeta <code>Compartides</code> dins de l'AEA corresponent.</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Ves a <b>Compartit amb mi</b>, troba el document que t'han compartit i fes clic a <b>Afegeix una drecera al Drive</b> per afegir-lo a la carpeta <code>Compartides</code>.</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Revisa l'activitat A1 d'un company: quina nota li posaries (1-10)?</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Per acabar, posa l'enllaç del teu Drive al campus (apartat Presentació › Tasca).</span></label></li>
-<li><label><input type="checkbox"><span class="n"></span><span class="t">Escriu les <b>conclusions</b>: l'activitat t'ha semblat útil o difícil?</span></label></li>
+<ol class="slist" start="1">
+<li>Comparteix el teu document, només com a <b>Lector</b>, amb el company del costat.</li>
+<li>Dins del Drive, crea la carpeta <code>Compartides</code> dins de l'AEA corresponent.</li>
+<li>Ves a <b>Compartit amb mi</b>, troba el document que t'han compartit i fes clic a <b>Afegeix una drecera al Drive</b> per afegir-lo a la carpeta <code>Compartides</code>.</li>
+<li>Revisa l'activitat A1 d'un company: quina nota li posaries (1-10)?</li>
+<li>Per acabar, posa l'enllaç del teu Drive al campus (apartat Presentació › Tasca).</li>
+<li>Escriu les <b>conclusions</b>: l'activitat t'ha semblat útil o difícil?</li>
 </ol>
 
       </div>
@@ -435,6 +442,13 @@ select.ko { background: #ffd9d9; border-color: #b3261e; }
 <details class="qa"><summary>On es lliura l'enllaç del Drive?</summary><p>A la tasca del campus, a l'apartat Presentació.</p></details>
 <div class="exbox"><div class="ordx"><h3>Compartir la carpeta amb el professor</h3><p class="mini">Ordena els passos. Usa les fletxes per ordenar els passos.</p><ol class="ord"><li data-pos="4"><span class="otxt">Desmarca «Notificar als usuaris»</span><span class="omv"><button type="button" class="up" aria-label="Puja">↑</button><button type="button" class="dn" aria-label="Baixa">↓</button></span></li><li data-pos="2"><span class="otxt">Escriu el correu del professor</span><span class="omv"><button type="button" class="up" aria-label="Puja">↑</button><button type="button" class="dn" aria-label="Baixa">↓</button></span></li><li data-pos="5"><span class="otxt">Fes clic a Envia o Comparteix</span><span class="omv"><button type="button" class="up" aria-label="Puja">↑</button><button type="button" class="dn" aria-label="Baixa">↓</button></span></li><li data-pos="0"><span class="otxt">Clic dret sobre la carpeta M0225 - NomCognom</span><span class="omv"><button type="button" class="up" aria-label="Puja">↑</button><button type="button" class="dn" aria-label="Baixa">↓</button></span></li><li data-pos="3"><span class="otxt">Posa el permís d'Editor</span><span class="omv"><button type="button" class="up" aria-label="Puja">↑</button><button type="button" class="dn" aria-label="Baixa">↓</button></span></li><li data-pos="1"><span class="otxt">Tria l'opció Comparteix</span><span class="omv"><button type="button" class="up" aria-label="Puja">↑</button><button type="button" class="dn" aria-label="Baixa">↓</button></span></li></ol><div class="btnrow"><button type="button" class="btn check">Comprova</button><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
 
+      </div>
+    </details>
+
+    <details class="part" open data-t="Activitat">
+      <summary>Activitat <span class="chip count"></span></summary>
+      <div class="inner">
+<div class="classroom"><h3>Consulta l'activitat al teu Classroom</h3><p>Ara que ja has vist la teoria i has practicat, fes l'activitat <b>A1 · Presa de contacte amb les xarxes locals</b>. La trobaràs a Classroom, dins de l'AEA1.</p><div class="btnrow"><a class="btn" href="https://classroom.google.com/" target="_blank" rel="noopener">Obre Classroom</a></div></div>
       </div>
     </details>
 
