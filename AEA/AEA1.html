@@ -287,6 +287,25 @@ select.ko { background: #ffd9d9; border-color: #b3261e; }
 .dot { width: 1.7rem; height: 1.7rem; font-size: .8rem; }
 .statusbar .wrap { padding-top: .45rem; padding-bottom: .45rem; }
 
+/* Exercicis fets, generador i bloqueig */
+.exbox { position: relative; }
+.exbox.done::after { content: "Fet"; position: absolute; top: 1rem; right: 1.25rem; background: var(--lime); border: 1px solid var(--dark); border-radius: 99px; padding: 0 .75rem; font-weight: 700; font-size: .85rem; }
+.exbox.genx { background: var(--lime); }
+.gq { font-weight: 700; font-size: 1.05rem; margin: .5rem 0; }
+.gopts { display: flex; flex-wrap: wrap; gap: .6rem; margin: .5rem 0; }
+.gopt { font: inherit; font-weight: 700; padding: .5rem 1.1rem; border: 1px solid var(--dark); border-radius: 12px; background: var(--white); cursor: pointer; box-shadow: 0 3px 0 var(--dark); }
+.gopt:hover { background: var(--grey); }
+.gopt.ok { background: #e4ffc7; outline: 3px solid var(--dark); }
+.gopt.ko { background: #ffd9d9; }
+.gexp { margin: .5rem 0; padding: .6rem .9rem; background: var(--white); border-radius: 12px; border: 1px solid var(--dark); }
+.lockpanel { display: none; padding: 3rem 0 4rem; }
+.locked .lockpanel { display: block; }
+.locked main.wrap, .locked .statusbar, .locked .docbtn, .locked .hero .lead { display: none; }
+.lockbox { background: var(--lime); border: 1px solid var(--dark); border-radius: 36px; box-shadow: 0 6px 0 var(--dark); padding: 2.5rem; max-width: 36rem; }
+.lockbox h2 { margin: 0 0 .5rem; font-size: 1.8rem; }
+.lk a { opacity: .55; cursor: not-allowed; }
+.lk .tag { background: var(--dark); color: var(--lime); border-color: var(--dark); }
+
   </style>
 </head>
 <body>
@@ -318,19 +337,19 @@ select.ko { background: #ffd9d9; border-color: #b3261e; }
       <div class="ra-box"><strong>RA1</strong><p>Reconeix l'estructura de les xarxes locals cablejades analitzant les característiques dels entorns d'aplicació i descrivint la funcionalitat dels seus components.</p></div>
     </section>
     <section>
-      <div class="sechead"><h2 class="label">Activitats</h2><p>Cada activitat es divideix en apartats amb la seva explicació i els seus exercicis. La barra de progrés avança a mesura que s'acaba cada apartat. Els temps són orientatius.</p></div>
+      <div class="sechead"><h2 class="label">Activitats</h2><p>Cada activitat es divideix en apartats amb la seva explicació i els seus exercicis. La barra de progrés avança a mesura que es fan els apartats, els exercicis i els passos de cada activitat. Els temps són orientatius.</p></div>
       <ul class="aea">
         <li><a href="A0.html"><span class="code">A0</span><span class="body"><h3>Normativa del centre i del mòdul</h3><span class="tag">40 min</span></span></a></li>
         <li><a href="A1.html"><span class="code">A1</span><span class="body"><h3>Presa de contacte amb les xarxes locals</h3><span class="tag">50 min</span></span></a></li>
         <li><a href="A2.html"><span class="code">A2</span><span class="body"><h3>Diagrames de xarxa (físics i lògics)</h3><span class="tag">85 min</span></span></a></li>
         <li><a href="A3.html"><span class="code">A3</span><span class="body"><h3>Tipus de xarxes (topologies)</h3><span class="tag">117 min</span></span></a></li>
-        <li><a href="A4.html"><span class="code">A4</span><span class="body"><h3>Dispositius i dominis (col·lisió i broadcast)</h3><span class="tag">147 min</span></span></a></li>
-        <li><a href="A5.html"><span class="code">A5</span><span class="body"><h3>Mitjans de transmissió</h3><span class="tag">151 min</span></span></a></li>
+        <li data-unlock="2026-11-09"><a href="A4.html"><span class="code">A4</span><span class="body"><h3>Dispositius i dominis (col·lisió i broadcast)</h3><span class="tag">147 min</span></span></a></li>
+        <li data-unlock="2026-11-09"><a href="A5.html"><span class="code">A5</span><span class="body"><h3>Mitjans de transmissió</h3><span class="tag">151 min</span></span></a></li>
       </ul>
     </section>
     <section>
       <div class="sechead"><h2 class="label">Teoria en PDF</h2><p>Per estudiar a casa.</p></div>
-      <ul class="pills"><li><a href="../assets/docs/teoria-A2.pdf" download>Teoria A2 · Diagrames de xarxa (físics i lògics)</a></li><li><a href="../assets/docs/teoria-A3.pdf" download>Teoria A3 · Tipus de xarxes (topologies)</a></li><li><a href="../assets/docs/teoria-A4.pdf" download>Teoria A4 · Dispositius i dominis (col·lisió i broadcast)</a></li><li><a href="../assets/docs/teoria-A5.pdf" download>Teoria A5 · Mitjans de transmissió</a></li></ul>
+      <ul class="pills"><li><a href="../assets/docs/teoria-A2.pdf" download>Teoria A2 · Diagrames de xarxa (físics i lògics)</a></li><li><a href="../assets/docs/teoria-A3.pdf" download>Teoria A3 · Tipus de xarxes (topologies)</a></li><li data-unlock="2026-11-09"><a href="../assets/docs/teoria-A4.pdf" download>Teoria A4 · Dispositius i dominis (col·lisió i broadcast)</a></li><li data-unlock="2026-11-09"><a href="../assets/docs/teoria-A5.pdf" download>Teoria A5 · Mitjans de transmissió</a></li></ul>
     </section>
     <section>
       <div class="sechead"><h2 class="label">Altres materials</h2></div>
@@ -351,6 +370,22 @@ select.ko { background: #ffd9d9; border-color: #b3261e; }
       <p>CFGM Sistemes Microinformàtics i Xarxes · Curs 2026-2027 · Nom del docent</p>
     </div>
   </footer>
+<script>
+(function(){
+  [].forEach.call(document.querySelectorAll("[data-unlock]"),function(el){
+    var p=el.getAttribute("data-unlock").split("-"),u=new Date(+p[0],+p[1]-1,+p[2]);
+    if(Date.now()>=u.getTime())return;
+    var lab=(+p[2])+"/"+(+p[1])+"/"+p[0];el.classList.add("lk");
+    var t=el.querySelector(".tag");
+    if(t)t.textContent="Bloquejada fins al "+lab;
+    [].forEach.call(el.querySelectorAll("a"),function(a){
+      if(!t)a.textContent+=" · bloquejada fins al "+lab;
+      a.removeAttribute("download");a.setAttribute("aria-disabled","true");
+      a.addEventListener("click",function(e){e.preventDefault()});
+    });
+  });
+})();
+</script>
 
 </body>
 </html>

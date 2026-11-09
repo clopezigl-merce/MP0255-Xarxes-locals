@@ -287,6 +287,25 @@ select.ko { background: #ffd9d9; border-color: #b3261e; }
 .dot { width: 1.7rem; height: 1.7rem; font-size: .8rem; }
 .statusbar .wrap { padding-top: .45rem; padding-bottom: .45rem; }
 
+/* Exercicis fets, generador i bloqueig */
+.exbox { position: relative; }
+.exbox.done::after { content: "Fet"; position: absolute; top: 1rem; right: 1.25rem; background: var(--lime); border: 1px solid var(--dark); border-radius: 99px; padding: 0 .75rem; font-weight: 700; font-size: .85rem; }
+.exbox.genx { background: var(--lime); }
+.gq { font-weight: 700; font-size: 1.05rem; margin: .5rem 0; }
+.gopts { display: flex; flex-wrap: wrap; gap: .6rem; margin: .5rem 0; }
+.gopt { font: inherit; font-weight: 700; padding: .5rem 1.1rem; border: 1px solid var(--dark); border-radius: 12px; background: var(--white); cursor: pointer; box-shadow: 0 3px 0 var(--dark); }
+.gopt:hover { background: var(--grey); }
+.gopt.ok { background: #e4ffc7; outline: 3px solid var(--dark); }
+.gopt.ko { background: #ffd9d9; }
+.gexp { margin: .5rem 0; padding: .6rem .9rem; background: var(--white); border-radius: 12px; border: 1px solid var(--dark); }
+.lockpanel { display: none; padding: 3rem 0 4rem; }
+.locked .lockpanel { display: block; }
+.locked main.wrap, .locked .statusbar, .locked .docbtn, .locked .hero .lead { display: none; }
+.lockbox { background: var(--lime); border: 1px solid var(--dark); border-radius: 36px; box-shadow: 0 6px 0 var(--dark); padding: 2.5rem; max-width: 36rem; }
+.lockbox h2 { margin: 0 0 .5rem; font-size: 1.8rem; }
+.lk a { opacity: .55; cursor: not-allowed; }
+.lk .tag { background: var(--dark); color: var(--lime); border-color: var(--dark); }
+
   </style>
 </head>
 <body>
@@ -318,7 +337,6 @@ select.ko { background: #ffd9d9; border-color: #b3261e; }
       <span id="pct">0%</span>
       <span id="aptlabel" class="aptlabel"></span>
       <div id="stepper" class="stepper" aria-label="Apartats"></div>
-      <button id="timer" type="button" title="Clic: inicia o atura. Doble clic: reinicia">Cronòmetre 00:00</button>
       <button id="expand" type="button">Desplega-ho tot</button>
       <button id="reset" type="button">Reinicia</button>
     </div>
@@ -430,15 +448,15 @@ select.ko { background: #ffd9d9; border-color: #b3261e; }
   </footer>
 <script>
 (function(){
-  var KEY='xl2:'+location.pathname, st={c:{},d:[]};
-  try{var s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&s.c&&s.d)st=s}catch(e){}
+  var KEY='xl2:'+location.pathname, st={c:{},d:[],e:{}};
+  try{var s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&s.c&&s.d){st=s;if(!st.e)st.e={}}}catch(e){}
   function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
   var apts=[].slice.call(document.querySelectorAll('details.part')),N=apts.length,cur=0,lock=false;
-  var boxes=[].slice.call(document.querySelectorAll('.steps input'));
+  var boxes=[].slice.call(document.querySelectorAll('.steps input')),exs=[].slice.call(document.querySelectorAll('.exbox:not(.genx)')),total=N+exs.length+boxes.length;
   var fill=document.getElementById('fill'),pct=document.getElementById('pct'),lab=document.getElementById('aptlabel'),stepper=document.getElementById('stepper'),dots=[];
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   function render(){
-    var p=Math.round(st.d.length*100/N);fill.style.width=p+'%';pct.textContent=p+'%';
+    var dn0=st.d.length+Object.keys(st.e).length+boxes.filter(function(b){return b.checked}).length,p=Math.round(dn0*100/total);fill.style.width=p+'%';pct.textContent=p+'%';
     lab.textContent="Apartat "+(cur+1)+" de "+N+" · "+apts[cur].getAttribute('data-t');
     apts.forEach(function(a,i){
       var dn=st.d.indexOf(i)>-1;a.classList.toggle('done',dn);dots[i].classList.toggle('done',dn);dots[i].classList.toggle('cur',i===cur);
@@ -465,6 +483,23 @@ select.ko { background: #ffd9d9; border-color: #b3261e; }
     nav.appendChild(nx);a.querySelector('.inner').appendChild(nav);
     sum.addEventListener('click',function(){setTimeout(function(){if(a.open){cur=i;render()}},0)});
   });
+  exs.forEach(function(x,i){if(st.e[i])x.classList.add('done')});
+  function complete(ex,t){
+    if(t.closest('.check')){
+      if(ex.querySelector('.fillx'))return [].every.call(ex.querySelectorAll('select'),function(x){return x.value});
+      if(ex.querySelector('.dnd'))return !ex.querySelector('.pool .chip-d');
+      if(ex.querySelector('.quiz'))return [].every.call(ex.querySelectorAll('.q'),function(q){return q.querySelector('input:checked')});
+      return true;
+    }
+    if(t.closest('.tfb'))return [].every.call(ex.querySelectorAll('.tfrow'),function(r){return r.classList.contains('ok')||r.classList.contains('ko')});
+    if(t.closest('.pc'))return [].every.call(ex.querySelectorAll('.pc'),function(c){return c.classList.contains('done')});
+    return false;
+  }
+  document.addEventListener('click',function(e){
+    var ex=e.target.closest&&e.target.closest('.exbox:not(.genx)');if(!ex)return;
+    var i=exs.indexOf(ex);if(i<0||st.e[i])return;var t=e.target;
+    setTimeout(function(){if(complete(ex,t)){st.e[i]=true;save();ex.classList.add('done');render()}},0);
+  });
   boxes.forEach(function(b,i){
     b.checked=!!st.c[i];
     b.addEventListener('change',function(){st.c[i]=b.checked;save();render()});
@@ -475,15 +510,8 @@ select.ko { background: #ffd9d9; border-color: #b3261e; }
   ex.addEventListener('click',function(){all=!all;apts.forEach(function(a,k){a.open=all||k===cur});ex.textContent=all?"Només l'apartat actual":'Desplega-ho tot'});
   document.getElementById('reset').addEventListener('click',function(){
     if(!confirm("Vols esborrar el progrés d'aquesta activitat?"))return;
-    st={c:{},d:[]};save();boxes.forEach(function(b){b.checked=false});go(0,true);
+    st={c:{},d:[],e:{}};save();boxes.forEach(function(b){b.checked=false});exs.forEach(function(x){x.classList.remove('done')});go(0,true);
   });
-  var t=document.getElementById('timer'),sec=0,iv=null;
-  function show(){var m=Math.floor(sec/60),x=sec%60;t.textContent='Cronòmetre '+(m<10?'0':'')+m+':'+(x<10?'0':'')+x}
-  t.addEventListener('click',function(){
-    if(iv){clearInterval(iv);iv=null;t.classList.remove('run')}
-    else{iv=setInterval(function(){sec++;show()},1000);t.classList.add('run')}
-  });
-  t.addEventListener('dblclick',function(){sec=0;show()});
 })();
 </script>
 <script>
@@ -577,6 +605,54 @@ select.ko { background: #ffd9d9; border-color: #b3261e; }
       else{a.classList.add('ko');c.classList.add('ko');setTimeout(function(){a.classList.remove('ko','sel');c.classList.remove('ko')},600)}
     })});
     p.querySelector('.reset').addEventListener('click',function(){cards.forEach(function(c){c.classList.remove('done','sel','ko')});sel=null;tries=0;left=tot;res.textContent=''});
+  });
+
+  function ri(a,b){return a+Math.floor(Math.random()*(b-a+1))}
+  function pk(a){return a[Math.floor(Math.random()*a.length)]}
+  function sh(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=b[i];b[i]=b[j];b[j]=t}return b}
+  function uniq(a){var s={},r=[];a.forEach(function(x){if(!s[x]){s[x]=1;r.push(x)}});return r}
+  var G={
+    ipnet:function(){var c=ri(1,254),d=ri(2,250),b=pk([[192,168],[172,16],[10,ri(0,200)]]),ip=b[0]+'.'+b[1]+'.'+c+'.'+d,net=b[0]+'.'+b[1]+'.'+c+'.0';
+      return {q:'Un PC té la IP <code>'+ip+'</code> i màscara <code>255.255.255.0</code>. Quina és la IP de la seva xarxa?',o:[net,b[0]+'.'+b[1]+'.0.0',ip,b[0]+'.'+b[1]+'.'+c+'.255'],e:'Amb la màscara 255.255.255.0 els tres primers números són la xarxa: '+net+'.'}},
+    same:function(){var b=pk([[192,168],[172,16]]),c=ri(1,250),d=ri(2,100),d2=ri(110,250),ip=b[0]+'.'+b[1]+'.'+c+'.'+d;
+      return {q:'Un PC té la IP <code>'+ip+'</code> (màscara <code>255.255.255.0</code>). Quina d\'aquestes IP és de la seva mateixa xarxa?',o:[b[0]+'.'+b[1]+'.'+c+'.'+d2,b[0]+'.'+b[1]+'.'+(c+1)+'.'+d,'10.'+c+'.'+d+'.1',b[0]+'.'+(b[1]+1)+'.'+c+'.'+d],e:'Ha de tenir els mateixos tres primers números: '+b[0]+'.'+b[1]+'.'+c+'.x'}},
+    mesh:function(){var n=ri(4,9);
+      if(Math.random()<.5){var m=n*(n-1)/2;return {q:'Quants enllaços necessita una <b>malla completa</b> de '+n+' equips?',o:[''+m,''+n,''+(n*(n-1)),''+(n*n)],e:'n(n−1)/2 = '+n+'·'+(n-1)+'/2 = '+m+'.'}}
+      return {q:'Quants cables necessita una <b>estrella</b> amb un switch i '+n+' PC?',o:[''+n,''+(n-1),''+(n+1),''+(n*(n-1)/2)],e:'Un cable per a cada PC fins al switch: '+n+'.'}},
+    domains:function(){var a=ri(2,6),b=ri(2,6),t=ri(0,3);
+      if(t===0)return {q:'Un <b>switch</b> té '+a+' PC connectats. Quants dominis de col·lisió hi ha?',o:[''+a,'1',''+(a+1),''+(a*2)],e:'Cada port del switch és un domini de col·lisió.'};
+      if(t===1)return {q:'Un <b>hub</b> té '+b+' PC connectats. Quants dominis de col·lisió hi ha?',o:['1',''+b,''+(b+1),'2'],e:'Tots els ports d\'un hub formen un sol domini.'};
+      if(t===2)return {q:'Un router connecta una xarxa amb un switch ('+a+' PC) i una altra amb un hub ('+b+' PC). Quants dominis de col·lisió hi ha en total?',o:[''+(a+2),''+(a+b),''+(a+b+2),'2'],e:'Switch: '+a+' PC + l\'enllaç amb el router = '+(a+1)+'. Hub: 1 domini. Total: '+(a+2)+'.'};
+      return {q:'Un router connecta '+a+' xarxes diferents. Quants dominis de broadcast hi ha?',o:[''+a,'1',''+(a+1),''+(a*2)],e:'El router separa els dominis de broadcast: un per xarxa.'}},
+    macip:function(){var hx=function(){var s=ri(0,255).toString(16);return (s.length<2?'0':'')+s},m=Math.random()<.5,
+      v=m?[1,2,3,4,5,6].map(hx).join(':'):ri(1,223)+'.'+ri(0,255)+'.'+ri(0,255)+'.'+ri(1,254);
+      return {q:'És una adreça MAC o una IP? <code>'+v+'</code>',o:m?['MAC','IP']:['IP','MAC'],e:m?'6 parells hexadecimals separats per dos punts: és una MAC.':'4 números decimals separats per punts: és una IPv4.'}},
+    cable:function(){var d=pk([15,40,70,95,120,150,220,400,500,800,2000,5000,10000]),a=d<=100?'Cable UTP':(d<=550?'Fibra multimode':'Fibra monomode'),all=['Cable UTP','Fibra multimode','Fibra monomode'];
+      return {q:'Cal un enllaç de <b>'+d+' m</b> a 1 Gbps. Quin mitjà és el més adequat?',o:[a].concat(all.filter(function(x){return x!==a})),e:'UTP fins a 100 m; fibra multimode fins a uns 550 m; més enllà, fibra monomode.'}}
+  };
+  $$(document,'.genx').forEach(function(g){
+    var kinds=g.getAttribute('data-gen').split(',').filter(Boolean),data=JSON.parse(g.getAttribute('data-pool')||'{"own":[],"all":[]}');
+    var body=g.querySelector('.gbody'),sc=g.querySelector('.gscore'),ok=0,tot=0;
+    function poolq(){
+      var own=data.own.length?data.own:data.all,p=pk(own),rev=Math.random()<.5;
+      var oth=sh(data.all.filter(function(x){return x[0]!==p[0]&&x[1]!==p[1]})).slice(0,2);
+      if(rev)return {q:'Quin concepte correspon a: <b>'+p[1]+'</b>?',o:[p[0]].concat(oth.map(function(x){return x[0]})),e:p[0]+': '+p[1]+'.'};
+      return {q:'A què es refereix <b>'+p[0]+'</b>?',o:[p[1]].concat(oth.map(function(x){return x[1]})),e:p[0]+': '+p[1]+'.'};
+    }
+    function show(){
+      var k=pk(kinds),x=k==='pool'?poolq():G[k](),o=uniq(x.o),right=o[0];o=sh(o);
+      body.innerHTML='';var q=document.createElement('p');q.className='gq';q.innerHTML=x.q;body.appendChild(q);
+      var w=document.createElement('div');w.className='gopts';var fb=document.createElement('p');fb.className='gexp';fb.hidden=true;
+      o.forEach(function(t){var b=document.createElement('button');b.type='button';b.className='gopt';b.textContent=t;
+        b.addEventListener('click',function(){
+          if(w.classList.contains('answered'))return;w.classList.add('answered');tot++;
+          var good=t===right;if(good)ok++;b.classList.add(good?'ok':'ko');
+          if(!good)[].forEach.call(w.children,function(c){if(c.textContent===right)c.classList.add('ok')});
+          fb.textContent=(good?'Correcte! ':'No és correcte. ')+x.e;fb.hidden=false;sc.textContent='Encerts: '+ok+' de '+tot;
+        });w.appendChild(b)});
+      body.appendChild(w);body.appendChild(fb);
+    }
+    g.querySelector('.gnew').addEventListener('click',show);show();
   });
 })();
 </script>
