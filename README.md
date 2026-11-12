@@ -4,8 +4,16 @@ Web del mòdul professional MP0255 Xarxes locals (CFGM Sistemes Microinformàtic
 
 ## Estructura
 
-- `index.html`: pàgina principal
-- `AEA/AEA1.html`: índex de l'AEA1; `AEA/A0.html` a `A5.html`: les activitats
-- `assets/css/style.css`: estils
-- `assets/docs/`: teoria en PDF (A2 a A5)
-- `assets/img/`: imatges
+```
+MP0255/
+├── index.html            ← portada del mòdul
+├── assets/
+│   ├── css/style.css
+│   └── img/
+└── AEA1/                 ← tot el contingut de l'AEA1
+    ├── index.html        ← pàgina de l'AEA1
+    ├── A0.html ... A5.html
+    └── docs/             ← PDF de teoria de l'AEA1
+```
+
+Cada nova AEA tindrà la seva carpeta (`AEA2/`, `AEA3/`...) amb la mateixa estructura: `index.html`, les activitats i la carpeta `docs/`.

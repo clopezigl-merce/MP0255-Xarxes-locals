@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A5 Mitjans de transmissió · MP0255 Xarxes locals</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --lime: #b9ff66; --dark: #191a23; --grey: #f3f3f3; --white: #fff;
+  --muted: #5b5d6b; --line: #191a23;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--white); color: var(--dark); line-height: 1.55; }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 1.25rem; }
+a { color: inherit; }
+.muted { color: var(--muted); }
+
+/* Etiqueta ressaltada */
+.label { display: inline-block; background: var(--lime); color: var(--dark); padding: .05rem .6rem; border-radius: 8px; font-weight: 700; }
+h2.label, .label.h2 { font-size: clamp(1.6rem, 4vw, 2.2rem); margin: 0; line-height: 1.3; }
+
+/* Botons */
+.btn { display: inline-block; padding: .85rem 1.6rem; border-radius: 14px; background: var(--dark); color: var(--white); font-weight: 700; text-decoration: none; border: 2px solid var(--dark); }
+.btn:hover { background: var(--lime); color: var(--dark); }
+.btn.soft { background: var(--lime); color: var(--dark); padding: .4rem 1rem; border-radius: 10px; }
+.btn.soft:hover { background: var(--dark); color: var(--lime); }
+.btnrow { display: flex; flex-wrap: wrap; gap: .6rem; margin: .75rem 0 0; }
+.btn.light { background: var(--white); color: var(--dark); }
+.btn.light:hover { background: var(--lime); }
+
+/* Capçalera de portada */
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem 0; flex-wrap: wrap; }
+.logo { display: flex; align-items: center; gap: .5rem; font-weight: 700; font-size: 1.35rem; text-decoration: none; }
+.logo i { width: 1.4rem; height: 1.4rem; background: var(--dark); border-radius: 5px; position: relative; display: inline-block; }
+.logo i::after { content: ""; position: absolute; inset: 5px; background: var(--lime); border-radius: 2px; }
+.nav ul { display: flex; gap: 1.5rem; list-style: none; margin: 0; padding: 0; align-items: center; flex-wrap: wrap; }
+.nav ul a { text-decoration: none; }
+.nav ul a:not(.btn):hover { text-decoration: underline; text-decoration-thickness: 3px; text-decoration-color: var(--lime); }
+.nav .btn { background: var(--white); color: var(--dark); padding: .6rem 1.2rem; border-color: var(--dark); }
+.nav .btn:hover { background: var(--lime); }
+
+/* Hero */
+.hero { padding: 2.5rem 0 3rem; }
+.hero .wrap.split { display: grid; grid-template-columns: 1.1fr 1fr; gap: 2rem; align-items: center; }
+.module { display: inline-block; margin: 0 0 1rem; padding: .15rem .7rem; background: var(--lime); border-radius: 8px; font-weight: 700; }
+.module a { text-decoration: none; }
+.hero h1 { margin: 0; font-size: clamp(2.2rem, 6vw, 4rem); line-height: 1.08; letter-spacing: -0.02em; }
+.lead { max-width: 46ch; margin: 1.25rem 0 1.75rem; font-size: 1.15rem; color: #2e2f3b; }
+.hero svg { width: 100%; height: auto; }
+.hero-small { padding: 1.5rem 0 1.5rem; border-bottom: 2px solid var(--dark); }
+.hero-small h1 { font-size: clamp(1.8rem, 5vw, 3rem); max-width: 24ch; }
+
+/* Franja de dades */
+.facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; padding: 1.5rem 0 2.5rem; text-align: center; }
+.facts b { display: block; font-size: 1.6rem; }
+.facts span { color: var(--muted); }
+
+/* Seccions */
+main.wrap { padding-top: 1.5rem; padding-bottom: 3rem; }
+section { margin-bottom: 4.5rem; }
+.sechead { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2.25rem; flex-wrap: wrap; }
+.sechead p { margin: 0; max-width: 42ch; color: #2e2f3b; }
+.note { color: var(--muted); margin-top: 0; }
+h2 { margin: 0 0 .5rem; font-size: 1.7rem; }
+
+/* Targetes d'AEA */
+.cards, .aea { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.75rem; }
+.card, .aea a, .aea .pending > div { display: flex; flex-direction: column; justify-content: space-between; gap: 1.5rem; min-height: 15rem; padding: 2rem; border: 1px solid var(--dark); border-radius: 36px; box-shadow: 0 6px 0 var(--dark); background: var(--grey); color: var(--dark); text-decoration: none; }
+.cards li:nth-child(4n+2) .card { background: var(--lime); }
+.cards li:nth-child(4n+3) .card { background: var(--dark); color: var(--white); }
+.cards li:nth-child(5n) .card { background: var(--lime); }
+.card .code { display: inline-block; align-self: flex-start; background: var(--lime); color: var(--dark); padding: 0 .6rem; border-radius: 8px; font-size: 1.5rem; font-weight: 700; }
+.cards li:nth-child(4n+2) .code { background: var(--white); }
+.card h3 { margin: .75rem 0 0; font-size: 1.15rem; max-width: 26ch; }
+.tag { display: inline-block; margin-top: .6rem; padding: 0 .65rem; border: 1px solid currentColor; border-radius: 99px; font-size: .9rem; font-weight: 700; }
+.go { display: inline-flex; align-items: center; gap: .6rem; font-weight: 700; }
+.go::before { content: "\2197"; display: inline-grid; place-items: center; width: 2.2rem; height: 2.2rem; border-radius: 50%; background: var(--dark); color: var(--lime); font-size: 1.1rem; }
+.cards li:nth-child(4n+3) .go::before { background: var(--white); color: var(--dark); }
+a.card:hover { transform: translateY(-3px); box-shadow: 0 9px 0 var(--dark); }
+.card.pending { min-height: 9rem; border-style: dashed; box-shadow: none; opacity: .75; }
+
+/* Acordió */
+.accordion details { background: var(--grey); border: 1px solid var(--dark); border-radius: 30px; box-shadow: 0 6px 0 var(--dark); margin-bottom: 1.5rem; }
+.accordion details[open] { background: var(--lime); }
+.accordion summary { display: flex; align-items: center; gap: 1.25rem; padding: 1.4rem 1.75rem; cursor: pointer; list-style: none; font-size: 1.15rem; font-weight: 700; }
+.accordion summary::-webkit-details-marker { display: none; }
+.accordion .num { font-size: 2rem; }
+.accordion .ttl { flex: 1; }
+.accordion summary::after { content: "+"; display: grid; place-items: center; flex: none; width: 2.6rem; height: 2.6rem; border: 1px solid var(--dark); border-radius: 50%; background: var(--white); font-size: 1.6rem; line-height: 1; }
+.accordion details[open] summary::after { content: "\2212"; }
+.accordion .body { padding: 0 1.75rem 1.5rem; margin: 0 1.75rem; border-top: 1px solid var(--dark); padding-top: 1.25rem; margin-bottom: .5rem; }
+.accordion .body p { margin: 0 0 .75rem; }
+.accordion .body a { font-weight: 700; }
+
+/* Bloc fosc */
+.darkbox { background: var(--dark); color: var(--white); border-radius: 40px; padding: 2.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+.darkbox h3 { margin: 0 0 .75rem; color: var(--lime); font-size: 1.2rem; }
+.darkbox ul { margin: 0; padding-left: 1.2rem; }
+.darkbox li { margin-bottom: .5rem; }
+
+/* Banner CTA */
+.cta { position: relative; overflow: hidden; background: var(--grey); border-radius: 40px; padding: 2.5rem; display: grid; grid-template-columns: 1.4fr 1fr; gap: 1rem; align-items: center; }
+.cta h2 { font-size: 1.8rem; }
+.cta p { max-width: 42ch; margin: 0 0 1.25rem; }
+.cta svg { width: 100%; max-width: 260px; justify-self: center; }
+
+/* Recursos */
+.pills { display: flex; flex-wrap: wrap; gap: .75rem; list-style: none; margin: 0; padding: 0; }
+.pills a { display: inline-block; padding: .55rem 1.1rem; border: 1px solid var(--dark); border-radius: 99px; text-decoration: none; font-weight: 700; box-shadow: 0 3px 0 var(--dark); }
+.pills a:hover { background: var(--lime); }
+
+/* Peu */
+footer.site { background: var(--dark); color: var(--white); border-radius: 40px 40px 0 0; padding: 2.5rem 0; margin-top: 2rem; }
+footer.site .wrap { display: flex; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; align-items: center; }
+footer.site .logo i { background: var(--lime); }
+footer.site .logo i::after { background: var(--dark); }
+footer.site p { margin: 0; color: #c9cad3; }
+footer.site a { color: var(--lime); }
+footer:not(.site) { border-top: 2px solid var(--dark); padding: 1.5rem 0; }
+footer:not(.site) a { font-weight: 700; }
+
+/* ------ Pàgines d'AEA i activitats ------ */
+.items, .items li { list-style: none; }
+.items { margin: 1rem 0 0; padding: 0; border: 1px solid var(--dark); border-radius: 24px; box-shadow: 0 5px 0 var(--dark); overflow: hidden; }
+.items li { display: flex; align-items: center; gap: 1rem; padding: .85rem 1.25rem; border-bottom: 1px solid var(--dark); background: var(--white); }
+.items li:last-child { border-bottom: 0; }
+.kind { flex: none; min-width: 6.5rem; text-align: center; padding: .05rem .6rem; border: 1px solid var(--dark); border-radius: 99px; font-size: .9rem; font-weight: 700; background: var(--grey); }
+.kind-act { background: var(--lime); }
+.kind-pre { background: var(--dark); color: var(--white); }
+.ra-box { background: var(--lime); border: 1px solid var(--dark); border-radius: 28px; box-shadow: 0 5px 0 var(--dark); padding: 1.5rem 1.75rem; }
+.ra-box p { margin: .25rem 0 0; }
+.aea a, .aea .pending > div { min-height: 0; flex-direction: row; align-items: center; padding: 1.25rem 1.5rem; border-radius: 28px; }
+.aea { grid-template-columns: 1fr; gap: 1.25rem; }
+.aea li { list-style: none; }
+.aea .code { font-weight: 700; font-size: 1.6rem; margin-right: 1rem; }
+.aea a { display: grid; grid-template-columns: 4rem 1fr; align-items: center; }
+.aea a:hover { background: var(--lime); }
+.aea h3 { margin: 0; font-size: 1.1rem; }
+.table-scroll { overflow-x: auto; margin-top: 1rem; }
+table { width: 100%; border-collapse: collapse; border: 1px solid var(--dark); }
+th, td { text-align: left; padding: .7rem .9rem; border-bottom: 1px solid var(--dark); vertical-align: top; }
+thead th { background: var(--lime); }
+
+.statusbar { position: sticky; top: 0; z-index: 10; background: var(--white); border-bottom: 2px solid var(--dark); }
+.statusbar .wrap { display: flex; align-items: center; gap: .75rem; padding-top: .6rem; padding-bottom: .6rem; flex-wrap: wrap; }
+.bar { flex: 1 1 8rem; height: 14px; background: var(--grey); border: 1px solid var(--dark); border-radius: 99px; overflow: hidden; }
+.bar span { display: block; height: 100%; width: 0; background: var(--lime); border-right: 1px solid var(--dark); transition: width .25s; }
+#pct { font-weight: 700; min-width: 3rem; }
+.statusbar button { font: inherit; font-weight: 700; padding: .3rem .9rem; border: 1px solid var(--dark); border-radius: 10px; background: var(--white); color: var(--dark); cursor: pointer; box-shadow: 0 3px 0 var(--dark); }
+.statusbar button:hover { background: var(--lime); }
+#timer.run { background: var(--lime); }
+
+details.part { background: var(--white); border: 1px solid var(--dark); border-radius: 28px; box-shadow: 0 6px 0 var(--dark); margin: 0 0 1.75rem; }
+details.part[open] { background: var(--grey); }
+details.part > summary { cursor: pointer; padding: 1.1rem 1.5rem; font-weight: 700; font-size: 1.2rem; list-style: none; display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+details.part > summary::-webkit-details-marker { display: none; }
+details.part > summary::before { content: "+"; display: grid; place-items: center; width: 2rem; height: 2rem; border: 1px solid var(--dark); border-radius: 50%; background: var(--white); font-size: 1.3rem; line-height: 1; }
+details.part[open] > summary::before { content: "\2212"; background: var(--lime); }
+details.part .inner { padding: 0 1.5rem 1.5rem; }
+.chip { font-size: .85rem; font-weight: 700; padding: 0 .6rem; border: 1px solid var(--dark); border-radius: 99px; background: var(--white); }
+.chip.time { background: var(--lime); }
+.chip.count:empty { display: none; }
+.steps { list-style: none; margin: 0; padding: 0; }
+.steps li { border-top: 1px solid #c9cad3; counter-increment: s; }
+.steps li:first-child { border-top: 0; }
+.steps label { display: grid; grid-template-columns: auto 1.8rem 1fr; gap: .6rem; padding: .7rem 0; cursor: pointer; align-items: start; }
+.steps .n::before { content: counter(s); font-weight: 700; }
+.steps.plain .n::before { content: ""; }
+.steps input { width: 1.3rem; height: 1.3rem; margin-top: .2rem; accent-color: var(--dark); }
+.steps li:has(input:checked) .t { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--dark); }
+.steps code, .tip code { background: var(--lime); padding: 0 .35rem; border-radius: 5px; }
+.tip { margin: .9rem 0; padding: .8rem 1.1rem; background: var(--white); border: 1px solid var(--dark); border-left: 8px solid var(--lime); border-radius: 12px; }
+.quote { margin: .9rem 0; padding: .6rem 1.1rem; border-left: 8px solid var(--dark); background: var(--white); font-style: italic; border-radius: 4px; }
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 2rem 0 2.5rem; }
+.compare > div { background: var(--lime); border: 1px solid var(--dark); border-radius: 28px; box-shadow: 0 5px 0 var(--dark); padding: 1.5rem; }
+.compare > div:nth-child(2) { background: var(--dark); color: var(--white); }
+.compare h3 { margin: 0 0 .4rem; }
+.compare p { margin: 0; }
+.players { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: .75rem; margin: .75rem 0; padding: 0; list-style: none; counter-reset: p; }
+.players li { counter-increment: p; background: var(--white); border: 1px solid var(--dark); border-radius: 18px; padding: .75rem 1rem; }
+.players li::before { content: counter(p, decimal-leading-zero); display: inline-block; margin-bottom: .2rem; padding: 0 .5rem; background: var(--lime); border-radius: 6px; font-weight: 700; }
+.qa { border-top: 1px solid #c9cad3; padding: .6rem 0; }
+.qa summary { cursor: pointer; font-weight: 700; }
+.qa p { margin: .5rem 0 0; padding: .6rem .9rem; background: var(--lime); border-radius: 12px; }
+h3.sub { margin: 1.25rem 0 .25rem; font-size: 1.05rem; }
+.mini { color: var(--muted); font-size: .95rem; }
+a:focus-visible, summary:focus-visible, button:focus-visible { outline: 3px solid var(--dark); outline-offset: 3px; }
+
+@media (max-width: 760px) {
+  .hero .wrap.split, .cards, .darkbox, .cta, .compare { grid-template-columns: 1fr; }
+  .facts { grid-template-columns: repeat(2, 1fr); }
+  .card { min-height: 12rem; }
+  .darkbox, .cta { padding: 1.75rem; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } a.card:hover { transform: none; } .bar span { transition: none; } }
+.cards li .card.pending { background: transparent; color: var(--muted); opacity: 1; border-style: dashed; box-shadow: none; }
+.cards li .card.pending .code { background: var(--grey); color: var(--muted); }
+
+/* Teoria, exercicis i PDF */
+.sechead.in { margin: 3rem 0 1.5rem; }
+.exbox { background: var(--white); border: 1px solid var(--dark); border-radius: 28px; box-shadow: 0 6px 0 var(--dark); padding: 1.5rem; margin-bottom: 1.75rem; }
+.exbox h3 { margin: 0 0 .25rem; }
+.inner p, .inner ul { margin: .6rem 0; }
+.inner table { background: var(--white); }
+.pool, .drop { min-height: 3.2rem; display: flex; flex-wrap: wrap; gap: .5rem; padding: .6rem; border: 2px dashed var(--dark); border-radius: 18px; align-content: flex-start; }
+.pool { background: var(--grey); margin: .75rem 0; }
+.drop.over, .pool.over { background: var(--lime); }
+.boxes { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem; }
+.box { background: var(--grey); border: 1px solid var(--dark); border-radius: 20px; padding: .8rem; }
+.box h4 { margin: 0 0 .5rem; font-size: 1rem; }
+.chip-d { display: inline-block; padding: .35rem .9rem; border: 1px solid var(--dark); border-radius: 99px; background: var(--white); font-weight: 500; cursor: grab; user-select: none; box-shadow: 0 2px 0 var(--dark); }
+.chip-d.sel { background: var(--lime); outline: 3px solid var(--dark); }
+.chip-d.ok { background: var(--lime); }
+.chip-d.ko { background: #ffd9d9; border-color: #b3261e; }
+.result { margin: .75rem 0 0; font-weight: 700; min-height: 1.5rem; }
+.exbox .btn { padding: .5rem 1.2rem; cursor: pointer; font: inherit; font-weight: 700; }
+.quiz fieldset.q { border: 1px solid var(--dark); border-radius: 18px; margin: 0 0 1rem; padding: .75rem 1.1rem 1rem; background: var(--grey); }
+.quiz legend { font-weight: 700; padding: 0 .4rem; }
+.quiz label { display: block; padding: .3rem 0; cursor: pointer; }
+.quiz input { accent-color: var(--dark); margin-right: .5rem; }
+.q .exp { display: none; margin: .5rem 0 0; padding: .5rem .8rem; border-radius: 12px; background: var(--white); border-left: 6px solid var(--dark); }
+.q.done .exp { display: block; }
+.q.ok { background: #e4ffc7; }
+.q.ko { background: #ffe4e4; }
+.tcards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1rem 0; }
+.tcard { background: var(--white); border: 1px solid var(--dark); border-radius: 22px; padding: 1rem 1.25rem; }
+.tcard svg, .fig svg { width: 150px; height: auto; display: block; }
+.tcard h3 { margin: .25rem 0; }
+.tcard p { margin: .4rem 0; }
+.fig { margin: 1rem 0; text-align: center; }
+.fig svg { width: 100%; max-width: 420px; margin: 0 auto; }
+.fig figcaption { color: var(--muted); font-size: .95rem; }
+.docbtn { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; margin: 0 0 1.5rem; }
+@media (max-width: 760px) { .tcards { grid-template-columns: 1fr; } }
+
+/* Apartats, progrés i exercicis nous */
+.statusbar .wrap { gap: .6rem; }
+.aptlabel { font-weight: 700; flex: 1 1 14rem; }
+.stepper { display: flex; gap: .3rem; flex-wrap: wrap; }
+.dot { width: 1.9rem; height: 1.9rem; padding: 0 !important; border-radius: 50% !important; box-shadow: none !important; font-size: .85rem; }
+.dot.done { background: var(--lime) !important; }
+.dot.cur { background: var(--dark) !important; color: var(--white) !important; }
+details.part { scroll-margin-top: 8.5rem; }
+.aptn { display: inline-grid; place-items: center; min-width: 1.9rem; height: 1.9rem; border-radius: 8px; background: var(--dark); color: var(--lime); font-size: 1rem; }
+details.part.done .aptn { background: var(--lime); color: var(--dark); border: 1px solid var(--dark); }
+.aptnav { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 2px solid var(--dark); }
+.aptnav .btn { font: inherit; font-weight: 700; cursor: pointer; }
+.fills { list-style: none; margin: .75rem 0; padding: 0; }
+.fills li { padding: .6rem 0; border-top: 1px solid #c9cad3; }
+.fills li:first-child { border-top: 0; }
+select { font: inherit; padding: .2rem .5rem; border: 1px solid var(--dark); border-radius: 10px; background: var(--white); max-width: 100%; }
+select.ok { background: var(--lime); }
+select.ko { background: #ffd9d9; border-color: #b3261e; }
+.ord { list-style: none; margin: .75rem 0; padding: 0; counter-reset: o; }
+.ord li { counter-increment: o; display: flex; gap: .75rem; align-items: center; padding: .55rem .9rem; margin-bottom: .5rem; background: var(--white); border: 1px solid var(--dark); border-radius: 14px; }
+.ord li::before { content: counter(o); font-weight: 700; background: var(--lime); border: 1px solid var(--dark); border-radius: 8px; padding: 0 .55rem; }
+.ord .otxt { flex: 1; }
+.omv { display: flex; gap: .3rem; }
+.omv button { font: inherit; font-weight: 700; width: 2.1rem; height: 2.1rem; border: 1px solid var(--dark); border-radius: 8px; background: var(--grey); cursor: pointer; }
+.omv button:hover { background: var(--lime); }
+.ord li.ok { background: #e4ffc7; }
+.ord li.ko { background: #ffe4e4; }
+.tfs { list-style: none; margin: .75rem 0; padding: 0; }
+.tfrow { padding: .75rem 1rem; margin-bottom: .6rem; border: 1px solid var(--dark); border-radius: 16px; background: var(--white); }
+.tfrow p { margin: 0 0 .5rem; }
+.tfbtns { display: flex; gap: .5rem; }
+.tfb { font: inherit; font-weight: 700; padding: .3rem 1.1rem; border: 1px solid var(--dark); border-radius: 10px; background: var(--grey); cursor: pointer; }
+.tfb:hover { background: var(--lime); }
+.tfrow .exp { display: none; margin: .6rem 0 0; padding: .5rem .8rem; border-radius: 10px; background: var(--grey); }
+.tfrow.ok { background: #e4ffc7; } .tfrow.ko { background: #ffe4e4; }
+.tfrow.ok .exp, .tfrow.ko .exp { display: block; }
+.tfb.pick { background: var(--dark); color: var(--white); }
+.pairs { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: .75rem 0; }
+.pairs > div { display: flex; flex-direction: column; gap: .5rem; }
+.pc { font: inherit; text-align: left; padding: .55rem .9rem; border: 1px solid var(--dark); border-radius: 14px; background: var(--white); cursor: pointer; box-shadow: 0 2px 0 var(--dark); }
+.pc:hover { background: var(--grey); }
+.pc.sel { background: var(--lime); outline: 3px solid var(--dark); }
+.pc.done { background: #e4ffc7; opacity: .75; cursor: default; }
+.pc.ko { background: #ffd9d9; }
+.docbtn { margin-top: .5rem; }
+@media (max-width: 640px) { .pairs { grid-template-columns: 1fr; } .aptlabel { flex-basis: 100%; } }
+.statusbar button { padding: .2rem .7rem; }
+.dot { width: 1.7rem; height: 1.7rem; font-size: .8rem; }
+.statusbar .wrap { padding-top: .45rem; padding-bottom: .45rem; }
+
+/* Exercicis fets, generador i bloqueig */
+.exbox { position: relative; }
+.exbox.done::after { content: "Fet"; position: absolute; top: 1rem; right: 1.25rem; background: var(--lime); border: 1px solid var(--dark); border-radius: 99px; padding: 0 .75rem; font-weight: 700; font-size: .85rem; }
+.exbox.genx { background: var(--lime); }
+.gq { font-weight: 700; font-size: 1.05rem; margin: .5rem 0; }
+.gopts { display: flex; flex-wrap: wrap; gap: .6rem; margin: .5rem 0; }
+.gopt { font: inherit; font-weight: 700; padding: .5rem 1.1rem; border: 1px solid var(--dark); border-radius: 12px; background: var(--white); cursor: pointer; box-shadow: 0 3px 0 var(--dark); }
+.gopt:hover { background: var(--grey); }
+.gopt.ok { background: #e4ffc7; outline: 3px solid var(--dark); }
+.gopt.ko { background: #ffd9d9; }
+.gexp { margin: .5rem 0; padding: .6rem .9rem; background: var(--white); border-radius: 12px; border: 1px solid var(--dark); }
+.lockpanel { display: none; padding: 3rem 0 4rem; }
+.locked .lockpanel { display: block; }
+.locked main.wrap, .locked .statusbar, .locked .docbtn, .locked .hero .lead { display: none; }
+.lockbox { background: var(--lime); border: 1px solid var(--dark); border-radius: 36px; box-shadow: 0 6px 0 var(--dark); padding: 2.5rem; max-width: 36rem; }
+.lockbox h2 { margin: 0 0 .5rem; font-size: 1.8rem; }
+.lk a { opacity: .55; cursor: not-allowed; }
+.lk .tag { background: var(--dark); color: var(--lime); border-color: var(--dark); }
+
+/* Llistes simples i targeta del Classroom */
+.slist { margin: .6rem 0; padding-left: 1.4rem; }
+.slist li { margin: .45rem 0; }
+.classroom { background: var(--lime); border: 1px solid var(--dark); border-radius: 28px; box-shadow: 0 5px 0 var(--dark); padding: 1.75rem; }
+.classroom h3 { margin: 0 0 .5rem; font-size: 1.4rem; }
+.classroom p { margin: 0 0 .75rem; max-width: 52ch; }
+
+  </style>
+<script>(function(){if(Date.now()<new Date(2026,10,9).getTime())document.documentElement.classList.add("locked")})();</script></head>
+<body>
+
+  <div class="wrap">
+    <nav class="nav" aria-label="Navegació principal">
+      <a class="logo" href="../index.html"><i></i>Xarxes locals</a>
+      <ul>
+        <li><a href="../index.html#aea">AEA</a></li>
+        <li><a href="../index.html#ra">Resultats d'aprenentatge</a></li>
+        <li><a href="../index.html#avaluacio">Avaluació</a></li>
+        <li><a href="../index.html#recursos">Recursos</a></li>
+        <li><a class="btn" href="index.html">AEA1</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <header class="hero hero-small">
+    <div class="wrap">
+      <p class="module"><a href="../index.html">MP0255 Xarxes locals</a> · <a href="index.html">AEA1</a> · A5</p>
+      <h1>A5 · Mitjans de transmissió</h1>
+      <p class="lead">Cables i ones: coneix els mitjans per on viatgen les dades i tria el més adequat.</p>
+    </div>
+  </header>
+
+  <section class="lockpanel"><div class="wrap"><div class="lockbox"><h2>Activitat bloquejada</h2><p>Aquesta activitat s'obrirà el <b>9 de novembre de 2026</b>.</p><a class="btn" href="index.html">Tornar a l'AEA1</a></div></div></section>
+<div class="statusbar" role="region" aria-label="Progrés de l'activitat">
+    <div class="wrap">
+      <div class="bar" aria-hidden="true"><span id="fill"></span></div>
+      <span id="pct">0%</span>
+      <span id="aptlabel" class="aptlabel"></span>
+      <div id="stepper" class="stepper" aria-label="Apartats"></div>
+      <button id="expand" type="button">Desplega-ho tot</button>
+      <button id="reset" type="button">Reinicia</button>
+    </div>
+  </div>
+
+  <main class="wrap">
+<div class="docbtn"><a class="btn" href="docs/teoria-A5.pdf" download>Descarrega la teoria (PDF)</a></div>
+
+    <details class="part" open data-t="Què és un mitjà de transmissió?">
+      <summary>Què és un mitjà de transmissió? <span class="chip time">8 min</span><span class="chip count"></span></summary>
+      <div class="inner">
+<p>Un <b>mitjà de transmissió</b> és el camí físic, o l'aire, per on viatja el senyal entre dos equips.</p><ul><li><b>Mitjans guiats:</b> el senyal va per un cable (parells trenats, coaxial o fibra òptica).</li><li><b>Mitjans no guiats:</b> el senyal viatja per l'aire en forma d'ones electromagnètiques (Wi-Fi, Bluetooth, mòbil, ràdio…).</li></ul><div class="table-scroll"><table><thead><tr><th>Què comparem?</th><th>Què vol dir</th></tr></thead><tbody><tr><th scope='row'>Velocitat</th><td>Quantes dades poden passar per segon</td></tr><tr><th scope='row'>Distància màxima</th><td>Fins on arriba el senyal sense perdre qualitat</td></tr><tr><th scope='row'>Atenuació</th><td>El senyal es debilita amb la distància</td></tr><tr><th scope='row'>Interferències</th><td>Soroll elèctric que pot espatllar el senyal</td></tr><tr><th scope='row'>Cost i instal·lació</th><td>Preu del cable, de les eines i de la feina</td></tr></tbody></table></div>
+      </div>
+    </details>
+
+    <details class="part" open data-t="El cable coaxial">
+      <summary>El cable coaxial <span class="chip time">8 min</span><span class="chip count"></span></summary>
+      <div class="inner">
+<p>El cable <b>coaxial</b> té, de dins cap a fora: un <b>conductor central</b> de coure, un <b>aïllant</b> (dielèctric), una <b>malla metàl·lica</b> que fa de blindatge i una <b>coberta</b> de plàstic.</p><ul><li><b>Banda base:</b> el cable porta un únic senyal digital que ocupa tota la banda. Era el cas de les primeres xarxes Ethernet (10BASE2 i 10BASE5).</li><li><b>Banda ampla:</b> el cable porta molts canals a freqüències diferents. És el cable d'antena de TV i TDT.</li></ul><p>El connector més habitual per a la TV és el <b>connector F</b>, que s'enrosca.</p>
+      </div>
+    </details>
+
+    <details class="part" open data-t="Cables de parells trenats: UTP, FTP, STP i SFTP">
+      <summary>Cables de parells trenats: UTP, FTP, STP i SFTP <span class="chip time">10 min</span><span class="chip count"></span></summary>
+      <div class="inner">
+<p>Els cables Ethernet tenen <b>4 parells</b> de fils de coure <b>trenats</b>. El trenat redueix les interferències entre els fils. Es connecten amb el <b>connector RJ45</b> i la distància màxima és de <b>100 m</b>.</p><div class="table-scroll"><table><thead><tr><th>Tipus</th><th>Blindatge</th><th>Característiques</th></tr></thead><tbody><tr><th scope='row'>UTP</th><td>Cap</td><td>El més econòmic i habitual</td></tr><tr><th scope='row'>FTP (F/UTP)</th><td>Una làmina d'alumini que envolta tots els parells</td><td>Més protecció que l'UTP</td></tr><tr><th scope='row'>STP</th><td>Blindatge individual de cada parell</td><td>Més protecció, més car i més rígid</td></tr><tr><th scope='row'>SFTP (S/FTP)</th><td>Làmina a cada parell i malla metàl·lica global</td><td>Màxima protecció</td></tr></tbody></table></div><div class="table-scroll"><table><thead><tr><th>Categoria</th><th>Velocitat orientativa</th></tr></thead><tbody><tr><th scope='row'>Cat 5e</th><td>Fins a 1 Gbps</td></tr><tr><th scope='row'>Cat 6</th><td>1 Gbps (10 Gbps fins a uns 55 m)</td></tr><tr><th scope='row'>Cat 6a</th><td>10 Gbps fins a 100 m</td></tr></tbody></table></div><p>El cable <b>directe</b> connecta equips diferents (PC–switch). El <b>creuat</b> connectava equips iguals (PC–PC). Els equips moderns detecten el tipus de cable sols (Auto-MDIX).</p>
+      </div>
+    </details>
+
+    <details class="part" open data-t="La fibra òptica">
+      <summary>La fibra òptica <span class="chip time">10 min</span><span class="chip count"></span></summary>
+      <div class="inner">
+<p>La fibra òptica envia <b>llum</b> per un nucli de vidre molt fi. La llum rebota a les parets i avança sense escapar-se. No li afecten les interferències electromagnètiques i arriba lluny i ràpid.</p><div class="table-scroll"><table><thead><tr><th></th><th>Multimode</th><th>Monomode</th></tr></thead><tbody><tr><th scope='row'>Nucli</th><td>50 o 62,5 µm</td><td>Uns 9 µm</td></tr><tr><th scope='row'>Distància</th><td>Fins a uns 550 m a 1 Gbps</td><td>10 km o més</td></tr><tr><th scope='row'>Cost</th><td>Més econòmica</td><td>Més cara</td></tr><tr><th scope='row'>Ús</th><td>Dins d'un edifici o campus</td><td>Enllaços llargs, ciutats i operadors</td></tr></tbody></table></div><p>Connectors habituals: <b>SC</b> (quadrat), <b>ST</b> (rodó, de baioneta) i <b>LC</b> (petit). A l'activitat relacionem la multimode amb SC i la monomode amb ST, però no és una regla fixa. Inconvenients: és més cara i més fràgil, i cal eines especials per connectar-la.</p>
+      </div>
+    </details>
+
+    <details class="part" open data-t="Quin cable per a cada cas?">
+      <summary>Quin cable per a cada cas? <span class="chip time">10 min</span><span class="chip count"></span></summary>
+      <div class="inner">
+<div class="table-scroll"><table><thead><tr><th>Situació</th><th>Mitjà recomanat</th></tr></thead><tbody><tr><th scope='row'>Fins a 100 m dins d'un edifici</th><td>UTP (o FTP si hi ha soroll elèctric)</td></tr><tr><th scope='row'>Entre 100 i 550 m a 1 Gbps</th><td>Fibra multimode</td></tr><tr><th scope='row'>Quilòmetres de distància</th><td>Fibra monomode</td></tr><tr><th scope='row'>Molt soroll elèctric</th><td>FTP, STP, SFTP o fibra</td></tr><tr><th scope='row'>Antena de TV</th><td>Coaxial</td></tr><tr><th scope='row'>Sense cables</th><td>Wi-Fi o altres ones</td></tr></tbody></table></div>
+      </div>
+    </details>
+
+    <details class="part" open data-t="Mitjans no guiats: les ones">
+      <summary>Mitjans no guiats: les ones <span class="chip time">10 min</span><span class="chip count"></span></summary>
+      <div class="inner">
+<p>Les <b>ones electromagnètiques</b> porten la informació per l'aire. Cada servei fa servir una <b>freqüència</b> (en hertz) i les bandes estan regulades per evitar interferències. A més freqüència, més capacitat però menys abast i més dificultat per travessar parets.</p><div class="table-scroll"><table><thead><tr><th>Ona</th><th>Freqüència orientativa</th><th>Ús</th></tr></thead><tbody><tr><th scope='row'>Ràdio AM</th><td>~530–1600 kHz</td><td>Ràdio d'ona mitjana, llarg abast</td></tr><tr><th scope='row'>Ràdio FM</th><td>87,5–108 MHz</td><td>Ràdio musical, millor qualitat</td></tr><tr><th scope='row'>TDT</th><td>UHF 470–694 MHz</td><td>Televisió digital terrestre</td></tr><tr><th scope='row'>Bluetooth</th><td>2,4 GHz</td><td>Pocs metres: auriculars, ratolí</td></tr><tr><th scope='row'>Wi-Fi</th><td>2,4 i 5 GHz</td><td>Xarxa local sense fils</td></tr></tbody></table></div><div class="table-scroll"><table><thead><tr><th>Mòbil</th><th>Època</th><th>Novetat</th></tr></thead><tbody><tr><th scope='row'>1G</th><td>Anys 80</td><td>Analògica, només veu</td></tr><tr><th scope='row'>2G</th><td>Anys 90</td><td>Digital (GSM): veu i SMS</td></tr><tr><th scope='row'>3G</th><td>Anys 2000</td><td>Internet al mòbil</td></tr><tr><th scope='row'>4G</th><td>Anys 2010</td><td>Banda ampla mòbil (LTE)</td></tr><tr><th scope='row'>5G</th><td>Anys 2020</td><td>Més velocitat i menys latència</td></tr></tbody></table></div>
+      </div>
+    </details>
+
+    <details class="part" open data-t="Exercicis pràctics">
+      <summary>Exercicis pràctics <span class="chip time">45 min</span><span class="chip count"></span></summary>
+      <div class="inner">
+<p>Practica ara tot el que has après a la teoria. Cada bloc correspon a un apartat.</p>
+<h3 class="sub">Què és un mitjà de transmissió?</h3>
+<div class="exbox"><div class="dnd"><h3>Guiat o no guiat?</h3><p class="mini"> Arrossega els conceptes a la caixa correcta (o toca un concepte i després la caixa).</p><div class="pool" aria-label="Conceptes"><span class="chip-d" draggable="true" data-ans="0">Cable UTP</span><span class="chip-d" draggable="true" data-ans="0">Cable coaxial</span><span class="chip-d" draggable="true" data-ans="0">Fibra òptica</span><span class="chip-d" draggable="true" data-ans="1">Wi-Fi</span><span class="chip-d" draggable="true" data-ans="1">Bluetooth</span><span class="chip-d" draggable="true" data-ans="1">Ràdio FM</span><span class="chip-d" draggable="true" data-ans="1">5G</span></div><div class="boxes"><div class="box"><h4>Mitjà guiat</h4><div class="drop" data-box="0"></div></div><div class="box"><h4>Mitjà no guiat</h4><div class="drop" data-box="1"></div></div></div><div class="btnrow"><button type="button" class="btn check">Comprova</button><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox genx" data-gen="pool" data-pool="{&quot;own&quot;: [[&quot;Mitjà guiat&quot;, &quot;El senyal va per un cable&quot;], [&quot;Mitjà no guiat&quot;, &quot;El senyal viatja per l&#x27;aire&quot;], [&quot;Atenuació&quot;, &quot;El senyal es debilita amb la distància&quot;], [&quot;Interferències&quot;, &quot;Soroll elèctric que pot espatllar el senyal&quot;]], &quot;all&quot;: [[&quot;Mitjà guiat&quot;, &quot;El senyal va per un cable&quot;], [&quot;Mitjà no guiat&quot;, &quot;El senyal viatja per l&#x27;aire&quot;], [&quot;Atenuació&quot;, &quot;El senyal es debilita amb la distància&quot;], [&quot;Interferències&quot;, &quot;Soroll elèctric que pot espatllar el senyal&quot;], [&quot;Conductor central&quot;, &quot;Part del coaxial que porta el senyal&quot;], [&quot;Banda base&quot;, &quot;Un únic senyal digital que ocupa tota la banda&quot;], [&quot;Banda ampla&quot;, &quot;Molts canals a freqüències diferents&quot;], [&quot;Connector F&quot;, &quot;Connector roscat del coaxial de TV&quot;], [&quot;UTP&quot;, &quot;Parells trenats sense blindatge&quot;], [&quot;FTP&quot;, &quot;Una làmina d&#x27;alumini per a tots els parells&quot;], [&quot;SFTP&quot;, &quot;Làmina a cada parell i malla global&quot;], [&quot;RJ45&quot;, &quot;Connector dels cables Ethernet&quot;], [&quot;Multimode&quot;, &quot;Fibra de nucli gran per a distàncies curtes&quot;], [&quot;Monomode&quot;, &quot;Fibra de nucli molt fi per a llargues distàncies&quot;], [&quot;SC&quot;, &quot;Connector quadrat de fibra&quot;], [&quot;ST&quot;, &quot;Connector de fibra rodó amb baioneta&quot;], [&quot;UTP&quot;, &quot;Fins a 100 m&quot;], [&quot;Fibra multimode&quot;, &quot;Entre 100 i 550 m a 1 Gbps&quot;], [&quot;Fibra monomode&quot;, &quot;Quilòmetres de distància&quot;], [&quot;Coaxial&quot;, &quot;Antena de TV&quot;], [&quot;Ràdio AM&quot;, &quot;~530–1600 kHz&quot;], [&quot;Ràdio FM&quot;, &quot;87,5–108 MHz&quot;], [&quot;TDT&quot;, &quot;UHF 470–694 MHz&quot;], [&quot;Bluetooth&quot;, &quot;2,4 GHz, pocs metres&quot;], [&quot;2G&quot;, &quot;Primera generació mòbil digital (GSM)&quot;], [&quot;5G&quot;, &quot;Més velocitat i menys latència&quot;]]}"><h3>Més exercicis</h3><p class="mini">Exercicis nous cada vegada: practica tantes vegades com vulguis.</p><div class="gbody"></div><p class="result gscore" aria-live="polite"></p><div class="btnrow"><button type="button" class="btn gnew">Genera més exercicis</button></div></div>
+<h3 class="sub">El cable coaxial</h3>
+<div class="exbox"><div class="ordx"><h3>Capes del coaxial</h3><p class="mini">De dins cap a fora. Usa les fletxes per ordenar els passos.</p><ol class="ord"><li data-pos="1"><span class="otxt">Aïllant (dielèctric)</span><span class="omv"><button type="button" class="up" aria-label="Puja">↑</button><button type="button" class="dn" aria-label="Baixa">↓</button></span></li><li data-pos="3"><span class="otxt">Coberta exterior de plàstic</span><span class="omv"><button type="button" class="up" aria-label="Puja">↑</button><button type="button" class="dn" aria-label="Baixa">↓</button></span></li><li data-pos="0"><span class="otxt">Conductor central de coure</span><span class="omv"><button type="button" class="up" aria-label="Puja">↑</button><button type="button" class="dn" aria-label="Baixa">↓</button></span></li><li data-pos="2"><span class="otxt">Malla metàl·lica</span><span class="omv"><button type="button" class="up" aria-label="Puja">↑</button><button type="button" class="dn" aria-label="Baixa">↓</button></span></li></ol><div class="btnrow"><button type="button" class="btn check">Comprova</button><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox"><div class="fillx"><h3>Completa</h3><p class="mini"> Tria la resposta correcta a cada desplegable.</p><ul class="fills"><li>El cable d'antena de TV és un coaxial de banda <select autocomplete="off" data-ans="ampla" aria-label="Tria la resposta"><option value="">…</option><option>base</option><option>ampla</option></select>.</li><li>El connector del coaxial de TV s'enrosca i es diu <select autocomplete="off" data-ans="F" aria-label="Tria la resposta"><option value="">…</option><option>SC</option><option>F</option><option>RJ45</option></select>.</li></ul><div class="btnrow"><button type="button" class="btn check">Comprova</button><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox genx" data-gen="pool" data-pool="{&quot;own&quot;: [[&quot;Conductor central&quot;, &quot;Part del coaxial que porta el senyal&quot;], [&quot;Banda base&quot;, &quot;Un únic senyal digital que ocupa tota la banda&quot;], [&quot;Banda ampla&quot;, &quot;Molts canals a freqüències diferents&quot;], [&quot;Connector F&quot;, &quot;Connector roscat del coaxial de TV&quot;]], &quot;all&quot;: [[&quot;Mitjà guiat&quot;, &quot;El senyal va per un cable&quot;], [&quot;Mitjà no guiat&quot;, &quot;El senyal viatja per l&#x27;aire&quot;], [&quot;Atenuació&quot;, &quot;El senyal es debilita amb la distància&quot;], [&quot;Interferències&quot;, &quot;Soroll elèctric que pot espatllar el senyal&quot;], [&quot;Conductor central&quot;, &quot;Part del coaxial que porta el senyal&quot;], [&quot;Banda base&quot;, &quot;Un únic senyal digital que ocupa tota la banda&quot;], [&quot;Banda ampla&quot;, &quot;Molts canals a freqüències diferents&quot;], [&quot;Connector F&quot;, &quot;Connector roscat del coaxial de TV&quot;], [&quot;UTP&quot;, &quot;Parells trenats sense blindatge&quot;], [&quot;FTP&quot;, &quot;Una làmina d&#x27;alumini per a tots els parells&quot;], [&quot;SFTP&quot;, &quot;Làmina a cada parell i malla global&quot;], [&quot;RJ45&quot;, &quot;Connector dels cables Ethernet&quot;], [&quot;Multimode&quot;, &quot;Fibra de nucli gran per a distàncies curtes&quot;], [&quot;Monomode&quot;, &quot;Fibra de nucli molt fi per a llargues distàncies&quot;], [&quot;SC&quot;, &quot;Connector quadrat de fibra&quot;], [&quot;ST&quot;, &quot;Connector de fibra rodó amb baioneta&quot;], [&quot;UTP&quot;, &quot;Fins a 100 m&quot;], [&quot;Fibra multimode&quot;, &quot;Entre 100 i 550 m a 1 Gbps&quot;], [&quot;Fibra monomode&quot;, &quot;Quilòmetres de distància&quot;], [&quot;Coaxial&quot;, &quot;Antena de TV&quot;], [&quot;Ràdio AM&quot;, &quot;~530–1600 kHz&quot;], [&quot;Ràdio FM&quot;, &quot;87,5–108 MHz&quot;], [&quot;TDT&quot;, &quot;UHF 470–694 MHz&quot;], [&quot;Bluetooth&quot;, &quot;2,4 GHz, pocs metres&quot;], [&quot;2G&quot;, &quot;Primera generació mòbil digital (GSM)&quot;], [&quot;5G&quot;, &quot;Més velocitat i menys latència&quot;]]}"><h3>Més exercicis</h3><p class="mini">Exercicis nous cada vegada: practica tantes vegades com vulguis.</p><div class="gbody"></div><p class="result gscore" aria-live="polite"></p><div class="btnrow"><button type="button" class="btn gnew">Genera més exercicis</button></div></div>
+<h3 class="sub">Cables de parells trenats: UTP, FTP, STP i SFTP</h3>
+<div class="exbox"><div class="dnd"><h3>Quin cable és?</h3><p class="mini"> Arrossega els conceptes a la caixa correcta (o toca un concepte i després la caixa).</p><div class="pool" aria-label="Conceptes"><span class="chip-d" draggable="true" data-ans="0">Sense blindatge</span><span class="chip-d" draggable="true" data-ans="0">El més econòmic</span><span class="chip-d" draggable="true" data-ans="1">Làmina d'alumini global</span><span class="chip-d" draggable="true" data-ans="2">Blindatge a cada parell</span><span class="chip-d" draggable="true" data-ans="2">El més protegit</span></div><div class="boxes"><div class="box"><h4>UTP</h4><div class="drop" data-box="0"></div></div><div class="box"><h4>FTP</h4><div class="drop" data-box="1"></div></div><div class="box"><h4>STP / SFTP</h4><div class="drop" data-box="2"></div></div></div><div class="btnrow"><button type="button" class="btn check">Comprova</button><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox"><div class="fillx"><h3>Dades</h3><p class="mini"> Tria la resposta correcta a cada desplegable.</p><ul class="fills"><li>Un cable UTP arriba com a màxim a <select autocomplete="off" data-ans="100 m" aria-label="Tria la resposta"><option value="">…</option><option>1 km</option><option>100 m</option><option>10 m</option></select>.</li><li>El connector d'un cable Ethernet és el <select autocomplete="off" data-ans="RJ45" aria-label="Tria la resposta"><option value="">…</option><option>RJ45</option><option>F</option><option>SC</option></select>.</li></ul><div class="btnrow"><button type="button" class="btn check">Comprova</button><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox genx" data-gen="pool" data-pool="{&quot;own&quot;: [[&quot;UTP&quot;, &quot;Parells trenats sense blindatge&quot;], [&quot;FTP&quot;, &quot;Una làmina d&#x27;alumini per a tots els parells&quot;], [&quot;SFTP&quot;, &quot;Làmina a cada parell i malla global&quot;], [&quot;RJ45&quot;, &quot;Connector dels cables Ethernet&quot;]], &quot;all&quot;: [[&quot;Mitjà guiat&quot;, &quot;El senyal va per un cable&quot;], [&quot;Mitjà no guiat&quot;, &quot;El senyal viatja per l&#x27;aire&quot;], [&quot;Atenuació&quot;, &quot;El senyal es debilita amb la distància&quot;], [&quot;Interferències&quot;, &quot;Soroll elèctric que pot espatllar el senyal&quot;], [&quot;Conductor central&quot;, &quot;Part del coaxial que porta el senyal&quot;], [&quot;Banda base&quot;, &quot;Un únic senyal digital que ocupa tota la banda&quot;], [&quot;Banda ampla&quot;, &quot;Molts canals a freqüències diferents&quot;], [&quot;Connector F&quot;, &quot;Connector roscat del coaxial de TV&quot;], [&quot;UTP&quot;, &quot;Parells trenats sense blindatge&quot;], [&quot;FTP&quot;, &quot;Una làmina d&#x27;alumini per a tots els parells&quot;], [&quot;SFTP&quot;, &quot;Làmina a cada parell i malla global&quot;], [&quot;RJ45&quot;, &quot;Connector dels cables Ethernet&quot;], [&quot;Multimode&quot;, &quot;Fibra de nucli gran per a distàncies curtes&quot;], [&quot;Monomode&quot;, &quot;Fibra de nucli molt fi per a llargues distàncies&quot;], [&quot;SC&quot;, &quot;Connector quadrat de fibra&quot;], [&quot;ST&quot;, &quot;Connector de fibra rodó amb baioneta&quot;], [&quot;UTP&quot;, &quot;Fins a 100 m&quot;], [&quot;Fibra multimode&quot;, &quot;Entre 100 i 550 m a 1 Gbps&quot;], [&quot;Fibra monomode&quot;, &quot;Quilòmetres de distància&quot;], [&quot;Coaxial&quot;, &quot;Antena de TV&quot;], [&quot;Ràdio AM&quot;, &quot;~530–1600 kHz&quot;], [&quot;Ràdio FM&quot;, &quot;87,5–108 MHz&quot;], [&quot;TDT&quot;, &quot;UHF 470–694 MHz&quot;], [&quot;Bluetooth&quot;, &quot;2,4 GHz, pocs metres&quot;], [&quot;2G&quot;, &quot;Primera generació mòbil digital (GSM)&quot;], [&quot;5G&quot;, &quot;Més velocitat i menys latència&quot;]]}"><h3>Més exercicis</h3><p class="mini">Exercicis nous cada vegada: practica tantes vegades com vulguis.</p><div class="gbody"></div><p class="result gscore" aria-live="polite"></p><div class="btnrow"><button type="button" class="btn gnew">Genera més exercicis</button></div></div>
+<h3 class="sub">La fibra òptica</h3>
+<div class="exbox"><div class="dnd"><h3>Multimode o monomode?</h3><p class="mini"> Arrossega els conceptes a la caixa correcta (o toca un concepte i després la caixa).</p><div class="pool" aria-label="Conceptes"><span class="chip-d" draggable="true" data-ans="0">Nucli gran (50/62,5 µm)</span><span class="chip-d" draggable="true" data-ans="0">Més econòmica</span><span class="chip-d" draggable="true" data-ans="0">Entre edificis d'un campus</span><span class="chip-d" draggable="true" data-ans="1">Nucli molt fi (~9 µm)</span><span class="chip-d" draggable="true" data-ans="1">Enllaços de 10 km o més</span><span class="chip-d" draggable="true" data-ans="1">Més cara</span></div><div class="boxes"><div class="box"><h4>Multimode</h4><div class="drop" data-box="0"></div></div><div class="box"><h4>Monomode</h4><div class="drop" data-box="1"></div></div></div><div class="btnrow"><button type="button" class="btn check">Comprova</button><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox genx" data-gen="pool" data-pool="{&quot;own&quot;: [[&quot;Multimode&quot;, &quot;Fibra de nucli gran per a distàncies curtes&quot;], [&quot;Monomode&quot;, &quot;Fibra de nucli molt fi per a llargues distàncies&quot;], [&quot;SC&quot;, &quot;Connector quadrat de fibra&quot;], [&quot;ST&quot;, &quot;Connector de fibra rodó amb baioneta&quot;]], &quot;all&quot;: [[&quot;Mitjà guiat&quot;, &quot;El senyal va per un cable&quot;], [&quot;Mitjà no guiat&quot;, &quot;El senyal viatja per l&#x27;aire&quot;], [&quot;Atenuació&quot;, &quot;El senyal es debilita amb la distància&quot;], [&quot;Interferències&quot;, &quot;Soroll elèctric que pot espatllar el senyal&quot;], [&quot;Conductor central&quot;, &quot;Part del coaxial que porta el senyal&quot;], [&quot;Banda base&quot;, &quot;Un únic senyal digital que ocupa tota la banda&quot;], [&quot;Banda ampla&quot;, &quot;Molts canals a freqüències diferents&quot;], [&quot;Connector F&quot;, &quot;Connector roscat del coaxial de TV&quot;], [&quot;UTP&quot;, &quot;Parells trenats sense blindatge&quot;], [&quot;FTP&quot;, &quot;Una làmina d&#x27;alumini per a tots els parells&quot;], [&quot;SFTP&quot;, &quot;Làmina a cada parell i malla global&quot;], [&quot;RJ45&quot;, &quot;Connector dels cables Ethernet&quot;], [&quot;Multimode&quot;, &quot;Fibra de nucli gran per a distàncies curtes&quot;], [&quot;Monomode&quot;, &quot;Fibra de nucli molt fi per a llargues distàncies&quot;], [&quot;SC&quot;, &quot;Connector quadrat de fibra&quot;], [&quot;ST&quot;, &quot;Connector de fibra rodó amb baioneta&quot;], [&quot;UTP&quot;, &quot;Fins a 100 m&quot;], [&quot;Fibra multimode&quot;, &quot;Entre 100 i 550 m a 1 Gbps&quot;], [&quot;Fibra monomode&quot;, &quot;Quilòmetres de distància&quot;], [&quot;Coaxial&quot;, &quot;Antena de TV&quot;], [&quot;Ràdio AM&quot;, &quot;~530–1600 kHz&quot;], [&quot;Ràdio FM&quot;, &quot;87,5–108 MHz&quot;], [&quot;TDT&quot;, &quot;UHF 470–694 MHz&quot;], [&quot;Bluetooth&quot;, &quot;2,4 GHz, pocs metres&quot;], [&quot;2G&quot;, &quot;Primera generació mòbil digital (GSM)&quot;], [&quot;5G&quot;, &quot;Més velocitat i menys latència&quot;]]}"><h3>Més exercicis</h3><p class="mini">Exercicis nous cada vegada: practica tantes vegades com vulguis.</p><div class="gbody"></div><p class="result gscore" aria-live="polite"></p><div class="btnrow"><button type="button" class="btn gnew">Genera més exercicis</button></div></div>
+<h3 class="sub">Quin cable per a cada cas?</h3>
+<div class="exbox"><div class="fillx"><h3>Tria el cable</h3><p class="mini"> Tria la resposta correcta a cada desplegable.</p><ul class="fills"><li>Cas 1 · Dos PC directes a 5 m: <select autocomplete="off" data-ans="UTP creuat" aria-label="Tria la resposta"><option value="">…</option><option>UTP creuat</option><option>Coaxial</option><option>Fibra monomode</option></select>.</li><li>Cas 2 · PC amb el switch de l'armari a 3 m: <select autocomplete="off" data-ans="UTP directe" aria-label="Tria la resposta"><option value="">…</option><option>UTP directe</option><option>UTP creuat</option><option>Fibra monomode</option></select>.</li><li>Cas 3 · Switch de l'aula amb el rack a 70 m: <select autocomplete="off" data-ans="UTP (fins a 100 m)" aria-label="Tria la resposta"><option value="">…</option><option>Bluetooth</option><option>UTP (fins a 100 m)</option><option>Coaxial de TV</option></select>.</li><li>Cas 4 · Dos edificis a 200 m i mínim 1 Gbps: <select autocomplete="off" data-ans="Fibra multimode" aria-label="Tria la resposta"><option value="">…</option><option>Cable UTP</option><option>Coaxial</option><option>Fibra multimode</option></select>.</li><li>Cas 5 · Un institut a 10 km: <select autocomplete="off" data-ans="Fibra monomode" aria-label="Tria la resposta"><option value="">…</option><option>Cable UTP</option><option>Fibra monomode</option><option>Fibra multimode</option></select>.</li></ul><div class="btnrow"><button type="button" class="btn check">Comprova</button><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<details class="qa"><summary>Per què?</summary><p>L'UTP arriba a 100 m. A 200 m cal fibra, i la multimode ja serveix i és més barata. A 10 km només hi arriba la monomode.</p></details><div class="exbox genx" data-gen="cable,pool" data-pool="{&quot;own&quot;: [[&quot;UTP&quot;, &quot;Fins a 100 m&quot;], [&quot;Fibra multimode&quot;, &quot;Entre 100 i 550 m a 1 Gbps&quot;], [&quot;Fibra monomode&quot;, &quot;Quilòmetres de distància&quot;], [&quot;Coaxial&quot;, &quot;Antena de TV&quot;]], &quot;all&quot;: [[&quot;Mitjà guiat&quot;, &quot;El senyal va per un cable&quot;], [&quot;Mitjà no guiat&quot;, &quot;El senyal viatja per l&#x27;aire&quot;], [&quot;Atenuació&quot;, &quot;El senyal es debilita amb la distància&quot;], [&quot;Interferències&quot;, &quot;Soroll elèctric que pot espatllar el senyal&quot;], [&quot;Conductor central&quot;, &quot;Part del coaxial que porta el senyal&quot;], [&quot;Banda base&quot;, &quot;Un únic senyal digital que ocupa tota la banda&quot;], [&quot;Banda ampla&quot;, &quot;Molts canals a freqüències diferents&quot;], [&quot;Connector F&quot;, &quot;Connector roscat del coaxial de TV&quot;], [&quot;UTP&quot;, &quot;Parells trenats sense blindatge&quot;], [&quot;FTP&quot;, &quot;Una làmina d&#x27;alumini per a tots els parells&quot;], [&quot;SFTP&quot;, &quot;Làmina a cada parell i malla global&quot;], [&quot;RJ45&quot;, &quot;Connector dels cables Ethernet&quot;], [&quot;Multimode&quot;, &quot;Fibra de nucli gran per a distàncies curtes&quot;], [&quot;Monomode&quot;, &quot;Fibra de nucli molt fi per a llargues distàncies&quot;], [&quot;SC&quot;, &quot;Connector quadrat de fibra&quot;], [&quot;ST&quot;, &quot;Connector de fibra rodó amb baioneta&quot;], [&quot;UTP&quot;, &quot;Fins a 100 m&quot;], [&quot;Fibra multimode&quot;, &quot;Entre 100 i 550 m a 1 Gbps&quot;], [&quot;Fibra monomode&quot;, &quot;Quilòmetres de distància&quot;], [&quot;Coaxial&quot;, &quot;Antena de TV&quot;], [&quot;Ràdio AM&quot;, &quot;~530–1600 kHz&quot;], [&quot;Ràdio FM&quot;, &quot;87,5–108 MHz&quot;], [&quot;TDT&quot;, &quot;UHF 470–694 MHz&quot;], [&quot;Bluetooth&quot;, &quot;2,4 GHz, pocs metres&quot;], [&quot;2G&quot;, &quot;Primera generació mòbil digital (GSM)&quot;], [&quot;5G&quot;, &quot;Més velocitat i menys latència&quot;]]}"><h3>Més exercicis</h3><p class="mini">Exercicis nous cada vegada: practica tantes vegades com vulguis.</p><div class="gbody"></div><p class="result gscore" aria-live="polite"></p><div class="btnrow"><button type="button" class="btn gnew">Genera més exercicis</button></div></div>
+<h3 class="sub">Mitjans no guiats: les ones</h3>
+<div class="exbox"><div class="pairx"><h3>Ona i ús</h3><p class="mini"> Toca un concepte i després la seva parella.</p><div class="pairs"><div><button type="button" class="pc" data-k="0" data-side="l">Ràdio AM</button><button type="button" class="pc" data-k="1" data-side="l">Ràdio FM</button><button type="button" class="pc" data-k="2" data-side="l">TDT</button><button type="button" class="pc" data-k="3" data-side="l">Bluetooth</button><button type="button" class="pc" data-k="4" data-side="l">Wi-Fi</button></div><div><button type="button" class="pc" data-k="1" data-side="r">Ràdio musical de més qualitat</button><button type="button" class="pc" data-k="4" data-side="r">Xarxa local sense fils</button><button type="button" class="pc" data-k="0" data-side="r">Ona mitjana, llarg abast</button><button type="button" class="pc" data-k="3" data-side="r">Connexió de pocs metres</button><button type="button" class="pc" data-k="2" data-side="r">Televisió digital terrestre</button></div></div><div class="btnrow"><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox"><div class="ordx"><h3>Ordena les generacions mòbils</h3><p class="mini">De la més antiga a la més recent. Usa les fletxes per ordenar els passos.</p><ol class="ord"><li data-pos="2"><span class="otxt">3G · internet al mòbil</span><span class="omv"><button type="button" class="up" aria-label="Puja">↑</button><button type="button" class="dn" aria-label="Baixa">↓</button></span></li><li data-pos="4"><span class="otxt">5G · més velocitat i menys latència</span><span class="omv"><button type="button" class="up" aria-label="Puja">↑</button><button type="button" class="dn" aria-label="Baixa">↓</button></span></li><li data-pos="1"><span class="otxt">2G · digital, veu i SMS</span><span class="omv"><button type="button" class="up" aria-label="Puja">↑</button><button type="button" class="dn" aria-label="Baixa">↓</button></span></li><li data-pos="3"><span class="otxt">4G · banda ampla mòbil</span><span class="omv"><button type="button" class="up" aria-label="Puja">↑</button><button type="button" class="dn" aria-label="Baixa">↓</button></span></li><li data-pos="0"><span class="otxt">1G · analògica, només veu</span><span class="omv"><button type="button" class="up" aria-label="Puja">↑</button><button type="button" class="dn" aria-label="Baixa">↓</button></span></li></ol><div class="btnrow"><button type="button" class="btn check">Comprova</button><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox genx" data-gen="pool" data-pool="{&quot;own&quot;: [[&quot;Ràdio AM&quot;, &quot;~530–1600 kHz&quot;], [&quot;Ràdio FM&quot;, &quot;87,5–108 MHz&quot;], [&quot;TDT&quot;, &quot;UHF 470–694 MHz&quot;], [&quot;Bluetooth&quot;, &quot;2,4 GHz, pocs metres&quot;], [&quot;2G&quot;, &quot;Primera generació mòbil digital (GSM)&quot;], [&quot;5G&quot;, &quot;Més velocitat i menys latència&quot;]], &quot;all&quot;: [[&quot;Mitjà guiat&quot;, &quot;El senyal va per un cable&quot;], [&quot;Mitjà no guiat&quot;, &quot;El senyal viatja per l&#x27;aire&quot;], [&quot;Atenuació&quot;, &quot;El senyal es debilita amb la distància&quot;], [&quot;Interferències&quot;, &quot;Soroll elèctric que pot espatllar el senyal&quot;], [&quot;Conductor central&quot;, &quot;Part del coaxial que porta el senyal&quot;], [&quot;Banda base&quot;, &quot;Un únic senyal digital que ocupa tota la banda&quot;], [&quot;Banda ampla&quot;, &quot;Molts canals a freqüències diferents&quot;], [&quot;Connector F&quot;, &quot;Connector roscat del coaxial de TV&quot;], [&quot;UTP&quot;, &quot;Parells trenats sense blindatge&quot;], [&quot;FTP&quot;, &quot;Una làmina d&#x27;alumini per a tots els parells&quot;], [&quot;SFTP&quot;, &quot;Làmina a cada parell i malla global&quot;], [&quot;RJ45&quot;, &quot;Connector dels cables Ethernet&quot;], [&quot;Multimode&quot;, &quot;Fibra de nucli gran per a distàncies curtes&quot;], [&quot;Monomode&quot;, &quot;Fibra de nucli molt fi per a llargues distàncies&quot;], [&quot;SC&quot;, &quot;Connector quadrat de fibra&quot;], [&quot;ST&quot;, &quot;Connector de fibra rodó amb baioneta&quot;], [&quot;UTP&quot;, &quot;Fins a 100 m&quot;], [&quot;Fibra multimode&quot;, &quot;Entre 100 i 550 m a 1 Gbps&quot;], [&quot;Fibra monomode&quot;, &quot;Quilòmetres de distància&quot;], [&quot;Coaxial&quot;, &quot;Antena de TV&quot;], [&quot;Ràdio AM&quot;, &quot;~530–1600 kHz&quot;], [&quot;Ràdio FM&quot;, &quot;87,5–108 MHz&quot;], [&quot;TDT&quot;, &quot;UHF 470–694 MHz&quot;], [&quot;Bluetooth&quot;, &quot;2,4 GHz, pocs metres&quot;], [&quot;2G&quot;, &quot;Primera generació mòbil digital (GSM)&quot;], [&quot;5G&quot;, &quot;Més velocitat i menys latència&quot;]]}"><h3>Més exercicis</h3><p class="mini">Exercicis nous cada vegada: practica tantes vegades com vulguis.</p><div class="gbody"></div><p class="result gscore" aria-live="polite"></p><div class="btnrow"><button type="button" class="btn gnew">Genera més exercicis</button></div></div>
+<h3 class="sub">Repàs final</h3>
+<div class="exbox"><div class="tfx"><h3>Vertader o fals?</h3><p class="mini"> Decideix si cada frase és vertadera o falsa.</p><ul class="tfs"><li class="tfrow" data-ans="1"><p>La fibra òptica no es veu afectada per les interferències electromagnètiques.</p><div class="tfbtns"><button type="button" class="tfb" data-v="1">Vertader</button><button type="button" class="tfb" data-v="0">Fals</button></div><p class="exp">Porta llum, no electricitat.</p></li><li class="tfrow" data-ans="0"><p>Un cable UTP pot arribar a 10 km.</p><div class="tfbtns"><button type="button" class="tfb" data-v="1">Vertader</button><button type="button" class="tfb" data-v="0">Fals</button></div><p class="exp">El màxim són 100 m.</p></li><li class="tfrow" data-ans="1"><p>El connector RJ45 és el dels cables Ethernet.</p><div class="tfbtns"><button type="button" class="tfb" data-v="1">Vertader</button><button type="button" class="tfb" data-v="0">Fals</button></div><p class="exp">Té 8 contactes per als 4 parells.</p></li></ul><div class="btnrow"><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox"><div class="quiz"><h3>Test d'autoavaluació</h3><fieldset class="q" data-ans="0"><legend>1. Quin cable fa servir l'antena de TV?</legend><label><input autocomplete="off" type="radio" autocomplete="off" name="a5q1" value="0">Coaxial</label><label><input autocomplete="off" type="radio" autocomplete="off" name="a5q1" value="1">UTP</label><label><input autocomplete="off" type="radio" autocomplete="off" name="a5q1" value="2">Fibra</label><p class="exp">És un coaxial de banda ampla.</p></fieldset><fieldset class="q" data-ans="1"><legend>2. Quina fibra serveix per a un enllaç de 10 km?</legend><label><input autocomplete="off" type="radio" autocomplete="off" name="a5q2" value="0">Multimode</label><label><input autocomplete="off" type="radio" autocomplete="off" name="a5q2" value="1">Monomode</label><label><input autocomplete="off" type="radio" autocomplete="off" name="a5q2" value="2">Cap</label><p class="exp">La monomode arriba a 10 km o més.</p></fieldset><fieldset class="q" data-ans="1"><legend>3. Quina és la primera generació mòbil digital?</legend><label><input autocomplete="off" type="radio" autocomplete="off" name="a5q3" value="0">1G</label><label><input autocomplete="off" type="radio" autocomplete="off" name="a5q3" value="1">2G</label><label><input autocomplete="off" type="radio" autocomplete="off" name="a5q3" value="2">3G</label><p class="exp">La 2G (GSM) va ser digital.</p></fieldset><div class="btnrow"><button type="button" class="btn check">Comprova</button><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox genx" data-gen="cable,pool" data-pool="{&quot;own&quot;: [[&quot;Mitjà guiat&quot;, &quot;El senyal va per un cable&quot;], [&quot;Mitjà no guiat&quot;, &quot;El senyal viatja per l&#x27;aire&quot;], [&quot;Atenuació&quot;, &quot;El senyal es debilita amb la distància&quot;], [&quot;Interferències&quot;, &quot;Soroll elèctric que pot espatllar el senyal&quot;], [&quot;Conductor central&quot;, &quot;Part del coaxial que porta el senyal&quot;], [&quot;Banda base&quot;, &quot;Un únic senyal digital que ocupa tota la banda&quot;], [&quot;Banda ampla&quot;, &quot;Molts canals a freqüències diferents&quot;], [&quot;Connector F&quot;, &quot;Connector roscat del coaxial de TV&quot;], [&quot;UTP&quot;, &quot;Parells trenats sense blindatge&quot;], [&quot;FTP&quot;, &quot;Una làmina d&#x27;alumini per a tots els parells&quot;], [&quot;SFTP&quot;, &quot;Làmina a cada parell i malla global&quot;], [&quot;RJ45&quot;, &quot;Connector dels cables Ethernet&quot;], [&quot;Multimode&quot;, &quot;Fibra de nucli gran per a distàncies curtes&quot;], [&quot;Monomode&quot;, &quot;Fibra de nucli molt fi per a llargues distàncies&quot;], [&quot;SC&quot;, &quot;Connector quadrat de fibra&quot;], [&quot;ST&quot;, &quot;Connector de fibra rodó amb baioneta&quot;], [&quot;UTP&quot;, &quot;Fins a 100 m&quot;], [&quot;Fibra multimode&quot;, &quot;Entre 100 i 550 m a 1 Gbps&quot;], [&quot;Fibra monomode&quot;, &quot;Quilòmetres de distància&quot;], [&quot;Coaxial&quot;, &quot;Antena de TV&quot;], [&quot;Ràdio AM&quot;, &quot;~530–1600 kHz&quot;], [&quot;Ràdio FM&quot;, &quot;87,5–108 MHz&quot;], [&quot;TDT&quot;, &quot;UHF 470–694 MHz&quot;], [&quot;Bluetooth&quot;, &quot;2,4 GHz, pocs metres&quot;], [&quot;2G&quot;, &quot;Primera generació mòbil digital (GSM)&quot;], [&quot;5G&quot;, &quot;Més velocitat i menys latència&quot;]], &quot;all&quot;: [[&quot;Mitjà guiat&quot;, &quot;El senyal va per un cable&quot;], [&quot;Mitjà no guiat&quot;, &quot;El senyal viatja per l&#x27;aire&quot;], [&quot;Atenuació&quot;, &quot;El senyal es debilita amb la distància&quot;], [&quot;Interferències&quot;, &quot;Soroll elèctric que pot espatllar el senyal&quot;], [&quot;Conductor central&quot;, &quot;Part del coaxial que porta el senyal&quot;], [&quot;Banda base&quot;, &quot;Un únic senyal digital que ocupa tota la banda&quot;], [&quot;Banda ampla&quot;, &quot;Molts canals a freqüències diferents&quot;], [&quot;Connector F&quot;, &quot;Connector roscat del coaxial de TV&quot;], [&quot;UTP&quot;, &quot;Parells trenats sense blindatge&quot;], [&quot;FTP&quot;, &quot;Una làmina d&#x27;alumini per a tots els parells&quot;], [&quot;SFTP&quot;, &quot;Làmina a cada parell i malla global&quot;], [&quot;RJ45&quot;, &quot;Connector dels cables Ethernet&quot;], [&quot;Multimode&quot;, &quot;Fibra de nucli gran per a distàncies curtes&quot;], [&quot;Monomode&quot;, &quot;Fibra de nucli molt fi per a llargues distàncies&quot;], [&quot;SC&quot;, &quot;Connector quadrat de fibra&quot;], [&quot;ST&quot;, &quot;Connector de fibra rodó amb baioneta&quot;], [&quot;UTP&quot;, &quot;Fins a 100 m&quot;], [&quot;Fibra multimode&quot;, &quot;Entre 100 i 550 m a 1 Gbps&quot;], [&quot;Fibra monomode&quot;, &quot;Quilòmetres de distància&quot;], [&quot;Coaxial&quot;, &quot;Antena de TV&quot;], [&quot;Ràdio AM&quot;, &quot;~530–1600 kHz&quot;], [&quot;Ràdio FM&quot;, &quot;87,5–108 MHz&quot;], [&quot;TDT&quot;, &quot;UHF 470–694 MHz&quot;], [&quot;Bluetooth&quot;, &quot;2,4 GHz, pocs metres&quot;], [&quot;2G&quot;, &quot;Primera generació mòbil digital (GSM)&quot;], [&quot;5G&quot;, &quot;Més velocitat i menys latència&quot;]]}"><h3>Més exercicis</h3><p class="mini">Exercicis nous cada vegada: practica tantes vegades com vulguis.</p><div class="gbody"></div><p class="result gscore" aria-live="polite"></p><div class="btnrow"><button type="button" class="btn gnew">Genera més exercicis</button></div></div>
+
+      </div>
+    </details>
+
+    <details class="part" open data-t="Activitat">
+      <summary>Activitat <span class="chip count"></span></summary>
+      <div class="inner">
+<div class="classroom"><h3>Consulta l'activitat al teu Classroom</h3><p>Ara que ja has vist la teoria i has practicat, fes l'activitat <b>A5 · Mitjans de transmissió</b>. La trobaràs a Classroom, dins de l'AEA1.</p><div class="btnrow"><a class="btn" href="https://classroom.google.com/" target="_blank" rel="noopener">Obre Classroom</a></div></div>
+      </div>
+    </details>
+
+  </main>
+
+  <footer class="site">
+    <div class="wrap">
+      <a class="logo" href="../index.html"><i></i>MP0255 Xarxes locals</a>
+      <p>CFGM Sistemes Microinformàtics i Xarxes · Curs 2026-2027 · Nom del docent</p>
+    </div>
+  </footer>
+<script>
+(function(){
+  var KEY='xl2:'+location.pathname, st={c:{},d:[],e:{}};
+  try{localStorage.removeItem(KEY)}catch(e){}
+  function save(){}
+  window.addEventListener('pageshow',function(e){if(e.persisted)location.reload()});
+  var apts=[].slice.call(document.querySelectorAll('details.part')),N=apts.length,cur=0,lock=false;
+  var boxes=[].slice.call(document.querySelectorAll('.steps input')),exs=[].slice.call(document.querySelectorAll('.exbox:not(.genx)')),total=N+exs.length+boxes.length;
+  var fill=document.getElementById('fill'),pct=document.getElementById('pct'),lab=document.getElementById('aptlabel'),stepper=document.getElementById('stepper'),dots=[];
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function render(){
+    var dn0=st.d.length+Object.keys(st.e).length+boxes.filter(function(b){return b.checked}).length,p=Math.round(dn0*100/total);fill.style.width=p+'%';pct.textContent=p+'%';
+    lab.textContent="Apartat "+(cur+1)+" de "+N+" · "+apts[cur].getAttribute('data-t');
+    apts.forEach(function(a,i){
+      var dn=st.d.indexOf(i)>-1;a.classList.toggle('done',dn);dots[i].classList.toggle('done',dn);dots[i].classList.toggle('cur',i===cur);
+      var c=a.querySelector('.count'),bs=a.querySelectorAll('.steps input');
+      if(c&&bs.length)c.textContent=[].filter.call(bs,function(b){return b.checked}).length+'/'+bs.length;
+    });
+  }
+  function go(i,scroll){
+    cur=Math.max(0,Math.min(N-1,i));apts.forEach(function(a,k){a.open=(k===cur)});render();
+    if(scroll)apts[cur].scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+  }
+  apts.forEach(function(a,i){
+    var sum=a.querySelector('summary'),n=document.createElement('span');n.className='aptn';n.textContent=i+1;sum.insertBefore(n,sum.firstChild);
+    var b=document.createElement('button');b.type='button';b.className='dot';b.textContent=i+1;
+    b.setAttribute('aria-label',"Apartat "+(i+1)+": "+a.getAttribute('data-t'));b.title=a.getAttribute('data-t');
+    b.addEventListener('click',function(){go(i,true)});stepper.appendChild(b);dots.push(b);
+    var nav=document.createElement('div');nav.className='aptnav';
+    if(i>0){var pv=document.createElement('button');pv.type='button';pv.className='btn light';pv.textContent='← Anterior';pv.addEventListener('click',function(){go(i-1,true)});nav.appendChild(pv)}else{nav.appendChild(document.createElement('span'))}
+    var nx=document.createElement('button');nx.type='button';nx.className='btn';nx.textContent=i<N-1?'Apartat acabat · Següent →':"Acabar l'activitat";
+    nx.addEventListener('click',function(){
+      if(st.d.indexOf(i)<0)st.d.push(i);save();
+      if(i<N-1)go(i+1,true);else{render();window.scrollTo({top:0,behavior:reduce?'auto':'smooth'})}
+    });
+    nav.appendChild(nx);a.querySelector('.inner').appendChild(nav);
+    sum.addEventListener('click',function(){setTimeout(function(){if(a.open){cur=i;render()}},0)});
+  });
+  exs.forEach(function(x,i){if(st.e[i])x.classList.add('done')});
+  function complete(ex,t){
+    if(t.closest('.check')){
+      if(ex.querySelector('.fillx'))return [].every.call(ex.querySelectorAll('select'),function(x){return x.value});
+      if(ex.querySelector('.dnd'))return !ex.querySelector('.pool .chip-d');
+      if(ex.querySelector('.quiz'))return [].every.call(ex.querySelectorAll('.q'),function(q){return q.querySelector('input:checked')});
+      return true;
+    }
+    if(t.closest('.tfb'))return [].every.call(ex.querySelectorAll('.tfrow'),function(r){return r.classList.contains('ok')||r.classList.contains('ko')});
+    if(t.closest('.pc'))return [].every.call(ex.querySelectorAll('.pc'),function(c){return c.classList.contains('done')});
+    return false;
+  }
+  document.addEventListener('click',function(e){
+    var ex=e.target.closest&&e.target.closest('.exbox:not(.genx)');if(!ex)return;
+    var i=exs.indexOf(ex);if(i<0||st.e[i])return;var t=e.target;
+    setTimeout(function(){if(complete(ex,t)){st.e[i]=true;save();ex.classList.add('done');render()}},0);
+  });
+  boxes.forEach(function(b,i){
+    b.checked=!!st.c[i];
+    b.addEventListener('change',function(){st.c[i]=b.checked;save();render()});
+  });
+  var first=0;while(first<N&&st.d.indexOf(first)>-1)first++;
+  go(first>=N?N-1:first,false);
+  var all=false,ex=document.getElementById('expand');
+  ex.addEventListener('click',function(){all=!all;apts.forEach(function(a,k){a.open=all||k===cur});ex.textContent=all?"Només l'apartat actual":'Desplega-ho tot'});
+  document.getElementById('reset').addEventListener('click',function(){
+    if(!confirm("Vols esborrar el progrés d'aquesta activitat?"))return;
+    st={c:{},d:[],e:{}};save();boxes.forEach(function(b){b.checked=false});exs.forEach(function(x){x.classList.remove('done')});go(0,true);
+  });
+})();
+</script>
+<script>
+(function(){
+  function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+  [].forEach.call(document.querySelectorAll('.dnd'),function(d){
+    var pool=d.querySelector('.pool'),chips=[].slice.call(d.querySelectorAll('.chip-d')),res=d.querySelector('.result'),sel=null;
+    var targets=[pool].concat([].slice.call(d.querySelectorAll('.drop')));
+    function scatter(){shuffle(chips.slice()).forEach(function(c){pool.appendChild(c)})}
+    function clear(){chips.forEach(function(c){c.classList.remove('ok','ko')});res.textContent=''}
+    function put(c,t){t.appendChild(c);c.classList.remove('sel');sel=null;clear()}
+    scatter();
+    chips.forEach(function(c){
+      c.setAttribute('tabindex','0');
+      c.addEventListener('click',function(e){e.stopPropagation();if(sel&&sel!==c){put(sel,c.parentNode);return}if(sel===c){c.classList.remove('sel');sel=null;return}if(sel)sel.classList.remove('sel');sel=c;c.classList.add('sel')});
+      c.addEventListener('dragstart',function(e){sel=c;e.dataTransfer.setData('text/plain','x')});
+      c.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();c.click()}});
+    });
+    targets.forEach(function(t){
+      t.addEventListener('click',function(){if(sel)put(sel,t)});
+      t.addEventListener('dragover',function(e){e.preventDefault();t.classList.add('over')});
+      t.addEventListener('dragleave',function(){t.classList.remove('over')});
+      t.addEventListener('drop',function(e){e.preventDefault();t.classList.remove('over');if(sel)put(sel,t)});
+    });
+    d.querySelector('.check').addEventListener('click',function(){
+      var ok=0,pl=0;
+      chips.forEach(function(c){var p=c.parentNode;c.classList.remove('ok','ko');
+        if(p.classList.contains('drop')){pl++;if(p.getAttribute('data-box')===c.getAttribute('data-ans')){ok++;c.classList.add('ok')}else c.classList.add('ko')}});
+      res.textContent=pl<chips.length?'Et falta col·locar '+(chips.length-pl)+' concepte(s). Correctes ara: '+ok+'.':ok+' de '+chips.length+' correctes'+(ok===chips.length?' · Perfecte!':'. Revisa els marcats en vermell.');
+    });
+    d.querySelector('.reset').addEventListener('click',function(){if(sel){sel.classList.remove('sel');sel=null}scatter();clear()});
+  });
+  [].forEach.call(document.querySelectorAll('.quiz'),function(z){
+    var qs=[].slice.call(z.querySelectorAll('.q')),res=z.querySelector('.result');
+    z.querySelector('.check').addEventListener('click',function(){
+      var ok=0,an=0;
+      qs.forEach(function(q){q.classList.remove('ok','ko');q.classList.add('done');var r=q.querySelector('input:checked');if(!r)return;an++;
+        if(r.value===q.getAttribute('data-ans')){ok++;q.classList.add('ok')}else q.classList.add('ko')});
+      res.textContent=ok+' de '+qs.length+' correctes'+(an<qs.length?' ('+(qs.length-an)+' sense respondre)':'');
+    });
+    z.querySelector('.reset').addEventListener('click',function(){
+      qs.forEach(function(q){q.classList.remove('ok','ko','done');[].forEach.call(q.querySelectorAll('input'),function(i){i.checked=false})});res.textContent='';
+    });
+  });
+
+  function $$(r,s){return [].slice.call(r.querySelectorAll(s))}
+  $$(document,'.fillx').forEach(function(f){
+    var sel=$$(f,'select'),res=f.querySelector('.result');
+    f.querySelector('.check').addEventListener('click',function(){
+      var ok=0,an=0;
+      sel.forEach(function(s){s.classList.remove('ok','ko');if(!s.value)return;an++;if(s.value===s.getAttribute('data-ans')){ok++;s.classList.add('ok')}else s.classList.add('ko')});
+      res.textContent=ok+' de '+sel.length+' correctes'+(an<sel.length?' ('+(sel.length-an)+' sense respondre)':'');
+    });
+    f.querySelector('.reset').addEventListener('click',function(){sel.forEach(function(s){s.selectedIndex=0;s.classList.remove('ok','ko')});res.textContent=''});
+  });
+  $$(document,'.ordx').forEach(function(o){
+    var ul=o.querySelector('.ord'),res=o.querySelector('.result'),init=$$(ul,'li');
+    function clear(){$$(ul,'li').forEach(function(l){l.classList.remove('ok','ko')});res.textContent=''}
+    ul.addEventListener('click',function(e){
+      var b=e.target.closest('button');if(!b)return;var li=b.closest('li');
+      if(b.classList.contains('up')&&li.previousElementSibling)ul.insertBefore(li,li.previousElementSibling);
+      if(b.classList.contains('dn')&&li.nextElementSibling)ul.insertBefore(li.nextElementSibling,li);
+      clear();
+    });
+    o.querySelector('.check').addEventListener('click',function(){
+      var ok=0,ls=$$(ul,'li');
+      ls.forEach(function(l,k){var g=+l.getAttribute('data-pos')===k;l.classList.remove('ok','ko');l.classList.add(g?'ok':'ko');if(g)ok++});
+      res.textContent=ok===ls.length?'Ordre correcte!':ok+' de '+ls.length+' al lloc correcte. Torna-ho a provar.';
+    });
+    o.querySelector('.reset').addEventListener('click',function(){init.forEach(function(l){ul.appendChild(l)});clear()});
+  });
+  $$(document,'.tfx').forEach(function(t){
+    var rows=$$(t,'.tfrow'),res=t.querySelector('.result');
+    function score(){var ok=0,an=0;rows.forEach(function(r){if(r.classList.contains('ok'))ok++;if(r.classList.contains('ok')||r.classList.contains('ko'))an++});res.textContent=ok+' de '+rows.length+' correctes'+(an<rows.length?' · et queden '+(rows.length-an):'')}
+    rows.forEach(function(r){$$(r,'.tfb').forEach(function(b){b.addEventListener('click',function(){
+      if(r.classList.contains('ok')||r.classList.contains('ko'))return;
+      r.classList.add(b.getAttribute('data-v')===r.getAttribute('data-ans')?'ok':'ko');b.classList.add('pick');score();
+    })})});
+    t.querySelector('.reset').addEventListener('click',function(){rows.forEach(function(r){r.classList.remove('ok','ko');$$(r,'.tfb').forEach(function(b){b.classList.remove('pick')})});res.textContent=''});
+  });
+  $$(document,'.pairx').forEach(function(p){
+    var cards=$$(p,'.pc'),res=p.querySelector('.result'),sel=null,tries=0,tot=cards.length/2,left=tot;
+    cards.forEach(function(c){c.addEventListener('click',function(){
+      if(c.classList.contains('done'))return;
+      if(!sel){sel=c;c.classList.add('sel');return}
+      if(sel===c){c.classList.remove('sel');sel=null;return}
+      if(sel.getAttribute('data-side')===c.getAttribute('data-side')){sel.classList.remove('sel');sel=c;c.classList.add('sel');return}
+      tries++;var a=sel;sel=null;
+      if(a.getAttribute('data-k')===c.getAttribute('data-k')){a.classList.remove('sel');a.classList.add('done');c.classList.add('done');left--;
+        res.textContent=left?('Parelles: '+(tot-left)+' de '+tot+' · intents: '+tries):('Totes les parelles! Intents: '+tries)}
+      else{a.classList.add('ko');c.classList.add('ko');setTimeout(function(){a.classList.remove('ko','sel');c.classList.remove('ko')},600)}
+    })});
+    p.querySelector('.reset').addEventListener('click',function(){cards.forEach(function(c){c.classList.remove('done','sel','ko')});sel=null;tries=0;left=tot;res.textContent=''});
+  });
+
+  function ri(a,b){return a+Math.floor(Math.random()*(b-a+1))}
+  function pk(a){return a[Math.floor(Math.random()*a.length)]}
+  function sh(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=b[i];b[i]=b[j];b[j]=t}return b}
+  function uniq(a){var s={},r=[];a.forEach(function(x){if(!s[x]){s[x]=1;r.push(x)}});return r}
+  var G={
+    ipnet:function(){var c=ri(1,254),d=ri(2,250),b=pk([[192,168],[172,16],[10,ri(0,200)]]),ip=b[0]+'.'+b[1]+'.'+c+'.'+d,net=b[0]+'.'+b[1]+'.'+c+'.0';
+      return {q:'Un PC té la IP <code>'+ip+'</code> i màscara <code>255.255.255.0</code>. Quina és la IP de la seva xarxa?',o:[net,b[0]+'.'+b[1]+'.0.0',ip,b[0]+'.'+b[1]+'.'+c+'.255'],e:'Amb la màscara 255.255.255.0 els tres primers números són la xarxa: '+net+'.'}},
+    same:function(){var b=pk([[192,168],[172,16]]),c=ri(1,250),d=ri(2,100),d2=ri(110,250),ip=b[0]+'.'+b[1]+'.'+c+'.'+d;
+      return {q:'Un PC té la IP <code>'+ip+'</code> (màscara <code>255.255.255.0</code>). Quina d\'aquestes IP és de la seva mateixa xarxa?',o:[b[0]+'.'+b[1]+'.'+c+'.'+d2,b[0]+'.'+b[1]+'.'+(c+1)+'.'+d,'10.'+c+'.'+d+'.1',b[0]+'.'+(b[1]+1)+'.'+c+'.'+d],e:'Ha de tenir els mateixos tres primers números: '+b[0]+'.'+b[1]+'.'+c+'.x'}},
+    mesh:function(){var n=ri(4,9);
+      if(Math.random()<.5){var m=n*(n-1)/2;return {q:'Quants enllaços necessita una <b>malla completa</b> de '+n+' equips?',o:[''+m,''+n,''+(n*(n-1)),''+(n*n)],e:'n(n−1)/2 = '+n+'·'+(n-1)+'/2 = '+m+'.'}}
+      return {q:'Quants cables necessita una <b>estrella</b> amb un switch i '+n+' PC?',o:[''+n,''+(n-1),''+(n+1),''+(n*(n-1)/2)],e:'Un cable per a cada PC fins al switch: '+n+'.'}},
+    domains:function(){var a=ri(2,6),b=ri(2,6),t=ri(0,3);
+      if(t===0)return {q:'Un <b>switch</b> té '+a+' PC connectats. Quants dominis de col·lisió hi ha?',o:[''+a,'1',''+(a+1),''+(a*2)],e:'Cada port del switch és un domini de col·lisió.'};
+      if(t===1)return {q:'Un <b>hub</b> té '+b+' PC connectats. Quants dominis de col·lisió hi ha?',o:['1',''+b,''+(b+1),'2'],e:'Tots els ports d\'un hub formen un sol domini.'};
+      if(t===2)return {q:'Un router connecta una xarxa amb un switch ('+a+' PC) i una altra amb un hub ('+b+' PC). Quants dominis de col·lisió hi ha en total?',o:[''+(a+2),''+(a+b),''+(a+b+2),'2'],e:'Switch: '+a+' PC + l\'enllaç amb el router = '+(a+1)+'. Hub: 1 domini. Total: '+(a+2)+'.'};
+      return {q:'Un router connecta '+a+' xarxes diferents. Quants dominis de broadcast hi ha?',o:[''+a,'1',''+(a+1),''+(a*2)],e:'El router separa els dominis de broadcast: un per xarxa.'}},
+    macip:function(){var hx=function(){var s=ri(0,255).toString(16);return (s.length<2?'0':'')+s},m=Math.random()<.5,
+      v=m?[1,2,3,4,5,6].map(hx).join(':'):ri(1,223)+'.'+ri(0,255)+'.'+ri(0,255)+'.'+ri(1,254);
+      return {q:'És una adreça MAC o una IP? <code>'+v+'</code>',o:m?['MAC','IP']:['IP','MAC'],e:m?'6 parells hexadecimals separats per dos punts: és una MAC.':'4 números decimals separats per punts: és una IPv4.'}},
+    cable:function(){var d=pk([15,40,70,95,120,150,220,400,500,800,2000,5000,10000]),a=d<=100?'Cable UTP':(d<=550?'Fibra multimode':'Fibra monomode'),all=['Cable UTP','Fibra multimode','Fibra monomode'];
+      return {q:'Cal un enllaç de <b>'+d+' m</b> a 1 Gbps. Quin mitjà és el més adequat?',o:[a].concat(all.filter(function(x){return x!==a})),e:'UTP fins a 100 m; fibra multimode fins a uns 550 m; més enllà, fibra monomode.'}}
+  };
+  $$(document,'.genx').forEach(function(g){
+    var kinds=g.getAttribute('data-gen').split(',').filter(Boolean),data=JSON.parse(g.getAttribute('data-pool')||'{"own":[],"all":[]}');
+    var body=g.querySelector('.gbody'),sc=g.querySelector('.gscore'),ok=0,tot=0;
+    function poolq(){
+      var own=data.own.length?data.own:data.all,p=pk(own),rev=Math.random()<.5;
+      var oth=sh(data.all.filter(function(x){return x[0]!==p[0]&&x[1]!==p[1]})).slice(0,2);
+      if(rev)return {q:'Quin concepte correspon a: <b>'+p[1]+'</b>?',o:[p[0]].concat(oth.map(function(x){return x[0]})),e:p[0]+': '+p[1]+'.'};
+      return {q:'A què es refereix <b>'+p[0]+'</b>?',o:[p[1]].concat(oth.map(function(x){return x[1]})),e:p[0]+': '+p[1]+'.'};
+    }
+    function show(){
+      var k=pk(kinds),x=k==='pool'?poolq():G[k](),o=uniq(x.o),right=o[0];o=sh(o);
+      body.innerHTML='';var q=document.createElement('p');q.className='gq';q.innerHTML=x.q;body.appendChild(q);
+      var w=document.createElement('div');w.className='gopts';var fb=document.createElement('p');fb.className='gexp';fb.hidden=true;
+      o.forEach(function(t){var b=document.createElement('button');b.type='button';b.className='gopt';b.textContent=t;
+        b.addEventListener('click',function(){
+          if(w.classList.contains('answered'))return;w.classList.add('answered');tot++;
+          var good=t===right;if(good)ok++;b.classList.add(good?'ok':'ko');
+          if(!good)[].forEach.call(w.children,function(c){if(c.textContent===right)c.classList.add('ok')});
+          fb.textContent=(good?'Correcte! ':'No és correcte. ')+x.e;fb.hidden=false;sc.textContent='Encerts: '+ok+' de '+tot;
+        });w.appendChild(b)});
+      body.appendChild(w);body.appendChild(fb);
+    }
+    g.querySelector('.gnew').addEventListener('click',show);show();
+  });
+})();
+</script>
+
+</body>
+</html>
