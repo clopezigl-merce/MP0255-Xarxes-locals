@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A6 Comandes de xarxa · MP0255 Xarxes locals</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --lime: #b9ff66; --dark: #191a23; --grey: #f3f3f3; --white: #fff;
+  --muted: #5b5d6b; --line: #191a23;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--white); color: var(--dark); line-height: 1.55; }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 1.25rem; }
+a { color: inherit; }
+.muted { color: var(--muted); }
+
+/* Etiqueta ressaltada */
+.label { display: inline-block; background: var(--lime); color: var(--dark); padding: .05rem .6rem; border-radius: 8px; font-weight: 700; }
+h2.label, .label.h2 { font-size: clamp(1.6rem, 4vw, 2.2rem); margin: 0; line-height: 1.3; }
+
+/* Botons */
+.btn { display: inline-block; padding: .85rem 1.6rem; border-radius: 14px; background: var(--dark); color: var(--white); font-weight: 700; text-decoration: none; border: 2px solid var(--dark); }
+.btn:hover { background: var(--lime); color: var(--dark); }
+.btn.soft { background: var(--lime); color: var(--dark); padding: .4rem 1rem; border-radius: 10px; }
+.btn.soft:hover { background: var(--dark); color: var(--lime); }
+.btnrow { display: flex; flex-wrap: wrap; gap: .6rem; margin: .75rem 0 0; }
+.btn.light { background: var(--white); color: var(--dark); }
+.btn.light:hover { background: var(--lime); }
+
+/* Capçalera de portada */
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem 0; flex-wrap: wrap; }
+.logo { display: flex; align-items: center; gap: .5rem; font-weight: 700; font-size: 1.35rem; text-decoration: none; }
+.logo i { width: 1.4rem; height: 1.4rem; background: var(--dark); border-radius: 5px; position: relative; display: inline-block; }
+.logo i::after { content: ""; position: absolute; inset: 5px; background: var(--lime); border-radius: 2px; }
+.nav ul { display: flex; gap: 1.5rem; list-style: none; margin: 0; padding: 0; align-items: center; flex-wrap: wrap; }
+.nav ul a { text-decoration: none; }
+.nav ul a:not(.btn):hover { text-decoration: underline; text-decoration-thickness: 3px; text-decoration-color: var(--lime); }
+.nav .btn { background: var(--white); color: var(--dark); padding: .6rem 1.2rem; border-color: var(--dark); }
+.nav .btn:hover { background: var(--lime); }
+
+/* Hero */
+.hero { padding: 2.5rem 0 3rem; }
+.hero .wrap.split { display: grid; grid-template-columns: 1.1fr 1fr; gap: 2rem; align-items: center; }
+.module { display: inline-block; margin: 0 0 1rem; padding: .15rem .7rem; background: var(--lime); border-radius: 8px; font-weight: 700; }
+.module a { text-decoration: none; }
+.hero h1 { margin: 0; font-size: clamp(2.2rem, 6vw, 4rem); line-height: 1.08; letter-spacing: -0.02em; }
+.lead { max-width: 46ch; margin: 1.25rem 0 1.75rem; font-size: 1.15rem; color: #2e2f3b; }
+.hero svg { width: 100%; height: auto; }
+.hero-small { padding: 1.5rem 0 1.5rem; border-bottom: 2px solid var(--dark); }
+.hero-small h1 { font-size: clamp(1.8rem, 5vw, 3rem); max-width: 24ch; }
+
+/* Franja de dades */
+.facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; padding: 1.5rem 0 2.5rem; text-align: center; }
+.facts b { display: block; font-size: 1.6rem; }
+.facts span { color: var(--muted); }
+
+/* Seccions */
+main.wrap { padding-top: 1.5rem; padding-bottom: 3rem; }
+section { margin-bottom: 4.5rem; }
+.sechead { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2.25rem; flex-wrap: wrap; }
+.sechead p { margin: 0; max-width: 42ch; color: #2e2f3b; }
+.note { color: var(--muted); margin-top: 0; }
+h2 { margin: 0 0 .5rem; font-size: 1.7rem; }
+
+/* Targetes d'AEA */
+.cards, .aea { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.75rem; }
+.card, .aea a, .aea .pending > div { display: flex; flex-direction: column; justify-content: space-between; gap: 1.5rem; min-height: 15rem; padding: 2rem; border: 1px solid var(--dark); border-radius: 36px; box-shadow: 0 6px 0 var(--dark); background: var(--grey); color: var(--dark); text-decoration: none; }
+.cards li:nth-child(4n+2) .card { background: var(--lime); }
+.cards li:nth-child(4n+3) .card { background: var(--dark); color: var(--white); }
+.cards li:nth-child(5n) .card { background: var(--lime); }
+.card .code { display: inline-block; align-self: flex-start; background: var(--lime); color: var(--dark); padding: 0 .6rem; border-radius: 8px; font-size: 1.5rem; font-weight: 700; }
+.cards li:nth-child(4n+2) .code { background: var(--white); }
+.card h3 { margin: .75rem 0 0; font-size: 1.15rem; max-width: 26ch; }
+.tag { display: inline-block; margin-top: .6rem; padding: 0 .65rem; border: 1px solid currentColor; border-radius: 99px; font-size: .9rem; font-weight: 700; }
+.go { display: inline-flex; align-items: center; gap: .6rem; font-weight: 700; }
+.go::before { content: "\2197"; display: inline-grid; place-items: center; width: 2.2rem; height: 2.2rem; border-radius: 50%; background: var(--dark); color: var(--lime); font-size: 1.1rem; }
+.cards li:nth-child(4n+3) .go::before { background: var(--white); color: var(--dark); }
+a.card:hover { transform: translateY(-3px); box-shadow: 0 9px 0 var(--dark); }
+.card.pending { min-height: 9rem; border-style: dashed; box-shadow: none; opacity: .75; }
+
+/* Acordió */
+.accordion details { background: var(--grey); border: 1px solid var(--dark); border-radius: 30px; box-shadow: 0 6px 0 var(--dark); margin-bottom: 1.5rem; }
+.accordion details[open] { background: var(--lime); }
+.accordion summary { display: flex; align-items: center; gap: 1.25rem; padding: 1.4rem 1.75rem; cursor: pointer; list-style: none; font-size: 1.15rem; font-weight: 700; }
+.accordion summary::-webkit-details-marker { display: none; }
+.accordion .num { font-size: 2rem; }
+.accordion .ttl { flex: 1; }
+.accordion summary::after { content: "+"; display: grid; place-items: center; flex: none; width: 2.6rem; height: 2.6rem; border: 1px solid var(--dark); border-radius: 50%; background: var(--white); font-size: 1.6rem; line-height: 1; }
+.accordion details[open] summary::after { content: "\2212"; }
+.accordion .body { padding: 0 1.75rem 1.5rem; margin: 0 1.75rem; border-top: 1px solid var(--dark); padding-top: 1.25rem; margin-bottom: .5rem; }
+.accordion .body p { margin: 0 0 .75rem; }
+.accordion .body a { font-weight: 700; }
+
+/* Bloc fosc */
+.darkbox { background: var(--dark); color: var(--white); border-radius: 40px; padding: 2.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+.darkbox h3 { margin: 0 0 .75rem; color: var(--lime); font-size: 1.2rem; }
+.darkbox ul { margin: 0; padding-left: 1.2rem; }
+.darkbox li { margin-bottom: .5rem; }
+
+/* Banner CTA */
+.cta { position: relative; overflow: hidden; background: var(--grey); border-radius: 40px; padding: 2.5rem; display: grid; grid-template-columns: 1.4fr 1fr; gap: 1rem; align-items: center; }
+.cta h2 { font-size: 1.8rem; }
+.cta p { max-width: 42ch; margin: 0 0 1.25rem; }
+.cta svg { width: 100%; max-width: 260px; justify-self: center; }
+
+/* Recursos */
+.pills { display: flex; flex-wrap: wrap; gap: .75rem; list-style: none; margin: 0; padding: 0; }
+.pills a { display: inline-block; padding: .55rem 1.1rem; border: 1px solid var(--dark); border-radius: 99px; text-decoration: none; font-weight: 700; box-shadow: 0 3px 0 var(--dark); }
+.pills a:hover { background: var(--lime); }
+
+/* Peu */
+footer.site { background: var(--dark); color: var(--white); border-radius: 40px 40px 0 0; padding: 2.5rem 0; margin-top: 2rem; }
+footer.site .wrap { display: flex; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; align-items: center; }
+footer.site .logo i { background: var(--lime); }
+footer.site .logo i::after { background: var(--dark); }
+footer.site p { margin: 0; color: #c9cad3; }
+footer.site a { color: var(--lime); }
+footer:not(.site) { border-top: 2px solid var(--dark); padding: 1.5rem 0; }
+footer:not(.site) a { font-weight: 700; }
+
+/* ------ Pàgines d'AEA i activitats ------ */
+.items, .items li { list-style: none; }
+.items { margin: 1rem 0 0; padding: 0; border: 1px solid var(--dark); border-radius: 24px; box-shadow: 0 5px 0 var(--dark); overflow: hidden; }
+.items li { display: flex; align-items: center; gap: 1rem; padding: .85rem 1.25rem; border-bottom: 1px solid var(--dark); background: var(--white); }
+.items li:last-child { border-bottom: 0; }
+.kind { flex: none; min-width: 6.5rem; text-align: center; padding: .05rem .6rem; border: 1px solid var(--dark); border-radius: 99px; font-size: .9rem; font-weight: 700; background: var(--grey); }
+.kind-act { background: var(--lime); }
+.kind-pre { background: var(--dark); color: var(--white); }
+.ra-box { background: var(--lime); border: 1px solid var(--dark); border-radius: 28px; box-shadow: 0 5px 0 var(--dark); padding: 1.5rem 1.75rem; }
+.ra-box p { margin: .25rem 0 0; }
+.aea a, .aea .pending > div { min-height: 0; flex-direction: row; align-items: center; padding: 1.25rem 1.5rem; border-radius: 28px; }
+.aea { grid-template-columns: 1fr; gap: 1.25rem; }
+.aea li { list-style: none; }
+.aea .code { font-weight: 700; font-size: 1.6rem; margin-right: 1rem; }
+.aea a { display: grid; grid-template-columns: 4rem 1fr; align-items: center; }
+.aea a:hover { background: var(--lime); }
+.aea h3 { margin: 0; font-size: 1.1rem; }
+.table-scroll { overflow-x: auto; margin-top: 1rem; }
+table { width: 100%; border-collapse: collapse; border: 1px solid var(--dark); }
+th, td { text-align: left; padding: .7rem .9rem; border-bottom: 1px solid var(--dark); vertical-align: top; }
+thead th { background: var(--lime); }
+
+.statusbar { position: sticky; top: 0; z-index: 10; background: var(--white); border-bottom: 2px solid var(--dark); }
+.statusbar .wrap { display: flex; align-items: center; gap: .75rem; padding-top: .6rem; padding-bottom: .6rem; flex-wrap: wrap; }
+.bar { flex: 1 1 8rem; height: 14px; background: var(--grey); border: 1px solid var(--dark); border-radius: 99px; overflow: hidden; }
+.bar span { display: block; height: 100%; width: 0; background: var(--lime); border-right: 1px solid var(--dark); transition: width .25s; }
+#pct { font-weight: 700; min-width: 3rem; }
+.statusbar button { font: inherit; font-weight: 700; padding: .3rem .9rem; border: 1px solid var(--dark); border-radius: 10px; background: var(--white); color: var(--dark); cursor: pointer; box-shadow: 0 3px 0 var(--dark); }
+.statusbar button:hover { background: var(--lime); }
+#timer.run { background: var(--lime); }
+
+details.part { background: var(--white); border: 1px solid var(--dark); border-radius: 28px; box-shadow: 0 6px 0 var(--dark); margin: 0 0 1.75rem; }
+details.part[open] { background: var(--grey); }
+details.part > summary { cursor: pointer; padding: 1.1rem 1.5rem; font-weight: 700; font-size: 1.2rem; list-style: none; display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+details.part > summary::-webkit-details-marker { display: none; }
+details.part > summary::before { content: "+"; display: grid; place-items: center; width: 2rem; height: 2rem; border: 1px solid var(--dark); border-radius: 50%; background: var(--white); font-size: 1.3rem; line-height: 1; }
+details.part[open] > summary::before { content: "\2212"; background: var(--lime); }
+details.part .inner { padding: 0 1.5rem 1.5rem; }
+.chip { font-size: .85rem; font-weight: 700; padding: 0 .6rem; border: 1px solid var(--dark); border-radius: 99px; background: var(--white); }
+.chip.time { background: var(--lime); }
+.chip.count:empty { display: none; }
+.steps { list-style: none; margin: 0; padding: 0; }
+.steps li { border-top: 1px solid #c9cad3; counter-increment: s; }
+.steps li:first-child { border-top: 0; }
+.steps label { display: grid; grid-template-columns: auto 1.8rem 1fr; gap: .6rem; padding: .7rem 0; cursor: pointer; align-items: start; }
+.steps .n::before { content: counter(s); font-weight: 700; }
+.steps.plain .n::before { content: ""; }
+.steps input { width: 1.3rem; height: 1.3rem; margin-top: .2rem; accent-color: var(--dark); }
+.steps li:has(input:checked) .t { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--dark); }
+.steps code, .tip code { background: var(--lime); padding: 0 .35rem; border-radius: 5px; }
+.tip { margin: .9rem 0; padding: .8rem 1.1rem; background: var(--white); border: 1px solid var(--dark); border-left: 8px solid var(--lime); border-radius: 12px; }
+.quote { margin: .9rem 0; padding: .6rem 1.1rem; border-left: 8px solid var(--dark); background: var(--white); font-style: italic; border-radius: 4px; }
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 2rem 0 2.5rem; }
+.compare > div { background: var(--lime); border: 1px solid var(--dark); border-radius: 28px; box-shadow: 0 5px 0 var(--dark); padding: 1.5rem; }
+.compare > div:nth-child(2) { background: var(--dark); color: var(--white); }
+.compare h3 { margin: 0 0 .4rem; }
+.compare p { margin: 0; }
+.players { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: .75rem; margin: .75rem 0; padding: 0; list-style: none; counter-reset: p; }
+.players li { counter-increment: p; background: var(--white); border: 1px solid var(--dark); border-radius: 18px; padding: .75rem 1rem; }
+.players li::before { content: counter(p, decimal-leading-zero); display: inline-block; margin-bottom: .2rem; padding: 0 .5rem; background: var(--lime); border-radius: 6px; font-weight: 700; }
+.qa { border-top: 1px solid #c9cad3; padding: .6rem 0; }
+.qa summary { cursor: pointer; font-weight: 700; }
+.qa p { margin: .5rem 0 0; padding: .6rem .9rem; background: var(--lime); border-radius: 12px; }
+h3.sub { margin: 1.25rem 0 .25rem; font-size: 1.05rem; }
+.mini { color: var(--muted); font-size: .95rem; }
+a:focus-visible, summary:focus-visible, button:focus-visible { outline: 3px solid var(--dark); outline-offset: 3px; }
+
+@media (max-width: 760px) {
+  .hero .wrap.split, .cards, .darkbox, .cta, .compare { grid-template-columns: 1fr; }
+  .facts { grid-template-columns: repeat(2, 1fr); }
+  .card { min-height: 12rem; }
+  .darkbox, .cta { padding: 1.75rem; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } a.card:hover { transform: none; } .bar span { transition: none; } }
+.cards li .card.pending { background: transparent; color: var(--muted); opacity: 1; border-style: dashed; box-shadow: none; }
+.cards li .card.pending .code { background: var(--grey); color: var(--muted); }
+
+/* Teoria, exercicis i PDF */
+.sechead.in { margin: 3rem 0 1.5rem; }
+.exbox { background: var(--white); border: 1px solid var(--dark); border-radius: 28px; box-shadow: 0 6px 0 var(--dark); padding: 1.5rem; margin-bottom: 1.75rem; }
+.exbox h3 { margin: 0 0 .25rem; }
+.inner p, .inner ul { margin: .6rem 0; }
+.inner table { background: var(--white); }
+.pool, .drop { min-height: 3.2rem; display: flex; flex-wrap: wrap; gap: .5rem; padding: .6rem; border: 2px dashed var(--dark); border-radius: 18px; align-content: flex-start; }
+.pool { background: var(--grey); margin: .75rem 0; }
+.drop.over, .pool.over { background: var(--lime); }
+.boxes { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem; }
+.box { background: var(--grey); border: 1px solid var(--dark); border-radius: 20px; padding: .8rem; }
+.box h4 { margin: 0 0 .5rem; font-size: 1rem; }
+.chip-d { display: inline-block; padding: .35rem .9rem; border: 1px solid var(--dark); border-radius: 99px; background: var(--white); font-weight: 500; cursor: grab; user-select: none; box-shadow: 0 2px 0 var(--dark); }
+.chip-d.sel { background: var(--lime); outline: 3px solid var(--dark); }
+.chip-d.ok { background: var(--lime); }
+.chip-d.ko { background: #ffd9d9; border-color: #b3261e; }
+.result { margin: .75rem 0 0; font-weight: 700; min-height: 1.5rem; }
+.exbox .btn { padding: .5rem 1.2rem; cursor: pointer; font: inherit; font-weight: 700; }
+.quiz fieldset.q { border: 1px solid var(--dark); border-radius: 18px; margin: 0 0 1rem; padding: .75rem 1.1rem 1rem; background: var(--grey); }
+.quiz legend { font-weight: 700; padding: 0 .4rem; }
+.quiz label { display: block; padding: .3rem 0; cursor: pointer; }
+.quiz input { accent-color: var(--dark); margin-right: .5rem; }
+.q .exp { display: none; margin: .5rem 0 0; padding: .5rem .8rem; border-radius: 12px; background: var(--white); border-left: 6px solid var(--dark); }
+.q.done .exp { display: block; }
+.q.ok { background: #e4ffc7; }
+.q.ko { background: #ffe4e4; }
+.tcards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1rem 0; }
+.tcard { background: var(--white); border: 1px solid var(--dark); border-radius: 22px; padding: 1rem 1.25rem; }
+.tcard svg, .fig svg { width: 150px; height: auto; display: block; }
+.tcard h3 { margin: .25rem 0; }
+.tcard p { margin: .4rem 0; }
+.fig { margin: 1rem 0; text-align: center; }
+.fig svg { width: 100%; max-width: 420px; margin: 0 auto; }
+.fig figcaption { color: var(--muted); font-size: .95rem; }
+.docbtn { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; margin: 0 0 1.5rem; }
+@media (max-width: 760px) { .tcards { grid-template-columns: 1fr; } }
+
+/* Apartats, progrés i exercicis nous */
+.statusbar .wrap { gap: .6rem; }
+.aptlabel { font-weight: 700; flex: 1 1 14rem; }
+.stepper { display: flex; gap: .3rem; flex-wrap: wrap; }
+.dot { width: 1.9rem; height: 1.9rem; padding: 0 !important; border-radius: 50% !important; box-shadow: none !important; font-size: .85rem; }
+.dot.done { background: var(--lime) !important; }
+.dot.cur { background: var(--dark) !important; color: var(--white) !important; }
+details.part { scroll-margin-top: 8.5rem; }
+.aptn { display: inline-grid; place-items: center; min-width: 1.9rem; height: 1.9rem; border-radius: 8px; background: var(--dark); color: var(--lime); font-size: 1rem; }
+details.part.done .aptn { background: var(--lime); color: var(--dark); border: 1px solid var(--dark); }
+.aptnav { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 2px solid var(--dark); }
+.aptnav .btn { font: inherit; font-weight: 700; cursor: pointer; }
+.fills { list-style: none; margin: .75rem 0; padding: 0; }
+.fills li { padding: .6rem 0; border-top: 1px solid #c9cad3; }
+.fills li:first-child { border-top: 0; }
+select { font: inherit; padding: .2rem .5rem; border: 1px solid var(--dark); border-radius: 10px; background: var(--white); max-width: 100%; }
+select.ok { background: var(--lime); }
+select.ko { background: #ffd9d9; border-color: #b3261e; }
+.ord { list-style: none; margin: .75rem 0; padding: 0; counter-reset: o; }
+.ord li { counter-increment: o; display: flex; gap: .75rem; align-items: center; padding: .55rem .9rem; margin-bottom: .5rem; background: var(--white); border: 1px solid var(--dark); border-radius: 14px; }
+.ord li::before { content: counter(o); font-weight: 700; background: var(--lime); border: 1px solid var(--dark); border-radius: 8px; padding: 0 .55rem; }
+.ord .otxt { flex: 1; }
+.omv { display: flex; gap: .3rem; }
+.omv button { font: inherit; font-weight: 700; width: 2.1rem; height: 2.1rem; border: 1px solid var(--dark); border-radius: 8px; background: var(--grey); cursor: pointer; }
+.omv button:hover { background: var(--lime); }
+.ord li.ok { background: #e4ffc7; }
+.ord li.ko { background: #ffe4e4; }
+.tfs { list-style: none; margin: .75rem 0; padding: 0; }
+.tfrow { padding: .75rem 1rem; margin-bottom: .6rem; border: 1px solid var(--dark); border-radius: 16px; background: var(--white); }
+.tfrow p { margin: 0 0 .5rem; }
+.tfbtns { display: flex; gap: .5rem; }
+.tfb { font: inherit; font-weight: 700; padding: .3rem 1.1rem; border: 1px solid var(--dark); border-radius: 10px; background: var(--grey); cursor: pointer; }
+.tfb:hover { background: var(--lime); }
+.tfrow .exp { display: none; margin: .6rem 0 0; padding: .5rem .8rem; border-radius: 10px; background: var(--grey); }
+.tfrow.ok { background: #e4ffc7; } .tfrow.ko { background: #ffe4e4; }
+.tfrow.ok .exp, .tfrow.ko .exp { display: block; }
+.tfb.pick { background: var(--dark); color: var(--white); }
+.pairs { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: .75rem 0; }
+.pairs > div { display: flex; flex-direction: column; gap: .5rem; }
+.pc { font: inherit; text-align: left; padding: .55rem .9rem; border: 1px solid var(--dark); border-radius: 14px; background: var(--white); cursor: pointer; box-shadow: 0 2px 0 var(--dark); }
+.pc:hover { background: var(--grey); }
+.pc.sel { background: var(--lime); outline: 3px solid var(--dark); }
+.pc.done { background: #e4ffc7; opacity: .75; cursor: default; }
+.pc.ko { background: #ffd9d9; }
+.docbtn { margin-top: .5rem; }
+@media (max-width: 640px) { .pairs { grid-template-columns: 1fr; } .aptlabel { flex-basis: 100%; } }
+.statusbar button { padding: .2rem .7rem; }
+.dot { width: 1.7rem; height: 1.7rem; font-size: .8rem; }
+.statusbar .wrap { padding-top: .45rem; padding-bottom: .45rem; }
+
+/* Exercicis fets, generador i bloqueig */
+.exbox { position: relative; }
+.exbox.done::after { content: "Fet"; position: absolute; top: 1rem; right: 1.25rem; background: var(--lime); border: 1px solid var(--dark); border-radius: 99px; padding: 0 .75rem; font-weight: 700; font-size: .85rem; }
+.exbox.genx { background: var(--lime); }
+.gq { font-weight: 700; font-size: 1.05rem; margin: .5rem 0; }
+.gopts { display: flex; flex-wrap: wrap; gap: .6rem; margin: .5rem 0; }
+.gopt { font: inherit; font-weight: 700; padding: .5rem 1.1rem; border: 1px solid var(--dark); border-radius: 12px; background: var(--white); cursor: pointer; box-shadow: 0 3px 0 var(--dark); }
+.gopt:hover { background: var(--grey); }
+.gopt.ok { background: #e4ffc7; outline: 3px solid var(--dark); }
+.gopt.ko { background: #ffd9d9; }
+.gexp { margin: .5rem 0; padding: .6rem .9rem; background: var(--white); border-radius: 12px; border: 1px solid var(--dark); }
+.lockpanel { display: none; padding: 3rem 0 4rem; }
+.locked .lockpanel { display: block; }
+.locked main.wrap, .locked .statusbar, .locked .docbtn, .locked .hero .lead { display: none; }
+.lockbox { background: var(--lime); border: 1px solid var(--dark); border-radius: 36px; box-shadow: 0 6px 0 var(--dark); padding: 2.5rem; max-width: 36rem; }
+.lockbox h2 { margin: 0 0 .5rem; font-size: 1.8rem; }
+.lk a { opacity: .55; cursor: not-allowed; }
+.lk .tag { background: var(--dark); color: var(--lime); border-color: var(--dark); }
+
+/* Llistes simples i targeta del Classroom */
+.slist { margin: .6rem 0; padding-left: 1.4rem; }
+.slist li { margin: .45rem 0; }
+.classroom { background: var(--lime); border: 1px solid var(--dark); border-radius: 28px; box-shadow: 0 5px 0 var(--dark); padding: 1.75rem; }
+.classroom h3 { margin: 0 0 .5rem; font-size: 1.4rem; }
+.classroom p { margin: 0 0 .75rem; max-width: 52ch; }
+
+  
+.typed{list-style:none;margin:.75rem 0;padding:0}.typed li{padding:.8rem 1rem;margin-bottom:.7rem;border:1px solid var(--dark);border-radius:16px;background:var(--white)}
+.tq{display:block;font-weight:700;margin-bottom:.4rem}
+.tline{display:flex;align-items:center;gap:.5rem;background:var(--dark);border-radius:12px;padding:.45rem .8rem}
+.tline:focus-within{outline:3px solid var(--lime)}
+.tprompt{color:var(--lime);font-family:monospace;font-weight:700}
+.tin{flex:1;min-width:0;background:transparent;border:0;outline:0;color:var(--lime);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1rem}
+.hintb{font:inherit;font-size:.9rem;font-weight:700;margin-top:.5rem;padding:.15rem .8rem;border:1px solid var(--dark);border-radius:99px;background:var(--grey);cursor:pointer}
+.hint,.sol{margin:.5rem 0 0;padding:.4rem .8rem;border-radius:10px;background:var(--grey)}
+.sol{background:var(--lime)}
+.typed li.ok{background:#e4ffc7}.typed li.ko{background:#ffe4e4}
+</style>
+</head>
+<body>
+<div class="wrap">
+    <nav class="nav" aria-label="Navegació principal">
+      <a class="logo" href="../index.html"><i></i>Xarxes locals</a>
+      <ul>
+        <li><a href="../index.html#aea">AEA</a></li>
+        <li><a href="../index.html#ra">Resultats d'aprenentatge</a></li>
+        <li><a href="../index.html#avaluacio">Avaluació</a></li>
+        <li><a href="../index.html#recursos">Recursos</a></li>
+        <li><a class="btn" href="index.html">AEA1</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <header class="hero hero-small">
+    <div class="wrap">
+      <p class="module"><a href="../index.html">MP0255 Xarxes locals</a> · <a href="index.html">AEA1</a> · A6</p>
+      <h1>A6 · Comandes de xarxa</h1>
+      <p class="lead">Aprèn a veure la IP i la MAC, comprovar connexions i seguir la ruta dels missatges amb comandes de Linux.</p>
+    </div>
+  </header>
+<div class="statusbar" role="region" aria-label="Progrés de l'activitat">
+    <div class="wrap">
+      <div class="bar" aria-hidden="true"><span id="fill"></span></div>
+      <span id="pct">0%</span>
+      <span id="aptlabel" class="aptlabel"></span>
+      <div id="stepper" class="stepper" aria-label="Apartats"></div>
+      <button id="expand" type="button">Desplega-ho tot</button>
+      <button id="reset" type="button">Reinicia</button>
+    </div>
+  </div>
+
+  <main class="wrap">
+<div class="docbtn"><a class="btn" href="docs/teoria-A6.pdf" download>Descarrega la teoria (PDF)</a></div>
+
+    <details class="part" open data-t="Per què usem comandes de xarxa?">
+      <summary>Per què usem comandes de xarxa? <span class="chip time">6 min</span><span class="chip count"></span></summary>
+      <div class="inner">
+<p>Moltes tasques d'un tècnic de xarxes es fan escrivint <b>comandes</b> al <b>terminal</b>: una finestra on dónes ordres al sistema amb text. Serveixen per veure la configuració d'un equip, comprovar si hi ha connexió i trobar on falla una xarxa.</p><ul><li>El terminal s'obre amb <code>Ctrl + Alt + T</code>.</li><li>Cada comanda s'escriu i s'executa amb <code>Enter</code>.</li><li>Si una comanda no acaba sola (com <code>ping</code>), s'atura amb <code>Ctrl + C</code>.</li></ul><div class="tip">En aquesta pràctica es treballa amb <b>LibreOffice en local</b>, no amb Google Drive, perquè es perdrà la connexió en moure cables. Cada alumne treballa amb el seu propi document.</div>
+      </div>
+    </details>
+
+    <details class="part" open data-t="Veure la IP i la MAC: ip a, ifconfig i lsb_release">
+      <summary>Veure la IP i la MAC: ip a, ifconfig i lsb_release <span class="chip time">8 min</span><span class="chip count"></span></summary>
+      <div class="inner">
+<div class="table-scroll"><table><thead><tr><th>Comanda</th><th>Què fa</th></tr></thead><tbody><tr><th scope='row'><code>ip a</code></th><td>Mostra les interfícies de xarxa amb la IP i la MAC</td></tr><tr><th scope='row'><code>ifconfig</code></th><td>Fa el mateix; cal tenir instal·lat el paquet net-tools</td></tr><tr><th scope='row'><code>lsb_release -a</code></th><td>Mostra la versió del sistema operatiu</td></tr></tbody></table></div><p>A la sortida de <code>ip a</code> busca la teva targeta de xarxa (per exemple <code>enp3s0</code>; la interfície <code>lo</code> és interna i té la 127.0.0.1):</p><pre style="background:#191a23;color:#b9ff66;padding:1rem;border-radius:14px;overflow-x:auto;font-size:.9rem;line-height:1.45">2: enp3s0: &lt;BROADCAST,MULTICAST,UP&gt; ...
+    link/ether 00:1a:2b:3c:4d:5e brd ff:ff:ff:ff:ff:ff
+    inet 172.16.209.37/24 brd 172.16.209.255 scope global enp3s0</pre><ul><li><code>link/ether</code> és la <b>MAC</b> (adreça física, gravada pel fabricant).</li><li><code>inet</code> és la <b>IPv4</b>. El <code>/24</code> equival a la màscara 255.255.255.0.</li></ul>
+      </div>
+    </details>
+
+    <details class="part" open data-t="Comprovar la connexió: ping">
+      <summary>Comprovar la connexió: ping <span class="chip time">8 min</span><span class="chip count"></span></summary>
+      <div class="inner">
+<p><code>ping</code> envia petits missatges a un altre equip i espera la resposta. Serveix per saber si hi ha connexió i quant triga (en mil·lisegons, <b>ms</b>).</p><pre style="background:#191a23;color:#b9ff66;padding:1rem;border-radius:14px;overflow-x:auto;font-size:.9rem;line-height:1.45">$ ping -c 4 172.16.209.38
+64 bytes from 172.16.209.38: icmp_seq=1 ttl=64 time=0.45 ms
+64 bytes from 172.16.209.38: icmp_seq=2 ttl=64 time=0.41 ms</pre><ul><li>Pots fer ping a una <b>IP</b> o a un <b>nom</b> (<code>ping www.google.es</code>). Amb un nom, el sistema obté la IP gràcies al <b>DNS</b>, que tradueix noms a adreces IP.</li><li>Sense opcions, el ping no s'atura: prem <code>Ctrl + C</code>. Amb <code>-c 4</code> envia només 4 missatges.</li><li>Si desconnectes el cable, deixen d'arribar respostes i pot aparèixer un missatge com <i>Network is unreachable</i> o <i>Destination Host Unreachable</i>.</li></ul>
+      </div>
+    </details>
+
+    <details class="part" open data-t="La taula ARP: arp -a">
+      <summary>La taula ARP: arp -a <span class="chip time">8 min</span><span class="chip count"></span></summary>
+      <div class="inner">
+<p>Dins d'una xarxa local els equips es comuniquen per <b>MAC</b>. El protocol <b>ARP</b> serveix per descobrir quina MAC correspon a cada IP: un equip pregunta a tothom (un <i>broadcast</i>) «qui té aquesta IP?» i el propietari respon amb la seva MAC.</p><p>Cada PC guarda el resultat a la seva <b>taula ARP</b>. La comanda <code>arp -a</code> la mostra. Només hi apareixen els equips amb qui t'has comunicat, per exemple després de fer-los un ping.</p><pre style="background:#191a23;color:#b9ff66;padding:1rem;border-radius:14px;overflow-x:auto;font-size:.9rem;line-height:1.45">$ arp -a
+? (172.16.209.38) at 00:1a:2b:3c:4d:6f [ether] on enp3s0</pre>
+      </div>
+    </details>
+
+    <details class="part" open data-t="Els salts d'una ruta: traceroute, tracepath i mtr">
+      <summary>Els salts d'una ruta: traceroute, tracepath i mtr <span class="chip time">10 min</span><span class="chip count"></span></summary>
+      <div class="inner">
+<p>Un <b>salt</b> és cada <b>router</b> pel qual passa un missatge fins al seu destí. Els switches no compten com a salt. Per això, si dos PC són a la mateixa xarxa, només hi veuràs 1 salt: el destí directe.</p><div class="table-scroll"><table><thead><tr><th>Comanda</th><th>Què fa</th></tr></thead><tbody><tr><th scope='row'><code>traceroute</code></th><td>Mostra un a un els salts fins al destí (cal instal·lar el paquet traceroute)</td></tr><tr><th scope='row'><code>tracepath</code></th><td>Alternativa que sol venir instal·lada</td></tr><tr><th scope='row'><code>mtr</code></th><td>Combina ping i traceroute i s'actualitza en directe</td></tr></tbody></table></div><pre style="background:#191a23;color:#b9ff66;padding:1rem;border-radius:14px;overflow-x:auto;font-size:.9rem;line-height:1.45">$ traceroute www.google.com
+ 1  172.16.209.1   1.2 ms
+ 2  10.20.0.1      3.8 ms
+ 3  * * *</pre><p>Els asteriscs <code>* * *</code> volen dir que aquell salt no ha respost a temps. Per veure els salts a un mapa pots fer servir l'aplicació web <b>geotraceroute.com</b>.</p>
+      </div>
+    </details>
+
+    <details class="part" open data-t="El default gateway: route -n">
+      <summary>El default gateway: route -n <span class="chip time">8 min</span><span class="chip count"></span></summary>
+      <div class="inner">
+<p>El <b>default gateway</b> (DG o passarel·la per defecte) és la <b>IP del router més proper</b>: la porta de sortida del PC cap a altres xarxes. Es pot veure amb <code>route -n</code> o amb <code>ip route</code>.</p><pre style="background:#191a23;color:#b9ff66;padding:1rem;border-radius:14px;overflow-x:auto;font-size:.9rem;line-height:1.45">$ route -n
+Destination   Gateway       Genmask        Flags Iface
+0.0.0.0       172.16.209.1  0.0.0.0        UG    enp3s0
+172.16.209.0  0.0.0.0       255.255.255.0  U     enp3s0</pre><p>La línia amb destinació <code>0.0.0.0</code> i la marca <code>UG</code> és la ruta per defecte: la columna <i>Gateway</i> és el DG. Amb <code>ip route</code> el veus com <code>default via 172.16.209.1</code>.</p>
+      </div>
+    </details>
+
+    <details class="part" open data-t="Exercicis pràctics">
+      <summary>Exercicis pràctics <span class="chip time">65 min</span><span class="chip count"></span></summary>
+      <div class="inner">
+<p>Practica ara tot el que has après a la teoria. Cada bloc correspon a un apartat.</p>
+<h3 class="sub">Per què usem comandes de xarxa?</h3>
+<div class="exbox"><div class="fillx"><h3>Completa</h3><p class="mini"> Tria la resposta correcta a cada desplegable.</p><ul class="fills"><li>El terminal s'obre amb Ctrl + Alt + <select autocomplete="off" data-ans="T" aria-label="Tria la resposta"><option value="">…</option><option>X</option><option>T</option><option>C</option></select>.</li><li>Per aturar un ping que no acaba, prems Ctrl + <select autocomplete="off" data-ans="C" aria-label="Tria la resposta"><option value="">…</option><option>C</option><option>Z</option><option>T</option></select>.</li><li>Una comanda és una <select autocomplete="off" data-ans="ordre escrita" aria-label="Tria la resposta"><option value="">…</option><option>imatge</option><option>taula</option><option>ordre escrita</option></select> que enviem al sistema.</li></ul><div class="btnrow"><button type="button" class="btn check">Comprova</button><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox genx" data-gen="pool" data-pool="{&quot;own&quot;: [[&quot;Terminal&quot;, &quot;Finestra on s&#x27;escriuen les comandes&quot;], [&quot;Ctrl + Alt + T&quot;, &quot;Obre el terminal&quot;], [&quot;Ctrl + C&quot;, &quot;Atura una comanda que no acaba&quot;], [&quot;Comanda&quot;, &quot;Ordre que escrivim al terminal&quot;]], &quot;all&quot;: [[&quot;Terminal&quot;, &quot;Finestra on s&#x27;escriuen les comandes&quot;], [&quot;Ctrl + Alt + T&quot;, &quot;Obre el terminal&quot;], [&quot;Ctrl + C&quot;, &quot;Atura una comanda que no acaba&quot;], [&quot;Comanda&quot;, &quot;Ordre que escrivim al terminal&quot;], [&quot;ip a&quot;, &quot;Mostra la IP i la MAC&quot;], [&quot;ifconfig&quot;, &quot;Mostra la IP i la MAC (cal net-tools)&quot;], [&quot;lsb_release -a&quot;, &quot;Mostra la versió del sistema operatiu&quot;], [&quot;link/ether&quot;, &quot;Línia on surt la MAC&quot;], [&quot;inet&quot;, &quot;Línia on surt la IPv4&quot;], [&quot;ping&quot;, &quot;Comprova si arriba la connexió a un equip&quot;], [&quot;ping -c 4&quot;, &quot;Envia només 4 missatges&quot;], [&quot;Network is unreachable&quot;, &quot;Missatge quan no hi ha xarxa&quot;], [&quot;DNS&quot;, &quot;Tradueix els noms de web a adreces IP&quot;], [&quot;ARP&quot;, &quot;Associa cada IP amb la seva MAC dins la xarxa local&quot;], [&quot;arp -a&quot;, &quot;Mostra les IP i MAC apreses&quot;], [&quot;Ping previ&quot;, &quot;Cal per aprendre la MAC d&#x27;un company&quot;], [&quot;Salt&quot;, &quot;Cada router pel qual passa el missatge&quot;], [&quot;traceroute&quot;, &quot;Mostra els salts fins al destí&quot;], [&quot;tracepath&quot;, &quot;Alternativa a traceroute&quot;], [&quot;mtr&quot;, &quot;Combina ping i traceroute en directe&quot;], [&quot;Default gateway&quot;, &quot;IP del router més proper&quot;], [&quot;route -n&quot;, &quot;Mostra la taula de rutes i el gateway&quot;], [&quot;ip route&quot;, &quot;Mostra les rutes (línia default via)&quot;], [&quot;geotraceroute&quot;, &quot;Aplicació web que mostra els salts en un mapa&quot;]]}"><h3>Més exercicis</h3><p class="mini">Exercicis nous cada vegada: practica tantes vegades com vulguis.</p><div class="gbody"></div><p class="result gscore" aria-live="polite"></p><div class="btnrow"><button type="button" class="btn gnew">Genera més exercicis</button></div></div>
+<h3 class="sub">Veure la IP i la MAC: ip a, ifconfig i lsb_release</h3>
+<div class="exbox"><div class="pairx"><h3>Comanda i funció</h3><p class="mini"> Toca un concepte i després la seva parella.</p><div class="pairs"><div><button type="button" class="pc" data-k="0" data-side="l">ip a</button><button type="button" class="pc" data-k="1" data-side="l">ifconfig</button><button type="button" class="pc" data-k="2" data-side="l">lsb_release -a</button><button type="button" class="pc" data-k="3" data-side="l">link/ether</button><button type="button" class="pc" data-k="4" data-side="l">inet</button></div><div><button type="button" class="pc" data-k="2" data-side="r">Mostra la versió del sistema operatiu</button><button type="button" class="pc" data-k="0" data-side="r">Mostra la IP i la MAC</button><button type="button" class="pc" data-k="3" data-side="r">Línia on surt la MAC</button><button type="button" class="pc" data-k="1" data-side="r">Mostra la IP i la MAC (cal net-tools)</button><button type="button" class="pc" data-k="4" data-side="r">Línia on surt la IPv4</button></div></div><div class="btnrow"><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox"><div class="typex"><h3>Escriu la comanda</h3><p class="mini"> Escriu la comanda a cada línia, com al terminal. Si et bloqueges, usa «Pista».</p><ul class="typed"><li data-acc="[&quot;ip a&quot;, &quot;ip addr&quot;, &quot;ip address&quot;, &quot;ifconfig&quot;]"><label><span class="tq">Mostra la IP i la MAC del teu PC.</span><span class="tline"><span class="tprompt">$</span><input type="text" class="tin" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Comanda"></span></label><button type="button" class="hintb">Pista</button><p class="hint" hidden>Comença per «ip» (o per «if»…).</p><p class="sol" hidden>Una resposta correcta: <code>ip a</code></p></li><li data-acc="[&quot;lsb_release -a&quot;]"><label><span class="tq">Mostra la versió del sistema operatiu.</span><span class="tline"><span class="tprompt">$</span><input type="text" class="tin" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Comanda"></span></label><button type="button" class="hintb">Pista</button><p class="hint" hidden>Comença per «lsb_»…</p><p class="sol" hidden>Una resposta correcta: <code>lsb_release -a</code></p></li></ul><div class="btnrow"><button type="button" class="btn check">Comprova</button><button type="button" class="btn light solb">Mostra les solucions</button><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox genx" data-gen="macip,pool" data-pool="{&quot;own&quot;: [[&quot;ip a&quot;, &quot;Mostra la IP i la MAC&quot;], [&quot;ifconfig&quot;, &quot;Mostra la IP i la MAC (cal net-tools)&quot;], [&quot;lsb_release -a&quot;, &quot;Mostra la versió del sistema operatiu&quot;], [&quot;link/ether&quot;, &quot;Línia on surt la MAC&quot;], [&quot;inet&quot;, &quot;Línia on surt la IPv4&quot;]], &quot;all&quot;: [[&quot;Terminal&quot;, &quot;Finestra on s&#x27;escriuen les comandes&quot;], [&quot;Ctrl + Alt + T&quot;, &quot;Obre el terminal&quot;], [&quot;Ctrl + C&quot;, &quot;Atura una comanda que no acaba&quot;], [&quot;Comanda&quot;, &quot;Ordre que escrivim al terminal&quot;], [&quot;ip a&quot;, &quot;Mostra la IP i la MAC&quot;], [&quot;ifconfig&quot;, &quot;Mostra la IP i la MAC (cal net-tools)&quot;], [&quot;lsb_release -a&quot;, &quot;Mostra la versió del sistema operatiu&quot;], [&quot;link/ether&quot;, &quot;Línia on surt la MAC&quot;], [&quot;inet&quot;, &quot;Línia on surt la IPv4&quot;], [&quot;ping&quot;, &quot;Comprova si arriba la connexió a un equip&quot;], [&quot;ping -c 4&quot;, &quot;Envia només 4 missatges&quot;], [&quot;Network is unreachable&quot;, &quot;Missatge quan no hi ha xarxa&quot;], [&quot;DNS&quot;, &quot;Tradueix els noms de web a adreces IP&quot;], [&quot;ARP&quot;, &quot;Associa cada IP amb la seva MAC dins la xarxa local&quot;], [&quot;arp -a&quot;, &quot;Mostra les IP i MAC apreses&quot;], [&quot;Ping previ&quot;, &quot;Cal per aprendre la MAC d&#x27;un company&quot;], [&quot;Salt&quot;, &quot;Cada router pel qual passa el missatge&quot;], [&quot;traceroute&quot;, &quot;Mostra els salts fins al destí&quot;], [&quot;tracepath&quot;, &quot;Alternativa a traceroute&quot;], [&quot;mtr&quot;, &quot;Combina ping i traceroute en directe&quot;], [&quot;Default gateway&quot;, &quot;IP del router més proper&quot;], [&quot;route -n&quot;, &quot;Mostra la taula de rutes i el gateway&quot;], [&quot;ip route&quot;, &quot;Mostra les rutes (línia default via)&quot;], [&quot;geotraceroute&quot;, &quot;Aplicació web que mostra els salts en un mapa&quot;]]}"><h3>Més exercicis</h3><p class="mini">Exercicis nous cada vegada: practica tantes vegades com vulguis.</p><div class="gbody"></div><p class="result gscore" aria-live="polite"></p><div class="btnrow"><button type="button" class="btn gnew">Genera més exercicis</button></div></div>
+<h3 class="sub">Comprovar la connexió: ping</h3>
+<div class="exbox"><div class="fillx"><h3>Sobre el ping</h3><p class="mini"> Tria la resposta correcta a cada desplegable.</p><ul class="fills"><li>Per enviar només 4 missatges, uses ping <select autocomplete="off" data-ans="-c 4" aria-label="Tria la resposta"><option value="">…</option><option>-c 4</option><option>-x 4</option><option>-n 4</option></select>.</li><li>Quan fas ping a www.google.es, el <select autocomplete="off" data-ans="DNS" aria-label="Tria la resposta"><option value="">…</option><option>DNS</option><option>DG</option><option>ARP</option></select> obté la IP del nom.</li><li>Si desconnectes el cable durant un ping, les respostes <select autocomplete="off" data-ans="deixen d'arribar" aria-label="Tria la resposta"><option value="">…</option><option>no canvien</option><option>deixen d'arribar</option><option>arriben més ràpid</option></select>.</li></ul><div class="btnrow"><button type="button" class="btn check">Comprova</button><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox"><div class="tfx"><h3>Ping</h3><p class="mini"> Decideix si cada frase és vertadera o falsa.</p><ul class="tfs"><li class="tfrow" data-ans="1"><p>El ping serveix per comprovar si hi ha connexió amb un altre equip.</p><div class="tfbtns"><button type="button" class="tfb" data-v="1">Vertader</button><button type="button" class="tfb" data-v="0">Fals</button></div><p class="exp">Envia missatges i espera la resposta.</p></li><li class="tfrow" data-ans="0"><p>Un ping sense opcions s'atura sol després de 4 missatges.</p><div class="tfbtns"><button type="button" class="tfb" data-v="1">Vertader</button><button type="button" class="tfb" data-v="0">Fals</button></div><p class="exp">A Linux continua fins que prems Ctrl + C.</p></li></ul><div class="btnrow"><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox"><div class="typex"><h3>Escriu la comanda</h3><p class="mini"> Escriu la comanda a cada línia, com al terminal. Si et bloqueges, usa «Pista».</p><ul class="typed"><li data-acc="[&quot;ping -c 4 172.16.209.38&quot;, &quot;ping -c4 172.16.209.38&quot;, &quot;ping 172.16.209.38 -c 4&quot;]"><label><span class="tq">Fes ping a la IP 172.16.209.38 enviant només 4 missatges.</span><span class="tline"><span class="tprompt">$</span><input type="text" class="tin" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Comanda"></span></label><button type="button" class="hintb">Pista</button><p class="hint" hidden>Usa l'opció -c.</p><p class="sol" hidden>Una resposta correcta: <code>ping -c 4 172.16.209.38</code></p></li><li data-acc="[&quot;ping www.google.es&quot;, &quot;ping *google.es*&quot;]"><label><span class="tq">Fes ping a www.google.es.</span><span class="tline"><span class="tprompt">$</span><input type="text" class="tin" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Comanda"></span></label><button type="button" class="hintb">Pista</button><p class="hint" hidden>Només cal «ping» i el nom de la web.</p><p class="sol" hidden>Una resposta correcta: <code>ping www.google.es</code></p></li></ul><div class="btnrow"><button type="button" class="btn check">Comprova</button><button type="button" class="btn light solb">Mostra les solucions</button><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox genx" data-gen="pool" data-pool="{&quot;own&quot;: [[&quot;ping&quot;, &quot;Comprova si arriba la connexió a un equip&quot;], [&quot;ping -c 4&quot;, &quot;Envia només 4 missatges&quot;], [&quot;Network is unreachable&quot;, &quot;Missatge quan no hi ha xarxa&quot;], [&quot;DNS&quot;, &quot;Tradueix els noms de web a adreces IP&quot;]], &quot;all&quot;: [[&quot;Terminal&quot;, &quot;Finestra on s&#x27;escriuen les comandes&quot;], [&quot;Ctrl + Alt + T&quot;, &quot;Obre el terminal&quot;], [&quot;Ctrl + C&quot;, &quot;Atura una comanda que no acaba&quot;], [&quot;Comanda&quot;, &quot;Ordre que escrivim al terminal&quot;], [&quot;ip a&quot;, &quot;Mostra la IP i la MAC&quot;], [&quot;ifconfig&quot;, &quot;Mostra la IP i la MAC (cal net-tools)&quot;], [&quot;lsb_release -a&quot;, &quot;Mostra la versió del sistema operatiu&quot;], [&quot;link/ether&quot;, &quot;Línia on surt la MAC&quot;], [&quot;inet&quot;, &quot;Línia on surt la IPv4&quot;], [&quot;ping&quot;, &quot;Comprova si arriba la connexió a un equip&quot;], [&quot;ping -c 4&quot;, &quot;Envia només 4 missatges&quot;], [&quot;Network is unreachable&quot;, &quot;Missatge quan no hi ha xarxa&quot;], [&quot;DNS&quot;, &quot;Tradueix els noms de web a adreces IP&quot;], [&quot;ARP&quot;, &quot;Associa cada IP amb la seva MAC dins la xarxa local&quot;], [&quot;arp -a&quot;, &quot;Mostra les IP i MAC apreses&quot;], [&quot;Ping previ&quot;, &quot;Cal per aprendre la MAC d&#x27;un company&quot;], [&quot;Salt&quot;, &quot;Cada router pel qual passa el missatge&quot;], [&quot;traceroute&quot;, &quot;Mostra els salts fins al destí&quot;], [&quot;tracepath&quot;, &quot;Alternativa a traceroute&quot;], [&quot;mtr&quot;, &quot;Combina ping i traceroute en directe&quot;], [&quot;Default gateway&quot;, &quot;IP del router més proper&quot;], [&quot;route -n&quot;, &quot;Mostra la taula de rutes i el gateway&quot;], [&quot;ip route&quot;, &quot;Mostra les rutes (línia default via)&quot;], [&quot;geotraceroute&quot;, &quot;Aplicació web que mostra els salts en un mapa&quot;]]}"><h3>Més exercicis</h3><p class="mini">Exercicis nous cada vegada: practica tantes vegades com vulguis.</p><div class="gbody"></div><p class="result gscore" aria-live="polite"></p><div class="btnrow"><button type="button" class="btn gnew">Genera més exercicis</button></div></div>
+<h3 class="sub">La taula ARP: arp -a</h3>
+<div class="exbox"><div class="ordx"><h3>Veure la MAC d'un company</h3><p class="mini"> Usa les fletxes per ordenar els passos.</p><ol class="ord"><li data-pos="3"><span class="otxt">Llegeix la MAC que hi ha al costat</span><span class="omv"><button type="button" class="up" aria-label="Puja">↑</button><button type="button" class="dn" aria-label="Baixa">↓</button></span></li><li data-pos="2"><span class="otxt">Busca la IP del company a la llista</span><span class="omv"><button type="button" class="up" aria-label="Puja">↑</button><button type="button" class="dn" aria-label="Baixa">↓</button></span></li><li data-pos="1"><span class="otxt">Escriu arp -a</span><span class="omv"><button type="button" class="up" aria-label="Puja">↑</button><button type="button" class="dn" aria-label="Baixa">↓</button></span></li><li data-pos="0"><span class="otxt">Fes ping a la IP del company</span><span class="omv"><button type="button" class="up" aria-label="Puja">↑</button><button type="button" class="dn" aria-label="Baixa">↓</button></span></li></ol><div class="btnrow"><button type="button" class="btn check">Comprova</button><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox"><div class="tfx"><h3>ARP</h3><p class="mini"> Decideix si cada frase és vertadera o falsa.</p><ul class="tfs"><li class="tfrow" data-ans="1"><p>La taula ARP només mostra els equips amb qui t'has comunicat.</p><div class="tfbtns"><button type="button" class="tfb" data-v="1">Vertader</button><button type="button" class="tfb" data-v="0">Fals</button></div><p class="exp">Per això cal fer ping abans.</p></li><li class="tfrow" data-ans="1"><p>L'ARP associa cada IP amb una adreça MAC.</p><div class="tfbtns"><button type="button" class="tfb" data-v="1">Vertader</button><button type="button" class="tfb" data-v="0">Fals</button></div><p class="exp">Així els equips se saben localitzar dins la xarxa local.</p></li></ul><div class="btnrow"><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox genx" data-gen="pool" data-pool="{&quot;own&quot;: [[&quot;ARP&quot;, &quot;Associa cada IP amb la seva MAC dins la xarxa local&quot;], [&quot;arp -a&quot;, &quot;Mostra les IP i MAC apreses&quot;], [&quot;Ping previ&quot;, &quot;Cal per aprendre la MAC d&#x27;un company&quot;]], &quot;all&quot;: [[&quot;Terminal&quot;, &quot;Finestra on s&#x27;escriuen les comandes&quot;], [&quot;Ctrl + Alt + T&quot;, &quot;Obre el terminal&quot;], [&quot;Ctrl + C&quot;, &quot;Atura una comanda que no acaba&quot;], [&quot;Comanda&quot;, &quot;Ordre que escrivim al terminal&quot;], [&quot;ip a&quot;, &quot;Mostra la IP i la MAC&quot;], [&quot;ifconfig&quot;, &quot;Mostra la IP i la MAC (cal net-tools)&quot;], [&quot;lsb_release -a&quot;, &quot;Mostra la versió del sistema operatiu&quot;], [&quot;link/ether&quot;, &quot;Línia on surt la MAC&quot;], [&quot;inet&quot;, &quot;Línia on surt la IPv4&quot;], [&quot;ping&quot;, &quot;Comprova si arriba la connexió a un equip&quot;], [&quot;ping -c 4&quot;, &quot;Envia només 4 missatges&quot;], [&quot;Network is unreachable&quot;, &quot;Missatge quan no hi ha xarxa&quot;], [&quot;DNS&quot;, &quot;Tradueix els noms de web a adreces IP&quot;], [&quot;ARP&quot;, &quot;Associa cada IP amb la seva MAC dins la xarxa local&quot;], [&quot;arp -a&quot;, &quot;Mostra les IP i MAC apreses&quot;], [&quot;Ping previ&quot;, &quot;Cal per aprendre la MAC d&#x27;un company&quot;], [&quot;Salt&quot;, &quot;Cada router pel qual passa el missatge&quot;], [&quot;traceroute&quot;, &quot;Mostra els salts fins al destí&quot;], [&quot;tracepath&quot;, &quot;Alternativa a traceroute&quot;], [&quot;mtr&quot;, &quot;Combina ping i traceroute en directe&quot;], [&quot;Default gateway&quot;, &quot;IP del router més proper&quot;], [&quot;route -n&quot;, &quot;Mostra la taula de rutes i el gateway&quot;], [&quot;ip route&quot;, &quot;Mostra les rutes (línia default via)&quot;], [&quot;geotraceroute&quot;, &quot;Aplicació web que mostra els salts en un mapa&quot;]]}"><h3>Més exercicis</h3><p class="mini">Exercicis nous cada vegada: practica tantes vegades com vulguis.</p><div class="gbody"></div><p class="result gscore" aria-live="polite"></p><div class="btnrow"><button type="button" class="btn gnew">Genera més exercicis</button></div></div>
+<h3 class="sub">Els salts d'una ruta: traceroute, tracepath i mtr</h3>
+<div class="exbox"><div class="fillx"><h3>Salts</h3><p class="mini"> Tria la resposta correcta a cada desplegable.</p><ul class="fills"><li>Un salt és un pas per un <select autocomplete="off" data-ans="router" aria-label="Tria la resposta"><option value="">…</option><option>switch</option><option>router</option><option>cable</option></select>.</li><li>Si dos PC són a la mateixa xarxa, traceroute mostra <select autocomplete="off" data-ans="1" aria-label="Tria la resposta"><option value="">…</option><option>1</option><option>5</option><option>10</option></select> salt(s).</li><li>Els asteriscs * * * volen dir que aquell salt <select autocomplete="off" data-ans="no ha respost" aria-label="Tria la resposta"><option value="">…</option><option>no ha respost</option><option>és el destí</option><option>va molt ràpid</option></select>.</li></ul><div class="btnrow"><button type="button" class="btn check">Comprova</button><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox"><div class="typex"><h3>Escriu la comanda</h3><p class="mini"> Escriu la comanda a cada línia, com al terminal. Si et bloqueges, usa «Pista».</p><ul class="typed"><li data-acc="[&quot;traceroute www.google.com&quot;, &quot;tracepath www.google.com&quot;, &quot;mtr www.google.com&quot;, &quot;traceroute *google.com*&quot;, &quot;tracepath *google.com*&quot;, &quot;mtr *google.com*&quot;]"><label><span class="tq">Mostra els salts fins a www.google.com (amb traceroute, tracepath o mtr).</span><span class="tline"><span class="tprompt">$</span><input type="text" class="tin" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Comanda"></span></label><button type="button" class="hintb">Pista</button><p class="hint" hidden>Escriu una de les tres comandes i el nom de la web.</p><p class="sol" hidden>Una resposta correcta: <code>traceroute www.google.com</code></p></li></ul><div class="btnrow"><button type="button" class="btn check">Comprova</button><button type="button" class="btn light solb">Mostra les solucions</button><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox genx" data-gen="pool" data-pool="{&quot;own&quot;: [[&quot;Salt&quot;, &quot;Cada router pel qual passa el missatge&quot;], [&quot;traceroute&quot;, &quot;Mostra els salts fins al destí&quot;], [&quot;tracepath&quot;, &quot;Alternativa a traceroute&quot;], [&quot;mtr&quot;, &quot;Combina ping i traceroute en directe&quot;]], &quot;all&quot;: [[&quot;Terminal&quot;, &quot;Finestra on s&#x27;escriuen les comandes&quot;], [&quot;Ctrl + Alt + T&quot;, &quot;Obre el terminal&quot;], [&quot;Ctrl + C&quot;, &quot;Atura una comanda que no acaba&quot;], [&quot;Comanda&quot;, &quot;Ordre que escrivim al terminal&quot;], [&quot;ip a&quot;, &quot;Mostra la IP i la MAC&quot;], [&quot;ifconfig&quot;, &quot;Mostra la IP i la MAC (cal net-tools)&quot;], [&quot;lsb_release -a&quot;, &quot;Mostra la versió del sistema operatiu&quot;], [&quot;link/ether&quot;, &quot;Línia on surt la MAC&quot;], [&quot;inet&quot;, &quot;Línia on surt la IPv4&quot;], [&quot;ping&quot;, &quot;Comprova si arriba la connexió a un equip&quot;], [&quot;ping -c 4&quot;, &quot;Envia només 4 missatges&quot;], [&quot;Network is unreachable&quot;, &quot;Missatge quan no hi ha xarxa&quot;], [&quot;DNS&quot;, &quot;Tradueix els noms de web a adreces IP&quot;], [&quot;ARP&quot;, &quot;Associa cada IP amb la seva MAC dins la xarxa local&quot;], [&quot;arp -a&quot;, &quot;Mostra les IP i MAC apreses&quot;], [&quot;Ping previ&quot;, &quot;Cal per aprendre la MAC d&#x27;un company&quot;], [&quot;Salt&quot;, &quot;Cada router pel qual passa el missatge&quot;], [&quot;traceroute&quot;, &quot;Mostra els salts fins al destí&quot;], [&quot;tracepath&quot;, &quot;Alternativa a traceroute&quot;], [&quot;mtr&quot;, &quot;Combina ping i traceroute en directe&quot;], [&quot;Default gateway&quot;, &quot;IP del router més proper&quot;], [&quot;route -n&quot;, &quot;Mostra la taula de rutes i el gateway&quot;], [&quot;ip route&quot;, &quot;Mostra les rutes (línia default via)&quot;], [&quot;geotraceroute&quot;, &quot;Aplicació web que mostra els salts en un mapa&quot;]]}"><h3>Més exercicis</h3><p class="mini">Exercicis nous cada vegada: practica tantes vegades com vulguis.</p><div class="gbody"></div><p class="result gscore" aria-live="polite"></p><div class="btnrow"><button type="button" class="btn gnew">Genera més exercicis</button></div></div>
+<h3 class="sub">El default gateway: route -n</h3>
+<div class="exbox"><div class="pairx"><h3>Ruta i gateway</h3><p class="mini"> Toca un concepte i després la seva parella.</p><div class="pairs"><div><button type="button" class="pc" data-k="0" data-side="l">Default gateway</button><button type="button" class="pc" data-k="1" data-side="l">route -n</button><button type="button" class="pc" data-k="2" data-side="l">ip route</button><button type="button" class="pc" data-k="3" data-side="l">geotraceroute.com</button></div><div><button type="button" class="pc" data-k="2" data-side="r">Mostra la ruta default via</button><button type="button" class="pc" data-k="1" data-side="r">Mostra la taula de rutes</button><button type="button" class="pc" data-k="3" data-side="r">Mostra els salts en un mapa</button><button type="button" class="pc" data-k="0" data-side="r">IP del router més proper</button></div></div><div class="btnrow"><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox"><div class="fillx"><h3>Completa</h3><p class="mini"> Tria la resposta correcta a cada desplegable.</p><ul class="fills"><li>A route -n, la ruta per defecte té destinació <select autocomplete="off" data-ans="0.0.0.0" aria-label="Tria la resposta"><option value="">…</option><option>0.0.0.0</option><option>127.0.0.1</option><option>255.255.255.0</option></select>.</li><li>El default gateway és la IP del <select autocomplete="off" data-ans="router" aria-label="Tria la resposta"><option value="">…</option><option>switch</option><option>router</option><option>PC</option></select> més proper.</li></ul><div class="btnrow"><button type="button" class="btn check">Comprova</button><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox"><div class="typex"><h3>Escriu la comanda</h3><p class="mini"> Escriu la comanda a cada línia, com al terminal. Si et bloqueges, usa «Pista».</p><ul class="typed"><li data-acc="[&quot;route -n&quot;, &quot;ip route&quot;, &quot;ip r&quot;]"><label><span class="tq">Mostra el default gateway (la taula de rutes).</span><span class="tline"><span class="tprompt">$</span><input type="text" class="tin" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Comanda"></span></label><button type="button" class="hintb">Pista</button><p class="hint" hidden>Una comanda comença per «route» i l'altra per «ip»…</p><p class="sol" hidden>Una resposta correcta: <code>route -n</code></p></li></ul><div class="btnrow"><button type="button" class="btn check">Comprova</button><button type="button" class="btn light solb">Mostra les solucions</button><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox genx" data-gen="pool" data-pool="{&quot;own&quot;: [[&quot;Default gateway&quot;, &quot;IP del router més proper&quot;], [&quot;route -n&quot;, &quot;Mostra la taula de rutes i el gateway&quot;], [&quot;ip route&quot;, &quot;Mostra les rutes (línia default via)&quot;], [&quot;geotraceroute&quot;, &quot;Aplicació web que mostra els salts en un mapa&quot;]], &quot;all&quot;: [[&quot;Terminal&quot;, &quot;Finestra on s&#x27;escriuen les comandes&quot;], [&quot;Ctrl + Alt + T&quot;, &quot;Obre el terminal&quot;], [&quot;Ctrl + C&quot;, &quot;Atura una comanda que no acaba&quot;], [&quot;Comanda&quot;, &quot;Ordre que escrivim al terminal&quot;], [&quot;ip a&quot;, &quot;Mostra la IP i la MAC&quot;], [&quot;ifconfig&quot;, &quot;Mostra la IP i la MAC (cal net-tools)&quot;], [&quot;lsb_release -a&quot;, &quot;Mostra la versió del sistema operatiu&quot;], [&quot;link/ether&quot;, &quot;Línia on surt la MAC&quot;], [&quot;inet&quot;, &quot;Línia on surt la IPv4&quot;], [&quot;ping&quot;, &quot;Comprova si arriba la connexió a un equip&quot;], [&quot;ping -c 4&quot;, &quot;Envia només 4 missatges&quot;], [&quot;Network is unreachable&quot;, &quot;Missatge quan no hi ha xarxa&quot;], [&quot;DNS&quot;, &quot;Tradueix els noms de web a adreces IP&quot;], [&quot;ARP&quot;, &quot;Associa cada IP amb la seva MAC dins la xarxa local&quot;], [&quot;arp -a&quot;, &quot;Mostra les IP i MAC apreses&quot;], [&quot;Ping previ&quot;, &quot;Cal per aprendre la MAC d&#x27;un company&quot;], [&quot;Salt&quot;, &quot;Cada router pel qual passa el missatge&quot;], [&quot;traceroute&quot;, &quot;Mostra els salts fins al destí&quot;], [&quot;tracepath&quot;, &quot;Alternativa a traceroute&quot;], [&quot;mtr&quot;, &quot;Combina ping i traceroute en directe&quot;], [&quot;Default gateway&quot;, &quot;IP del router més proper&quot;], [&quot;route -n&quot;, &quot;Mostra la taula de rutes i el gateway&quot;], [&quot;ip route&quot;, &quot;Mostra les rutes (línia default via)&quot;], [&quot;geotraceroute&quot;, &quot;Aplicació web que mostra els salts en un mapa&quot;]]}"><h3>Més exercicis</h3><p class="mini">Exercicis nous cada vegada: practica tantes vegades com vulguis.</p><div class="gbody"></div><p class="result gscore" aria-live="polite"></p><div class="btnrow"><button type="button" class="btn gnew">Genera més exercicis</button></div></div>
+<h3 class="sub">Repàs final</h3>
+<div class="exbox"><div class="typex"><h3>Repàs escrit: escriu la comanda</h3><p class="mini"> Escriu la comanda a cada línia, com al terminal. Si et bloqueges, usa «Pista».</p><ul class="typed"><li data-acc="[&quot;arp -a&quot;, &quot;arp&quot;]"><label><span class="tq">Vols veure la MAC del teu company, que ja has fet ping. Quina comanda mostra la taula ARP?</span><span class="tline"><span class="tprompt">$</span><input type="text" class="tin" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Comanda"></span></label><button type="button" class="hintb">Pista</button><p class="hint" hidden>Comença per «arp».</p><p class="sol" hidden>Una resposta correcta: <code>arp -a</code></p></li><li data-acc="[&quot;apt install net-tools&quot;, &quot;apt-get install net-tools&quot;, &quot;apt install -y net-tools&quot;]"><label><span class="tq">Necessites les comandes ifconfig, arp i route. Instal·la el paquet net-tools.</span><span class="tline"><span class="tprompt">$</span><input type="text" class="tin" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Comanda"></span></label><button type="button" class="hintb">Pista</button><p class="hint" hidden>Comença per «apt» (amb sudo davant).</p><p class="sol" hidden>Una resposta correcta: <code>apt install net-tools</code></p></li><li data-acc="[&quot;ip a&quot;, &quot;ip addr&quot;, &quot;ip address&quot;]"><label><span class="tq">Mostra la IP i la MAC amb la comanda moderna (no ifconfig).</span><span class="tline"><span class="tprompt">$</span><input type="text" class="tin" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Comanda"></span></label><button type="button" class="hintb">Pista</button><p class="hint" hidden>Comença per «ip».</p><p class="sol" hidden>Una resposta correcta: <code>ip a</code></p></li><li data-acc="[&quot;tracepath www.amazon.com&quot;, &quot;tracepath *amazon.com*&quot;]"><label><span class="tq">Mira quants salts hi ha fins a www.amazon.com amb tracepath.</span><span class="tline"><span class="tprompt">$</span><input type="text" class="tin" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Comanda"></span></label><button type="button" class="hintb">Pista</button><p class="hint" hidden>Comença per «tracepath».</p><p class="sol" hidden>Una resposta correcta: <code>tracepath www.amazon.com</code></p></li><li data-acc="[&quot;ping -c 3 172.16.209.38&quot;, &quot;ping -c3 172.16.209.38&quot;, &quot;ping 172.16.209.38 -c 3&quot;]"><label><span class="tq">Fes ping a la IP 172.16.209.38 enviant només 3 missatges.</span><span class="tline"><span class="tprompt">$</span><input type="text" class="tin" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Comanda"></span></label><button type="button" class="hintb">Pista</button><p class="hint" hidden>Usa l'opció -c.</p><p class="sol" hidden>Una resposta correcta: <code>ping -c 3 172.16.209.38</code></p></li></ul><div class="btnrow"><button type="button" class="btn check">Comprova</button><button type="button" class="btn light solb">Mostra les solucions</button><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox"><div class="dnd"><h3>Quina comanda faig servir?</h3><p class="mini"> Arrossega els conceptes a la caixa correcta (o toca un concepte i després la caixa).</p><div class="pool" aria-label="Conceptes"><span class="chip-d" draggable="true" data-ans="0">ip a</span><span class="chip-d" draggable="true" data-ans="0">ifconfig</span><span class="chip-d" draggable="true" data-ans="1">ping</span><span class="chip-d" draggable="true" data-ans="2">arp -a</span><span class="chip-d" draggable="true" data-ans="3">traceroute</span><span class="chip-d" draggable="true" data-ans="3">tracepath</span><span class="chip-d" draggable="true" data-ans="3">mtr</span><span class="chip-d" draggable="true" data-ans="4">route -n</span><span class="chip-d" draggable="true" data-ans="4">ip route</span></div><div class="boxes"><div class="box"><h4>Veure la IP i la MAC</h4><div class="drop" data-box="0"></div></div><div class="box"><h4>Comprovar la connexió</h4><div class="drop" data-box="1"></div></div><div class="box"><h4>Veure les MAC apreses</h4><div class="drop" data-box="2"></div></div><div class="box"><h4>Veure els salts</h4><div class="drop" data-box="3"></div></div><div class="box"><h4>Veure el default gateway</h4><div class="drop" data-box="4"></div></div></div><div class="btnrow"><button type="button" class="btn check">Comprova</button><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox"><div class="quiz"><h3>Test d'autoavaluació</h3><fieldset class="q" data-ans="0"><legend>1. Quina comanda mostra la IP i la MAC del teu PC?</legend><label><input autocomplete="off" type="radio" name="a6q1" value="0">ip a</label><label><input autocomplete="off" type="radio" name="a6q1" value="1">arp -a</label><label><input autocomplete="off" type="radio" name="a6q1" value="2">ping</label><p class="exp">ip a (o ifconfig).</p></fieldset><fieldset class="q" data-ans="1"><legend>2. Quina comanda mostra les MAC apreses de la xarxa local?</legend><label><input autocomplete="off" type="radio" name="a6q2" value="0">route -n</label><label><input autocomplete="off" type="radio" name="a6q2" value="1">arp -a</label><label><input autocomplete="off" type="radio" name="a6q2" value="2">traceroute</label><p class="exp">La taula ARP es veu amb arp -a.</p></fieldset><fieldset class="q" data-ans="0"><legend>3. Com s'atura un ping que no acaba?</legend><label><input autocomplete="off" type="radio" name="a6q3" value="0">Ctrl + C</label><label><input autocomplete="off" type="radio" name="a6q3" value="1">Ctrl + Alt + T</label><label><input autocomplete="off" type="radio" name="a6q3" value="2">Enter</label><p class="exp">Ctrl + C atura la comanda.</p></fieldset><fieldset class="q" data-ans="0"><legend>4. Quants salts veus entre dos PC de la mateixa xarxa?</legend><label><input autocomplete="off" type="radio" name="a6q4" value="0">1</label><label><input autocomplete="off" type="radio" name="a6q4" value="1">5</label><label><input autocomplete="off" type="radio" name="a6q4" value="2">10</label><p class="exp">Els switches no compten com a salt.</p></fieldset><fieldset class="q" data-ans="1"><legend>5. Què és el default gateway?</legend><label><input autocomplete="off" type="radio" name="a6q5" value="0">La MAC del PC</label><label><input autocomplete="off" type="radio" name="a6q5" value="1">La IP del router més proper</label><label><input autocomplete="off" type="radio" name="a6q5" value="2">El nom del PC</label><p class="exp">És la porta de sortida cap a altres xarxes.</p></fieldset><fieldset class="q" data-ans="0"><legend>6. Quina comanda mostra el default gateway?</legend><label><input autocomplete="off" type="radio" name="a6q6" value="0">route -n</label><label><input autocomplete="off" type="radio" name="a6q6" value="1">lsb_release -a</label><label><input autocomplete="off" type="radio" name="a6q6" value="2">tracepath</label><p class="exp">També es pot veure amb ip route.</p></fieldset><div class="btnrow"><button type="button" class="btn check">Comprova</button><button type="button" class="btn light reset">Reinicia</button></div><p class="result" aria-live="polite"></p></div></div>
+<div class="exbox genx" data-gen="macip,pool" data-pool="{&quot;own&quot;: [[&quot;Terminal&quot;, &quot;Finestra on s&#x27;escriuen les comandes&quot;], [&quot;Ctrl + Alt + T&quot;, &quot;Obre el terminal&quot;], [&quot;Ctrl + C&quot;, &quot;Atura una comanda que no acaba&quot;], [&quot;Comanda&quot;, &quot;Ordre que escrivim al terminal&quot;], [&quot;ip a&quot;, &quot;Mostra la IP i la MAC&quot;], [&quot;ifconfig&quot;, &quot;Mostra la IP i la MAC (cal net-tools)&quot;], [&quot;lsb_release -a&quot;, &quot;Mostra la versió del sistema operatiu&quot;], [&quot;link/ether&quot;, &quot;Línia on surt la MAC&quot;], [&quot;inet&quot;, &quot;Línia on surt la IPv4&quot;], [&quot;ping&quot;, &quot;Comprova si arriba la connexió a un equip&quot;], [&quot;ping -c 4&quot;, &quot;Envia només 4 missatges&quot;], [&quot;Network is unreachable&quot;, &quot;Missatge quan no hi ha xarxa&quot;], [&quot;DNS&quot;, &quot;Tradueix els noms de web a adreces IP&quot;], [&quot;ARP&quot;, &quot;Associa cada IP amb la seva MAC dins la xarxa local&quot;], [&quot;arp -a&quot;, &quot;Mostra les IP i MAC apreses&quot;], [&quot;Ping previ&quot;, &quot;Cal per aprendre la MAC d&#x27;un company&quot;], [&quot;Salt&quot;, &quot;Cada router pel qual passa el missatge&quot;], [&quot;traceroute&quot;, &quot;Mostra els salts fins al destí&quot;], [&quot;tracepath&quot;, &quot;Alternativa a traceroute&quot;], [&quot;mtr&quot;, &quot;Combina ping i traceroute en directe&quot;], [&quot;Default gateway&quot;, &quot;IP del router més proper&quot;], [&quot;route -n&quot;, &quot;Mostra la taula de rutes i el gateway&quot;], [&quot;ip route&quot;, &quot;Mostra les rutes (línia default via)&quot;], [&quot;geotraceroute&quot;, &quot;Aplicació web que mostra els salts en un mapa&quot;]], &quot;all&quot;: [[&quot;Terminal&quot;, &quot;Finestra on s&#x27;escriuen les comandes&quot;], [&quot;Ctrl + Alt + T&quot;, &quot;Obre el terminal&quot;], [&quot;Ctrl + C&quot;, &quot;Atura una comanda que no acaba&quot;], [&quot;Comanda&quot;, &quot;Ordre que escrivim al terminal&quot;], [&quot;ip a&quot;, &quot;Mostra la IP i la MAC&quot;], [&quot;ifconfig&quot;, &quot;Mostra la IP i la MAC (cal net-tools)&quot;], [&quot;lsb_release -a&quot;, &quot;Mostra la versió del sistema operatiu&quot;], [&quot;link/ether&quot;, &quot;Línia on surt la MAC&quot;], [&quot;inet&quot;, &quot;Línia on surt la IPv4&quot;], [&quot;ping&quot;, &quot;Comprova si arriba la connexió a un equip&quot;], [&quot;ping -c 4&quot;, &quot;Envia només 4 missatges&quot;], [&quot;Network is unreachable&quot;, &quot;Missatge quan no hi ha xarxa&quot;], [&quot;DNS&quot;, &quot;Tradueix els noms de web a adreces IP&quot;], [&quot;ARP&quot;, &quot;Associa cada IP amb la seva MAC dins la xarxa local&quot;], [&quot;arp -a&quot;, &quot;Mostra les IP i MAC apreses&quot;], [&quot;Ping previ&quot;, &quot;Cal per aprendre la MAC d&#x27;un company&quot;], [&quot;Salt&quot;, &quot;Cada router pel qual passa el missatge&quot;], [&quot;traceroute&quot;, &quot;Mostra els salts fins al destí&quot;], [&quot;tracepath&quot;, &quot;Alternativa a traceroute&quot;], [&quot;mtr&quot;, &quot;Combina ping i traceroute en directe&quot;], [&quot;Default gateway&quot;, &quot;IP del router més proper&quot;], [&quot;route -n&quot;, &quot;Mostra la taula de rutes i el gateway&quot;], [&quot;ip route&quot;, &quot;Mostra les rutes (línia default via)&quot;], [&quot;geotraceroute&quot;, &quot;Aplicació web que mostra els salts en un mapa&quot;]]}"><h3>Més exercicis</h3><p class="mini">Exercicis nous cada vegada: practica tantes vegades com vulguis.</p><div class="gbody"></div><p class="result gscore" aria-live="polite"></p><div class="btnrow"><button type="button" class="btn gnew">Genera més exercicis</button></div></div>
+
+      </div>
+    </details>
+
+    <details class="part" open data-t="Activitat">
+      <summary>Activitat <span class="chip count"></span></summary>
+      <div class="inner">
+<div class="classroom"><h3>Consulta l'activitat al teu Classroom</h3><p>Ara que ja has vist la teoria i has practicat, fes l'activitat <b>A6 · Comandes de xarxa</b>. La trobaràs a Classroom, dins de l'AEA1.</p><div class="btnrow"><a class="btn" href="https://classroom.google.com/" target="_blank" rel="noopener">Obre Classroom</a></div></div>
+      </div>
+    </details>
+
+  </main>
+
+<footer class="site">
+    <div class="wrap">
+      <a class="logo" href="../index.html"><i></i>MP0255 Xarxes locals</a>
+      <p>CFGM Sistemes Microinformàtics i Xarxes · Curs 2026-2027 · Nom del docent</p>
+    </div>
+  </footer>
+<script>
+(function(){
+  var KEY='xl2:'+location.pathname, st={c:{},d:[],e:{}};
+  try{localStorage.removeItem(KEY)}catch(e){}
+  function save(){}
+  window.addEventListener('pageshow',function(e){if(e.persisted)location.reload()});
+  var apts=[].slice.call(document.querySelectorAll('details.part')),N=apts.length,cur=0,lock=false;
+  var boxes=[].slice.call(document.querySelectorAll('.steps input')),exs=[].slice.call(document.querySelectorAll('.exbox:not(.genx)')),total=N+exs.length+boxes.length;
+  var fill=document.getElementById('fill'),pct=document.getElementById('pct'),lab=document.getElementById('aptlabel'),stepper=document.getElementById('stepper'),dots=[];
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function render(){
+    var dn0=st.d.length+Object.keys(st.e).length+boxes.filter(function(b){return b.checked}).length,p=Math.round(dn0*100/total);fill.style.width=p+'%';pct.textContent=p+'%';
+    lab.textContent="Apartat "+(cur+1)+" de "+N+" · "+apts[cur].getAttribute('data-t');
+    apts.forEach(function(a,i){
+      var dn=st.d.indexOf(i)>-1;a.classList.toggle('done',dn);dots[i].classList.toggle('done',dn);dots[i].classList.toggle('cur',i===cur);
+      var c=a.querySelector('.count'),bs=a.querySelectorAll('.steps input');
+      if(c&&bs.length)c.textContent=[].filter.call(bs,function(b){return b.checked}).length+'/'+bs.length;
+    });
+  }
+  function go(i,scroll){
+    cur=Math.max(0,Math.min(N-1,i));apts.forEach(function(a,k){a.open=(k===cur)});render();
+    if(scroll)apts[cur].scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+  }
+  apts.forEach(function(a,i){
+    var sum=a.querySelector('summary'),n=document.createElement('span');n.className='aptn';n.textContent=i+1;sum.insertBefore(n,sum.firstChild);
+    var b=document.createElement('button');b.type='button';b.className='dot';b.textContent=i+1;
+    b.setAttribute('aria-label',"Apartat "+(i+1)+": "+a.getAttribute('data-t'));b.title=a.getAttribute('data-t');
+    b.addEventListener('click',function(){go(i,true)});stepper.appendChild(b);dots.push(b);
+    var nav=document.createElement('div');nav.className='aptnav';
+    if(i>0){var pv=document.createElement('button');pv.type='button';pv.className='btn light';pv.textContent='← Anterior';pv.addEventListener('click',function(){go(i-1,true)});nav.appendChild(pv)}else{nav.appendChild(document.createElement('span'))}
+    var nx=document.createElement('button');nx.type='button';nx.className='btn';nx.textContent=i<N-1?'Apartat acabat · Següent →':"Acabar l'activitat";
+    nx.addEventListener('click',function(){
+      if(st.d.indexOf(i)<0)st.d.push(i);save();
+      if(i<N-1)go(i+1,true);else{render();window.scrollTo({top:0,behavior:reduce?'auto':'smooth'})}
+    });
+    nav.appendChild(nx);a.querySelector('.inner').appendChild(nav);
+    sum.addEventListener('click',function(){setTimeout(function(){if(a.open){cur=i;render()}},0)});
+  });
+  exs.forEach(function(x,i){if(st.e[i])x.classList.add('done')});
+  function complete(ex,t){
+    if(t.closest('.check')){
+      if(ex.querySelector('.fillx'))return [].every.call(ex.querySelectorAll('select'),function(x){return x.value});
+      if(ex.querySelector('.dnd'))return !ex.querySelector('.pool .chip-d');
+      if(ex.querySelector('.quiz'))return [].every.call(ex.querySelectorAll('.q'),function(q){return q.querySelector('input:checked')});if(ex.querySelector('.typex'))return [].every.call(ex.querySelectorAll('.tin'),function(i){return i.value.trim()});
+      return true;
+    }
+    if(t.closest('.tfb'))return [].every.call(ex.querySelectorAll('.tfrow'),function(r){return r.classList.contains('ok')||r.classList.contains('ko')});
+    if(t.closest('.pc'))return [].every.call(ex.querySelectorAll('.pc'),function(c){return c.classList.contains('done')});
+    return false;
+  }
+  document.addEventListener('click',function(e){
+    var ex=e.target.closest&&e.target.closest('.exbox:not(.genx)');if(!ex)return;
+    var i=exs.indexOf(ex);if(i<0||st.e[i])return;var t=e.target;
+    setTimeout(function(){if(complete(ex,t)){st.e[i]=true;save();ex.classList.add('done');render()}},0);
+  });
+  boxes.forEach(function(b,i){
+    b.checked=!!st.c[i];
+    b.addEventListener('change',function(){st.c[i]=b.checked;save();render()});
+  });
+  var first=0;while(first<N&&st.d.indexOf(first)>-1)first++;
+  go(first>=N?N-1:first,false);
+  var all=false,ex=document.getElementById('expand');
+  ex.addEventListener('click',function(){all=!all;apts.forEach(function(a,k){a.open=all||k===cur});ex.textContent=all?"Només l'apartat actual":'Desplega-ho tot'});
+  document.getElementById('reset').addEventListener('click',function(){
+    if(!confirm("Vols esborrar el progrés d'aquesta activitat?"))return;
+    st={c:{},d:[],e:{}};save();boxes.forEach(function(b){b.checked=false});exs.forEach(function(x){x.classList.remove('done')});go(0,true);
+  });
+})();
+</script>
+<script>
+(function(){
+  function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+  [].forEach.call(document.querySelectorAll('.dnd'),function(d){
+    var pool=d.querySelector('.pool'),chips=[].slice.call(d.querySelectorAll('.chip-d')),res=d.querySelector('.result'),sel=null;
+    var targets=[pool].concat([].slice.call(d.querySelectorAll('.drop')));
+    function scatter(){shuffle(chips.slice()).forEach(function(c){pool.appendChild(c)})}
+    function clear(){chips.forEach(function(c){c.classList.remove('ok','ko')});res.textContent=''}
+    function put(c,t){t.appendChild(c);c.classList.remove('sel');sel=null;clear()}
+    scatter();
+    chips.forEach(function(c){
+      c.setAttribute('tabindex','0');
+      c.addEventListener('click',function(e){e.stopPropagation();if(sel&&sel!==c){put(sel,c.parentNode);return}if(sel===c){c.classList.remove('sel');sel=null;return}if(sel)sel.classList.remove('sel');sel=c;c.classList.add('sel')});
+      c.addEventListener('dragstart',function(e){sel=c;e.dataTransfer.setData('text/plain','x')});
+      c.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();c.click()}});
+    });
+    targets.forEach(function(t){
+      t.addEventListener('click',function(){if(sel)put(sel,t)});
+      t.addEventListener('dragover',function(e){e.preventDefault();t.classList.add('over')});
+      t.addEventListener('dragleave',function(){t.classList.remove('over')});
+      t.addEventListener('drop',function(e){e.preventDefault();t.classList.remove('over');if(sel)put(sel,t)});
+    });
+    d.querySelector('.check').addEventListener('click',function(){
+      var ok=0,pl=0;
+      chips.forEach(function(c){var p=c.parentNode;c.classList.remove('ok','ko');
+        if(p.classList.contains('drop')){pl++;if(p.getAttribute('data-box')===c.getAttribute('data-ans')){ok++;c.classList.add('ok')}else c.classList.add('ko')}});
+      res.textContent=pl<chips.length?'Et falta col·locar '+(chips.length-pl)+' concepte(s). Correctes ara: '+ok+'.':ok+' de '+chips.length+' correctes'+(ok===chips.length?' · Perfecte!':'. Revisa els marcats en vermell.');
+    });
+    d.querySelector('.reset').addEventListener('click',function(){if(sel){sel.classList.remove('sel');sel=null}scatter();clear()});
+  });
+  [].forEach.call(document.querySelectorAll('.quiz'),function(z){
+    var qs=[].slice.call(z.querySelectorAll('.q')),res=z.querySelector('.result');
+    z.querySelector('.check').addEventListener('click',function(){
+      var ok=0,an=0;
+      qs.forEach(function(q){q.classList.remove('ok','ko');q.classList.add('done');var r=q.querySelector('input:checked');if(!r)return;an++;
+        if(r.value===q.getAttribute('data-ans')){ok++;q.classList.add('ok')}else q.classList.add('ko')});
+      res.textContent=ok+' de '+qs.length+' correctes'+(an<qs.length?' ('+(qs.length-an)+' sense respondre)':'');
+    });
+    z.querySelector('.reset').addEventListener('click',function(){
+      qs.forEach(function(q){q.classList.remove('ok','ko','done');[].forEach.call(q.querySelectorAll('input'),function(i){i.checked=false})});res.textContent='';
+    });
+  });
+
+  function $$(r,s){return [].slice.call(r.querySelectorAll(s))}
+  $$(document,'.fillx').forEach(function(f){
+    var sel=$$(f,'select'),res=f.querySelector('.result');
+    f.querySelector('.check').addEventListener('click',function(){
+      var ok=0,an=0;
+      sel.forEach(function(s){s.classList.remove('ok','ko');if(!s.value)return;an++;if(s.value===s.getAttribute('data-ans')){ok++;s.classList.add('ok')}else s.classList.add('ko')});
+      res.textContent=ok+' de '+sel.length+' correctes'+(an<sel.length?' ('+(sel.length-an)+' sense respondre)':'');
+    });
+    f.querySelector('.reset').addEventListener('click',function(){sel.forEach(function(s){s.selectedIndex=0;s.classList.remove('ok','ko')});res.textContent=''});
+  });
+  $$(document,'.ordx').forEach(function(o){
+    var ul=o.querySelector('.ord'),res=o.querySelector('.result'),init=$$(ul,'li');
+    function clear(){$$(ul,'li').forEach(function(l){l.classList.remove('ok','ko')});res.textContent=''}
+    ul.addEventListener('click',function(e){
+      var b=e.target.closest('button');if(!b)return;var li=b.closest('li');
+      if(b.classList.contains('up')&&li.previousElementSibling)ul.insertBefore(li,li.previousElementSibling);
+      if(b.classList.contains('dn')&&li.nextElementSibling)ul.insertBefore(li.nextElementSibling,li);
+      clear();
+    });
+    o.querySelector('.check').addEventListener('click',function(){
+      var ok=0,ls=$$(ul,'li');
+      ls.forEach(function(l,k){var g=+l.getAttribute('data-pos')===k;l.classList.remove('ok','ko');l.classList.add(g?'ok':'ko');if(g)ok++});
+      res.textContent=ok===ls.length?'Ordre correcte!':ok+' de '+ls.length+' al lloc correcte. Torna-ho a provar.';
+    });
+    o.querySelector('.reset').addEventListener('click',function(){init.forEach(function(l){ul.appendChild(l)});clear()});
+  });
+  $$(document,'.tfx').forEach(function(t){
+    var rows=$$(t,'.tfrow'),res=t.querySelector('.result');
+    function score(){var ok=0,an=0;rows.forEach(function(r){if(r.classList.contains('ok'))ok++;if(r.classList.contains('ok')||r.classList.contains('ko'))an++});res.textContent=ok+' de '+rows.length+' correctes'+(an<rows.length?' · et queden '+(rows.length-an):'')}
+    rows.forEach(function(r){$$(r,'.tfb').forEach(function(b){b.addEventListener('click',function(){
+      if(r.classList.contains('ok')||r.classList.contains('ko'))return;
+      r.classList.add(b.getAttribute('data-v')===r.getAttribute('data-ans')?'ok':'ko');b.classList.add('pick');score();
+    })})});
+    t.querySelector('.reset').addEventListener('click',function(){rows.forEach(function(r){r.classList.remove('ok','ko');$$(r,'.tfb').forEach(function(b){b.classList.remove('pick')})});res.textContent=''});
+  });
+  $$(document,'.pairx').forEach(function(p){
+    var cards=$$(p,'.pc'),res=p.querySelector('.result'),sel=null,tries=0,tot=cards.length/2,left=tot;
+    cards.forEach(function(c){c.addEventListener('click',function(){
+      if(c.classList.contains('done'))return;
+      if(!sel){sel=c;c.classList.add('sel');return}
+      if(sel===c){c.classList.remove('sel');sel=null;return}
+      if(sel.getAttribute('data-side')===c.getAttribute('data-side')){sel.classList.remove('sel');sel=c;c.classList.add('sel');return}
+      tries++;var a=sel;sel=null;
+      if(a.getAttribute('data-k')===c.getAttribute('data-k')){a.classList.remove('sel');a.classList.add('done');c.classList.add('done');left--;
+        res.textContent=left?('Parelles: '+(tot-left)+' de '+tot+' · intents: '+tries):('Totes les parelles! Intents: '+tries)}
+      else{a.classList.add('ko');c.classList.add('ko');setTimeout(function(){a.classList.remove('ko','sel');c.classList.remove('ko')},600)}
+    })});
+    p.querySelector('.reset').addEventListener('click',function(){cards.forEach(function(c){c.classList.remove('done','sel','ko')});sel=null;tries=0;left=tot;res.textContent=''});
+  });
+
+  function ri(a,b){return a+Math.floor(Math.random()*(b-a+1))}
+  function pk(a){return a[Math.floor(Math.random()*a.length)]}
+  function sh(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=b[i];b[i]=b[j];b[j]=t}return b}
+  function uniq(a){var s={},r=[];a.forEach(function(x){if(!s[x]){s[x]=1;r.push(x)}});return r}
+  var G={
+    ipnet:function(){var c=ri(1,254),d=ri(2,250),b=pk([[192,168],[172,16],[10,ri(0,200)]]),ip=b[0]+'.'+b[1]+'.'+c+'.'+d,net=b[0]+'.'+b[1]+'.'+c+'.0';
+      return {q:'Un PC té la IP <code>'+ip+'</code> i màscara <code>255.255.255.0</code>. Quina és la IP de la seva xarxa?',o:[net,b[0]+'.'+b[1]+'.0.0',ip,b[0]+'.'+b[1]+'.'+c+'.255'],e:'Amb la màscara 255.255.255.0 els tres primers números són la xarxa: '+net+'.'}},
+    same:function(){var b=pk([[192,168],[172,16]]),c=ri(1,250),d=ri(2,100),d2=ri(110,250),ip=b[0]+'.'+b[1]+'.'+c+'.'+d;
+      return {q:'Un PC té la IP <code>'+ip+'</code> (màscara <code>255.255.255.0</code>). Quina d\'aquestes IP és de la seva mateixa xarxa?',o:[b[0]+'.'+b[1]+'.'+c+'.'+d2,b[0]+'.'+b[1]+'.'+(c+1)+'.'+d,'10.'+c+'.'+d+'.1',b[0]+'.'+(b[1]+1)+'.'+c+'.'+d],e:'Ha de tenir els mateixos tres primers números: '+b[0]+'.'+b[1]+'.'+c+'.x'}},
+    mesh:function(){var n=ri(4,9);
+      if(Math.random()<.5){var m=n*(n-1)/2;return {q:'Quants enllaços necessita una <b>malla completa</b> de '+n+' equips?',o:[''+m,''+n,''+(n*(n-1)),''+(n*n)],e:'n(n−1)/2 = '+n+'·'+(n-1)+'/2 = '+m+'.'}}
+      return {q:'Quants cables necessita una <b>estrella</b> amb un switch i '+n+' PC?',o:[''+n,''+(n-1),''+(n+1),''+(n*(n-1)/2)],e:'Un cable per a cada PC fins al switch: '+n+'.'}},
+    domains:function(){var a=ri(2,6),b=ri(2,6),t=ri(0,3);
+      if(t===0)return {q:'Un <b>switch</b> té '+a+' PC connectats. Quants dominis de col·lisió hi ha?',o:[''+a,'1',''+(a+1),''+(a*2)],e:'Cada port del switch és un domini de col·lisió.'};
+      if(t===1)return {q:'Un <b>hub</b> té '+b+' PC connectats. Quants dominis de col·lisió hi ha?',o:['1',''+b,''+(b+1),'2'],e:'Tots els ports d\'un hub formen un sol domini.'};
+      if(t===2)return {q:'Un router connecta una xarxa amb un switch ('+a+' PC) i una altra amb un hub ('+b+' PC). Quants dominis de col·lisió hi ha en total?',o:[''+(a+2),''+(a+b),''+(a+b+2),'2'],e:'Switch: '+a+' PC + l\'enllaç amb el router = '+(a+1)+'. Hub: 1 domini. Total: '+(a+2)+'.'};
+      return {q:'Un router connecta '+a+' xarxes diferents. Quants dominis de broadcast hi ha?',o:[''+a,'1',''+(a+1),''+(a*2)],e:'El router separa els dominis de broadcast: un per xarxa.'}},
+    macip:function(){var hx=function(){var s=ri(0,255).toString(16);return (s.length<2?'0':'')+s},m=Math.random()<.5,
+      v=m?[1,2,3,4,5,6].map(hx).join(':'):ri(1,223)+'.'+ri(0,255)+'.'+ri(0,255)+'.'+ri(1,254);
+      return {q:'És una adreça MAC o una IP? <code>'+v+'</code>',o:m?['MAC','IP']:['IP','MAC'],e:m?'6 parells hexadecimals separats per dos punts: és una MAC.':'4 números decimals separats per punts: és una IPv4.'}},
+    pin:function(){var c=pk(['directe','creuat','consola']),p=ri(1,8),m={directe:[1,2,3,4,5,6,7,8],creuat:[3,6,1,4,5,2,7,8],consola:[8,7,6,5,4,3,2,1]}[c],a=m[p-1],n={directe:'directe',creuat:'creuat (A–B)',consola:'consola (rollover)'}[c],r=[];
+      [1,2,3,4,5,6,7,8].forEach(function(x){if(x!==a)r.push(x)});r=sh(r).slice(0,3);
+      return {q:'Al tester, en un cable <b>'+n+'</b>, el pin <b>'+p+'</b> d\'un extrem arriba al pin…',o:[''+a].concat(r.map(String)),e:'En un cable '+n+', el pin '+p+' va al pin '+a+'.'}},
+    cable:function(){var d=pk([15,40,70,95,120,150,220,400,500,800,2000,5000,10000]),a=d<=100?'Cable UTP':(d<=550?'Fibra multimode':'Fibra monomode'),all=['Cable UTP','Fibra multimode','Fibra monomode'];
+      return {q:'Cal un enllaç de <b>'+d+' m</b> a 1 Gbps. Quin mitjà és el més adequat?',o:[a].concat(all.filter(function(x){return x!==a})),e:'UTP fins a 100 m; fibra multimode fins a uns 550 m; més enllà, fibra monomode.'}}
+  };
+  $$(document,'.genx').forEach(function(g){
+    var kinds=g.getAttribute('data-gen').split(',').filter(Boolean),data=JSON.parse(g.getAttribute('data-pool')||'{"own":[],"all":[]}');
+    var body=g.querySelector('.gbody'),sc=g.querySelector('.gscore'),ok=0,tot=0;
+    function poolq(){
+      var own=data.own.length?data.own:data.all,p=pk(own),rev=Math.random()<.5;
+      var oth=sh(data.all.filter(function(x){return x[0]!==p[0]&&x[1]!==p[1]})).slice(0,2);
+      if(rev)return {q:'Quin concepte correspon a: <b>'+p[1]+'</b>?',o:[p[0]].concat(oth.map(function(x){return x[0]})),e:p[0]+': '+p[1]+'.'};
+      return {q:'A què es refereix <b>'+p[0]+'</b>?',o:[p[1]].concat(oth.map(function(x){return x[1]})),e:p[0]+': '+p[1]+'.'};
+    }
+    function show(){
+      var k=pk(kinds),x=k==='pool'?poolq():G[k](),o=uniq(x.o),right=o[0];o=sh(o);
+      body.innerHTML='';var q=document.createElement('p');q.className='gq';q.innerHTML=x.q;body.appendChild(q);
+      var w=document.createElement('div');w.className='gopts';var fb=document.createElement('p');fb.className='gexp';fb.hidden=true;
+      o.forEach(function(t){var b=document.createElement('button');b.type='button';b.className='gopt';b.textContent=t;
+        b.addEventListener('click',function(){
+          if(w.classList.contains('answered'))return;w.classList.add('answered');tot++;
+          var good=t===right;if(good)ok++;b.classList.add(good?'ok':'ko');
+          if(!good)[].forEach.call(w.children,function(c){if(c.textContent===right)c.classList.add('ok')});
+          fb.textContent=(good?'Correcte! ':'No és correcte. ')+x.e;fb.hidden=false;sc.textContent='Encerts: '+ok+' de '+tot;
+        });w.appendChild(b)});
+      body.appendChild(w);body.appendChild(fb);
+    }
+    g.querySelector('.gnew').addEventListener('click',show);show();
+  });
+
+  function nm(s){return s.trim().replace(/^\$\s*/,'').replace(/^sudo\s+/,'').replace(/\s+/g,' ').toLowerCase()}
+  function rx(p){return new RegExp('^'+p.split('*').map(function(x){return x.replace(/[.+?^${}()|[\]\\]/g,'\\$&')}).join('.*')+'$')}
+  $$(document,'.typex').forEach(function(t){
+    var lis=$$(t,'.typed li'),res=t.querySelector('.result');
+    lis.forEach(function(li){li.querySelector('.hintb').addEventListener('click',function(){li.querySelector('.hint').hidden=false})});
+    t.querySelector('.check').addEventListener('click',function(){
+      var ok=0,an=0;
+      lis.forEach(function(li){
+        var v=nm(li.querySelector('.tin').value),acc=JSON.parse(li.getAttribute('data-acc'));li.classList.remove('ok','ko');
+        if(!v)return;an++;
+        if(acc.some(function(p){return rx(nm(p)).test(v)})){ok++;li.classList.add('ok')}else li.classList.add('ko');
+      });
+      res.textContent=ok+' de '+lis.length+' correctes'+(an<lis.length?' ('+(lis.length-an)+' sense respondre)':'');
+    });
+    t.querySelector('.solb').addEventListener('click',function(){lis.forEach(function(li){li.querySelector('.sol').hidden=false})});
+    t.querySelector('.reset').addEventListener('click',function(){lis.forEach(function(li){li.classList.remove('ok','ko');li.querySelector('.tin').value='';li.querySelector('.hint').hidden=true;li.querySelector('.sol').hidden=true});res.textContent=''});
+  });
+})();
+</script>
+
+
+</body>
+</html>

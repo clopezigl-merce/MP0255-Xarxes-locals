@@ -10,10 +10,14 @@ MP0255/
 ├── assets/
 │   ├── css/style.css
 │   └── img/
-└── AEA1/                 ← tot el contingut de l'AEA1
-    ├── index.html        ← pàgina de l'AEA1
-    ├── A0.html ... A5.html
-    └── docs/             ← PDF de teoria de l'AEA1
+├── AEA1/                 ← Reconeixement de l'estructura de les xarxes locals
+│   ├── index.html
+│   ├── A0.html ... A6.html
+│   └── docs/             ← PDF de teoria
+└── AEA2/                 ← Cablejat estructurat (RA2 i RA6)
+    ├── index.html
+    ├── B1.html, B2.html  ← bloquejades fins nou avís
+    └── docs/             ← PDF de teoria i manual de riscos laborals
 ```
 
-Cada nova AEA tindrà la seva carpeta (`AEA2/`, `AEA3/`...) amb la mateixa estructura: `index.html`, les activitats i la carpeta `docs/`.
+Cada AEA té la seva carpeta amb la mateixa estructura: `index.html`, les activitats i la carpeta `docs/`.
