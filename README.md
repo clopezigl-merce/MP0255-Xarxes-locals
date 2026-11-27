@@ -14,9 +14,11 @@ MP0255/
 │   ├── index.html
 │   ├── A0.html ... A6.html
 │   └── docs/             ← PDF de teoria
-└── AEA2/                 ← Cablejat estructurat (RA2 i RA6)
+└── AEA2/                 ← AEA-2: Cablejat estructurat i R.L (RA2 + RA6)
     ├── index.html
-    ├── B1.html, B2.html  ← bloquejades fins nou avís
+    ├── B1.html           ← oberta
+    ├── B2.html           ← bloquejada fins nou avís
+    ├── img/              ← fotos i esquemes del tutorial del taller
     └── docs/             ← PDF de teoria i manual de riscos laborals
 ```
 
